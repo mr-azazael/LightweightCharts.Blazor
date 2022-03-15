@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32228.430
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LightweightCharts.Blazor.Client", "..\examples\LightweightCharts.Blazor.Client\LightweightCharts.Blazor.Client.csproj", "{FC09D3AD-07D1-4E3C-A89B-23DDC756D117}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LightweightCharts.Blazor", "..\src\LightweightCharts.Blazor\LightweightCharts.Blazor.csproj", "{8CBCB119-E65C-4370-8FCA-4F5C4C04B214}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FC09D3AD-07D1-4E3C-A89B-23DDC756D117}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC09D3AD-07D1-4E3C-A89B-23DDC756D117}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC09D3AD-07D1-4E3C-A89B-23DDC756D117}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC09D3AD-07D1-4E3C-A89B-23DDC756D117}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8CBCB119-E65C-4370-8FCA-4F5C4C04B214}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CBCB119-E65C-4370-8FCA-4F5C4C04B214}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CBCB119-E65C-4370-8FCA-4F5C4C04B214}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CBCB119-E65C-4370-8FCA-4F5C4C04B214}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A1005267-99D1-4734-8249-812F52BA0C64}
+	EndGlobalSection
+EndGlobal

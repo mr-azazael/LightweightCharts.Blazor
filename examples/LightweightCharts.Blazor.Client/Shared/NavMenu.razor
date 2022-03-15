@@ -1,0 +1,59 @@
+﻿<div class="top-row ps-3 navbar navbar-dark">
+	<div class="container-fluid">
+		<a class="navbar-brand" href="">Lightweight Charts</a>
+		<button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+	</div>
+</div>
+
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+	<nav class="flex-column">
+		<div class="nav-item px-1">
+			<NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+				Home
+			</NavLink>
+		</div>
+		<div class="nav-item px-1">
+			<NavLink class="nav-link" href="areaSeries">
+				Area Series & Auto-Resize
+			</NavLink>
+		</div>
+		<div class="nav-item px-1">
+			<NavLink class="nav-link" href="barSeries">
+				Bar Series & Timescale Formatter
+			</NavLink>
+		</div>
+		<div class="nav-item px-1">
+			<NavLink class="nav-link" href="baselineSeries">
+				Baseline Series & Autoscale Info
+			</NavLink>
+		</div>
+		<div class="nav-item px-1">
+			<NavLink class="nav-link" href="candlestickSeries">
+				Candlestick Series & Markers
+			</NavLink>
+		</div>
+		<div class="nav-item px-1">
+			<NavLink class="nav-link" href="histogramSeries">
+				Histogram Series
+			</NavLink>
+		</div>
+				<div class="nav-item px-1">
+			<NavLink class="nav-link" href="lineSeries">
+				Line Series & Timeline Sync
+			</NavLink>
+		</div>
+	</nav>
+</div>
+
+@code {
+	private bool collapseNavMenu = true;
+
+	private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+	private void ToggleNavMenu()
+	{
+		collapseNavMenu = !collapseNavMenu;
+	}
+}

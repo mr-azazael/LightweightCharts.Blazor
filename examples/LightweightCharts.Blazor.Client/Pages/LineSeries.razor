@@ -1,0 +1,12 @@
+﻿@page "/lineSeries"
+
+<PageTitle>Line Series & Timeline Sync</PageTitle>
+
+<div class="w-100 h-100" style="display:grid;">
+	<div class="bg-warning" style="grid-row-start: 1; grid-row-end: 2;">
+		<ChartComponent @ref=LineChartComponent AutoResize=true />
+	</div>
+	<div class="bg-info" style="grid-row-start: 2; grid-row-end: 3;">
+		<ChartComponent @ref=AreaChartComponent AutoResize=true />
+	</div>
+</div>
