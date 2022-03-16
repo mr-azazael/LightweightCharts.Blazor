@@ -267,14 +267,18 @@ namespace LightweightCharts.Blazor.Charts
 		protected override async Task OnAfterRenderAsync(bool firstRender)
 		{
 			await base.OnAfterRenderAsync(firstRender);
-			await JsRuntime.InvokeVoidAsync("LightweightChartsBlazor.registerSizeChangedEvent", Id, _DotNetObjectReference, nameof(OnContainerSizeChanged));
-			_Layout = await JsRuntime.InvokeAsync<IJSObjectReference>("LightweightChartsBlazor.createChartLayout", Id, new ChartOptions());
-			_EventsHelper = new EventsHelper(this, JsRuntime);
 
-			_EventsHelper.AddEvent<InternalMouseEventArgs>(OnClicked, Events.Click);
-			_EventsHelper.AddEvent<InternalMouseEventArgs>(OnCrosshairMoved, Events.CrosshairMove);
+			if (firstRender)
+			{
+				await JsRuntime.InvokeVoidAsync("LightweightChartsBlazor.registerSizeChangedEvent", Id, _DotNetObjectReference, nameof(OnContainerSizeChanged));
+				_Layout = await JsRuntime.InvokeAsync<IJSObjectReference>("LightweightChartsBlazor.createChartLayout", Id, new ChartOptions());
+				_EventsHelper = new EventsHelper(this, JsRuntime);
 
-			_InitializationCompleted.SetResult();
+				_EventsHelper.AddEvent<InternalMouseEventArgs>(OnClicked, Events.Click);
+				_EventsHelper.AddEvent<InternalMouseEventArgs>(OnCrosshairMoved, Events.CrosshairMove);
+
+				_InitializationCompleted.SetResult();
+			}
 		}
 
 		public async Task<ChartOptions> Options()

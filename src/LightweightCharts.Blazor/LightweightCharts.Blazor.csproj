@@ -3,16 +3,27 @@
 	<PropertyGroup>
 		<TargetFramework>net6.0</TargetFramework>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-		<VersionPrefix>3.8.0</VersionPrefix>
+		<PackageId>LightweightCharts.Blazor</PackageId>
+		<PackageVersion>3.8.0</PackageVersion>
+		<Authors>Laurentiu Cernescu</Authors>
+		<Description>Blazor wrapper for TradingView's Lightweight charts.</Description>
+		<!--<Copyright>?</Copyright>-->
+		<PackageProjectUrl>https://github.com/mr-azazael/LightweightCharts.Blazor</PackageProjectUrl>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<RepositoryUrl>https://github.com/mr-azazael/LightweightCharts.Blazor</RepositoryUrl>
+		<PackageTags>Blazor;TradingView;Financial;Charts</PackageTags>
+		<PackageReleaseNotes>First release</PackageReleaseNotes>
+		<Version>$(PackageVersion)</Version>
+		<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+		<PackageIcon>logo.png</PackageIcon>
 	</PropertyGroup>
 
-	<!--<ItemGroup>
-		<Compile Remove="Npm\**" />
-		<Content Remove="Npm\**" />
-		<EmbeddedResource Remove="Npm\**" />
-		<None Remove="Npm\**" />
-	</ItemGroup>-->
+	<ItemGroup>		
+		<None Include="..\..\README.md" Pack="True" PackagePath=""/>
+		<None Include="..\..\resources\logo.png" Pack="True" PackagePath=""/>
+		<None Include="LICENSE.txt" Pack="True" PackagePath=""/>
+	</ItemGroup>
 
 	<ItemGroup>
 		<SupportedPlatform Include="browser" />
@@ -20,17 +31,6 @@
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.2" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Folder Include="wwwroot\" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <None Include="..\..\README.md">
-	    <Pack>True</Pack>
-	    <PackagePath>\</PackagePath>
-	  </None>
 	</ItemGroup>
 
 </Project>
