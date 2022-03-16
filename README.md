@@ -1,8 +1,12 @@
-# LightweightCharts.Blazor
+<div align="center">
+  <h1>LightweightCharts for Blazor</h1>
+</div>
+
+# 
 Blazor wrapper for TradingView's Lightweight Charts javascript library.
 
 ## Installing
-Install the package via the NuGet package manager.
+Install the package via the NuGet package manager.<br/>
 Add the script imports to your root html file (index.html or _Layout.cshtml).
 
 ```html
@@ -15,6 +19,7 @@ Add the script imports to your root html file (index.html or _Layout.cshtml).
 Add the chart component to your razor file.
 
 ```html
+@using LightweightCharts.Blazor.Charts
 <ChartComponent @ref="Chart" />
 ```
 
@@ -25,15 +30,16 @@ await Chart.InitializationCompleted;
 var series = await Chart.AddLineSeriesAsync();
 ```
 
-See the repository GitHub for examples.
+The Github repository contains a demo project with several examples (all available series, custom options, multiple series in a chart, multiple charts, etc.).
 
 ## Limitations
 Synchronous methods can't be forwarded to c# code. 
 Because of this, some options can be set only from javascript.
-Option properties not available in c# wrappers are:
+The demo project contains an example that offers a workaround.
+Known options not available in c# wrappers are:
 - TimeScale options tickMarkFormatter;
 - Series options autoscaleInfoProvider;
 
 ## Debugging
-Clone the LightweightCharts.Blazor project and add a project reference to it in your blazor client.
+Clone the LightweightCharts.Blazor project and add a project reference to it in your blazor client.<br/>
 The contents of 'lightweight-charts.standalone.js' can be replaced with the development version to debug the javascript library.
