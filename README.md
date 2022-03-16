@@ -1,9 +1,7 @@
 <div align="center">
   <h1>LightweightCharts for Blazor</h1>
+  A blazor wrapper for TradingView's Lightweight Charts javascript library.
 </div>
-
-# 
-Blazor wrapper for TradingView's Lightweight Charts javascript library.
 
 ## Installing
 Install the package via the NuGet package manager.<br/>
@@ -23,7 +21,7 @@ Add the chart component to your razor file.
 <ChartComponent @ref="Chart" />
 ```
 
-Wait for the chart component to finish its initialization, then use the exposed api methods to add series to it.
+Wait for the chart component to finish its initialization, then use the exposed api methods to add data series to it.
 
 ```c#
 await Chart.InitializationCompleted;
