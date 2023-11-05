@@ -299,7 +299,10 @@ namespace LightweightCharts.Blazor.Charts
 		public async void OnContainerSizeChanged(double width, double height)
 		{
 			if (AutoResize)
+			{
+				await InitializationCompleted;
 				await JsRuntime.InvokeVoidAsync("LightweightChartsBlazor.lightweightChartsInvoke", _Layout, "resize", Math.Floor(width), Math.Floor(height), true);
+			}
 		}
 
 		#endregion
