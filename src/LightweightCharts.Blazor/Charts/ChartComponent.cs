@@ -177,10 +177,10 @@ namespace LightweightCharts.Blazor.Charts
 		IJSRuntime JsRuntime { get; set; }
 
 		/// <summary>
-		/// Container div classes. By default, its set to w-100 h-100
+		/// Container div style. By default, its set to width: 100%, height: 100%
 		/// </summary>
 		[Parameter]
-		public string Class { get; set; } = "w-100 h-100";
+		public string CssStyle { get; set; } = "width: 100%; height: 100%;";
 
 		/// <summary>
 		/// Auto-resizes the chart to the available container space <br/>
@@ -260,7 +260,7 @@ namespace LightweightCharts.Blazor.Charts
 		{
 			builder.OpenElement(1, "div");
 			builder.AddAttribute(2, "id", Id);
-			builder.AddAttribute(3, "class", Class);
+			builder.AddAttribute(3, "style", CssStyle);
 			builder.CloseElement();
 		}
 
