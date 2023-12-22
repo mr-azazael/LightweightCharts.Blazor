@@ -22,7 +22,7 @@ window.LightweightChartsBlazor = {
 		var element = document.getElementById(elementId);
 		var resizeObserver = new ResizeObserver(entry => {
 			var boundingRect = entry[0].contentRect;
-			dotNetHandler.invokeMethodAsync(methodName, boundingRect.offsetWidth, boundingRect.offsetHeight);
+			dotNetHandler.invokeMethodAsync(methodName, boundingRect.width, boundingRect.height);
 		});
 
 		resizeObserver.observe(element);
