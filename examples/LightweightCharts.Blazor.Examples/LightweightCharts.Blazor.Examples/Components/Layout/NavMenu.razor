@@ -1,0 +1,56 @@
+﻿<div class="top-row ps-3 navbar navbar-dark">
+	<div class="container-fluid">
+		<a class="navbar-brand" href="">Lightweight Charts Examples</a>
+	</div>
+</div>
+
+<input type="checkbox" title="Navigation menu" class="navbar-toggler" />
+
+<style>
+	.navItem {
+		height: auto !important;
+		line-height: initial !important;
+	}
+</style>
+
+<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
+	<nav class="flex-column">
+
+		<div class="nav-item px-3">
+			<NavLink class="nav-link navItem" href="" Match="NavLinkMatch.All">
+				<span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Area Series & Auto-Resize
+			</NavLink>
+		</div>
+
+		<div class="nav-item px-3">
+			<NavLink class="nav-link navItem" href="barSeries">
+				<span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Live Bar Series & Timescale Formatter
+			</NavLink>
+		</div>
+
+		<div class="nav-item px-3">
+			<NavLink class="nav-link navItem" href="baselineSeries">
+				<span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Baseline Series & Autoscale Info
+			</NavLink>
+		</div>
+
+		<div class="nav-item px-3">
+			<NavLink class="nav-link navItem" href="candlestickSeries">
+				<span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Candlestick Series & Markers
+			</NavLink>
+		</div>
+
+		<div class="nav-item px-3">
+			<NavLink class="nav-link navItem" href="histogramSeries">
+				<span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Histogram Series
+			</NavLink>
+		</div>
+
+		<div class="nav-item px-3">
+			<NavLink class="nav-link navItem" href="lineSeries">
+				<span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Line Series & Timeline Sync
+			</NavLink>
+		</div>
+
+	</nav>
+</div>

@@ -1,0 +1,37 @@
+﻿@using LightweightCharts.Blazor.DataItems
+
+<div class="bg-info border border-1 border-dark rounded-2 bg-opacity-50 bg-primary mb-1">
+	@if (Data is OhlcData ohlc)
+	{
+		Format ??= OhlcFormat;
+		<span class="px-1">@(string.Format(Format, ohlc.Open, ohlc.High, ohlc.Low, ohlc.Close))</span>
+	}
+	else if (Data is HistogramData histogram)
+	{
+		Format ??= HistogramFormat;
+		<span class="px-1">@(string.Format(Format, histogram.Value))</span>
+	}
+	else if (Data is SingleValueData single)
+	{
+		Format ??= SingleFormat;
+		<span class="px-1">@(string.Format(Format, single.Value))</span>
+	}
+	else if (Data is BarData bar)
+	{
+		Format ??= OhlcFormat;
+		<span class="px-1">@(string.Format(Format, bar.Open, bar.High, bar.Low, bar.Close))</span>
+	}
+</div>
+
+@code
+{
+	const string OhlcFormat = "Open: {0:F2} High: {0:F2} Low: {0:F2} Close: {0:F2}";
+	const string HistogramFormat = "Volume: {0:F2}";
+	const string SingleFormat = "Value: {0:F2}";
+
+	[Parameter]
+	public WhitespaceData Data { get; set; }
+
+	[Parameter]
+	public string Format { get; set; }
+}
