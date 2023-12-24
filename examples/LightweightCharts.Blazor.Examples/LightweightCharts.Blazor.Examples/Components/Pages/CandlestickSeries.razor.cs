@@ -1,4 +1,5 @@
 ﻿using LightweightCharts.Blazor.Charts;
+using LightweightCharts.Blazor.Customization.Chart;
 using LightweightCharts.Blazor.Customization.Enums;
 using LightweightCharts.Blazor.Customization.Series;
 using LightweightCharts.Blazor.DataItems;
@@ -17,28 +18,50 @@ partial class CandlestickSeries
 	ISeriesApi<HistogramStyleOptions> _Histogram;
 	IEnumerable<SeriesPrice> _MouseHoverPrices;
 	string _LastClickedId;
+	ChartComponent _ChartComponent;
+	ChartOptions _Options;
 
 	ChartComponent ChartComponent
 	{
-		set => InitializeChartComponent(value);
+		get => _ChartComponent;
+		set
+		{
+			_ChartComponent = value;
+			InitializeChartComponent(value);
+		}
+	}
+
+	string _BackgroundType;
+	string BackgroundType
+	{
+		get => _BackgroundType;
+		set
+		{
+			_BackgroundType = value;
+			_Options.Layout.Background = _BackgroundType switch
+			{
+				"Solid" => new SolidColor(),
+				_ => new VerticalGradientColor()
+			};
+		}
 	}
 
 	async void InitializeChartComponent(ChartComponent chart)
 	{
 		await chart.InitializationCompleted;
-
+		
 		//clicking on markers seem to return the candlestick series
 		//no hovered series is sent when clicking on the actual series items...
 		chart.Clicked += OnChartClicked;
 		chart.CrosshairMoved += OnChartCrosshairMoved;
 
-		await chart.ApplyOptions(new Customization.Chart.ChartOptions
+		await chart.ApplyOptions(new ChartOptions
 		{
-			LeftPriceScale = new Customization.Chart.PriceScaleOptions
+			LeftPriceScale = new PriceScaleOptions
 			{
 				Visible = false
 			},
-			RightPriceScale = new Customization.Chart.PriceScaleOptions
+			RightPriceScale = new PriceScaleOptions
 			{
 				ScaleMargins = new Customization.PriceScaleMargins
 				{
@@ -46,7 +69,7 @@ partial class CandlestickSeries
 					Top = 0
 				}
 			},
-			OverlayPriceScale = new Customization.Chart.BasePriceScaleOptions
+			OverlayPriceScale = new BasePriceScaleOptions
 			{
 				ScaleMargins = new Customization.PriceScaleMargins
 				{
@@ -55,6 +78,10 @@ partial class CandlestickSeries
 				}
 			}
 		});
+
+		_Options = await chart.Options();
+		BackgroundType = "Solid";
+		StateHasChanged();
 
 		await SetupCandlestickSeries(chart);
 		await SetupHistogramSeries(chart);
@@ -124,7 +151,7 @@ partial class CandlestickSeries
 
 	async Task SetupHistogramSeries(ChartComponent chart)
 	{
-		_Histogram = await chart.AddHistogramSeriesAsync(new Customization.Series.HistogramStyleOptions
+		_Histogram = await chart.AddHistogramSeriesAsync(new HistogramStyleOptions
 		{
 			PriceScaleId = "overlay",
 			PriceLineVisible = false,
@@ -164,5 +191,10 @@ partial class CandlestickSeries
 			{
 				Color = Color.LightBlue
 			});
+	}
+
+	async Task OnApplyOptions()
+	{
+		await ChartComponent.ApplyOptions(_Options);
 	}
 }

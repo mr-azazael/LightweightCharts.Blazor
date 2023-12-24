@@ -2,21 +2,106 @@
 @rendermode InteractiveServer
 
 @using LightweightCharts.Blazor.Charts
+@using LightweightCharts.Blazor.Customization.Chart
+@using LightweightCharts.Blazor.Customization.Enums
+@using Microsoft.AspNetCore.Components.Web
 
 <PageTitle>Candlestick Series & Markers</PageTitle>
 
-<div class="w-100 h-100" style="position:relative;">
+<div class="w-100 h-100 d-flex">
 
-	<ChartComponent @ref=ChartComponent AutoResize=false />
-
-	<div style="position:absolute;top:0; left:0; z-index: 5; width:auto;" class="m-2">
-		@if (_MouseHoverPrices != null)
+	<div class="w-25 h-100 d-flex flex-column">
+		@if (_Options != null)
 		{
-			@foreach (var price in _MouseHoverPrices)
-			{
-				<SeriesPriceData Data=@price.DataItem />
-			}
+			<div class="border border-1 rounded border-info m-1">
+				<LayoutItem Label="Background Type">
+					<InputSelect @bind-Value=BackgroundType id=@context>
+						<option>Solid</option>
+						<option>Vertical gradient</option>
+					</InputSelect>
+				</LayoutItem>
+
+				@if (BackgroundType == "Solid")
+				{
+					<LayoutItem Label="Background color">
+						<input type="color" id=@context
+								 value=@HexColorConverter.FromColor(((SolidColor)_Options.Layout.Background).Color)
+								 @onchange=@(args => ((SolidColor)_Options.Layout.Background).Color = HexColorConverter.FromString((string)args.Value)) />
+					</LayoutItem>
+				}
+				else
+				{
+					<LayoutItem Label="Top color">
+						<input type="color" id=@context
+								 value=@HexColorConverter.FromColor(((VerticalGradientColor)_Options.Layout.Background).TopColor)
+								 @onchange=@(args => ((VerticalGradientColor)_Options.Layout.Background).TopColor = HexColorConverter.FromString((string)args.Value)) />
+					</LayoutItem>
+
+					<LayoutItem Label="Bottom color">
+						<input type="color" id=@context
+								 value=@HexColorConverter.FromColor(((VerticalGradientColor)_Options.Layout.Background).BottomColor)
+								 @onchange=@(args => ((VerticalGradientColor)_Options.Layout.Background).BottomColor = HexColorConverter.FromString((string)args.Value)) />
+					</LayoutItem>
+				}
+			</div>
+
+			<div class="border border-1 rounded border-info m-1">
+				<LayoutItem Label="Horizontal line color">
+					<input type="color" id=@context
+							 value=@HexColorConverter.FromColor(_Options.Grid.HorizontalLines.Color)
+							 @onchange=@(args => _Options.Grid.HorizontalLines.Color = HexColorConverter.FromString((string)args.Value)) />
+				</LayoutItem>
+				<LayoutItem Label="Horizontal line style">
+					<InputSelect @bind-Value=_Options.Grid.HorizontalLines.Style id=@context>
+						@foreach (var member in Enum.GetValues<LineStyle>())
+						{
+							<option>@member</option>
+						}
+					</InputSelect>
+				</LayoutItem>
+				<LayoutItem Label="Horizontal line visible">
+					<input type="checkbox" id=@context
+							 checked=@_Options.Grid.HorizontalLines.Visible
+							 @onchange=@(args => _Options.Grid.HorizontalLines.Visible = (bool)args.Value) />
+				</LayoutItem>
+			</div>
+
+			<div class="border border-1 rounded border-info m-1">
+				<LayoutItem Label="Vertical line color">
+					<input type="color" id=@context
+							 value=@HexColorConverter.FromColor(_Options.Grid.VerticalLines.Color)
+							 @onchange=@(args => _Options.Grid.VerticalLines.Color = HexColorConverter.FromString((string)args.Value)) />
+				</LayoutItem>
+				<LayoutItem Label="Vertical line style">
+					<InputSelect @bind-Value=_Options.Grid.VerticalLines.Style id=@context>
+						@foreach (var member in Enum.GetValues<LineStyle>())
+						{
+							<option>@member</option>
+						}
+					</InputSelect>
+				</LayoutItem>
+				<LayoutItem Label="Vertical line visible">
+					<input type="checkbox" id=@context
+							 checked=@_Options.Grid.VerticalLines.Visible
+							 @onchange=@(args => _Options.Grid.VerticalLines.Visible = (bool)args.Value) />
+				</LayoutItem>
+			</div>
+
+			<button class="btn btn-info m-4 mt-auto" @onclick=OnApplyOptions>Apply</button>
 		}
+	</div>
+
+	<div class="w-75 h-100 position-relative">
+		<div style="position:absolute; top:0; left:0; z-index: 5; width:auto; pointer-events: none;" class="m-2">
+			@if (_MouseHoverPrices != null)
+			{
+				@foreach (var price in _MouseHoverPrices)
+				{
+					<SeriesPriceData Data=@price.DataItem />
+				}
+			}
+		</div>
+		<ChartComponent @ref=ChartComponent AutoResize=false />
 	</div>
 
 </div>

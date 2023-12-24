@@ -1,0 +1,15 @@
+﻿<div class="d-flex my-1">
+	<label for=@Id class="my-auto px-1 w-50">@Label</label>
+	@ChildContent(Id)
+</div>
+
+@code
+{
+	string Id { get; } = $"id-{Guid.NewGuid()}";
+
+	[Parameter]
+	public string Label { get; set; }
+
+	[Parameter]
+	public RenderFragment<string> ChildContent { get; set; }
+}
