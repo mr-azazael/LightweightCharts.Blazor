@@ -11,7 +11,7 @@ namespace LightweightCharts.Blazor.Customization.Chart
 	/// </summary>
 	public class LayoutOptions : BaseModel
 	{
-		BackgroundColor _Background = new SolidColor { Color = Color.White };
+		Background _Background = new SolidColor { Color = Color.White };
 		Color _TextColor = Extensions.ParseHtmlCode("#191919");
 		int _FontSize = 11;
 		string _FontFamily = "Trebuchet MS";
@@ -20,7 +20,7 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		/// Chart and scales background color.
 		/// </summary>
 		[JsonPropertyName("background")]
-		public BackgroundColor Background
+		public Background Background
 		{
 			get => _Background;
 			set => SetValue(value, ref _Background);

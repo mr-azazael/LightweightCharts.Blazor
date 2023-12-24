@@ -449,7 +449,11 @@ namespace LightweightCharts.Blazor.Charts
 
 		public async ValueTask DisposeAsync()
 		{
-			await _EventsHelper.DisposeAsync();
+			if (_EventsHelper != null)
+			{
+				await _EventsHelper.DisposeAsync();
+				_EventsHelper = null;
+			}
 		}
 	}
 }

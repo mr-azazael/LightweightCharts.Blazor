@@ -1,4 +1,5 @@
-﻿using LightweightCharts.Blazor.Customization.Enums;
+﻿using LightweightCharts.Blazor.Converters;
+using LightweightCharts.Blazor.Customization.Enums;
 using System.Drawing;
 using System.Text.Json.Serialization;
 
@@ -9,7 +10,10 @@ namespace LightweightCharts.Blazor.Customization.Chart
 	/// Types that extend this class: <see cref="SolidColor"/>, <see cref="VerticalGradientColor"/>.<br/>
 	/// https://tradingview.github.io/lightweight-charts/docs/api#background
 	/// </summary>
-	public abstract class BackgroundColor : BaseModel
+	[JsonPolymorphic(TypeDiscriminatorPropertyName = "type")]
+	[JsonDerivedType(typeof(SolidColor), typeDiscriminator: "solid")]
+	[JsonDerivedType(typeof(VerticalGradientColor), typeDiscriminator: "gradient")]
+	public abstract class Background : BaseModel
 	{
 		/// <summary>
 		/// Type of color.
@@ -22,7 +26,7 @@ namespace LightweightCharts.Blazor.Customization.Chart
 	/// Represents a solid color.<br/>
 	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/SolidColor
 	/// </summary>
-	public class SolidColor : BackgroundColor
+	public class SolidColor : Background
 	{
 		Color _Color = Color.Transparent;
 
@@ -32,6 +36,7 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		/// Color.
 		/// </summary>
 		[JsonPropertyName("color")]
+		[JsonConverter(typeof(JsonColorConverter))]
 		public Color Color
 		{
 			get => _Color;
@@ -43,7 +48,7 @@ namespace LightweightCharts.Blazor.Customization.Chart
 	/// Represents a vertical gradient of two colors.<br/>
 	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/VerticalGradientColor
 	/// </summary>
-	public class VerticalGradientColor : BackgroundColor
+	public class VerticalGradientColor : Background
 	{
 		Color _TopColor = Color.Transparent;
 		Color _BottomColor = Color.Transparent;
@@ -54,6 +59,7 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		/// Top color.
 		/// </summary>
 		[JsonPropertyName("topColor")]
+		[JsonConverter(typeof(JsonColorConverter))]
 		public Color TopColor
 		{
 			get => _TopColor;
@@ -64,6 +70,7 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		/// Bottom color.
 		/// </summary>
 		[JsonPropertyName("bottomColor")]
+		[JsonConverter(typeof(JsonColorConverter))]
 		public Color BottomColor
 		{
 			get => _BottomColor;

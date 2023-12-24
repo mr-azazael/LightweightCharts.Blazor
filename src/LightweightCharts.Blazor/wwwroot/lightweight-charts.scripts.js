@@ -12,6 +12,9 @@ window.LightweightChartsBlazor = {
 		var args = Array.prototype.slice.call(arguments, 2);
 		var result = target[method].apply(target, args);
 
+		if (typeof result === 'object' && typeof result.then === 'function')
+			result = await result;
+
 		if (result != undefined && result.UniqueJavascriptId == undefined)
 			result.UniqueJavascriptId = await DotNet.invokeMethodAsync('LightweightCharts.Blazor', 'GenerateGuidForJavascript');
 
@@ -31,8 +34,7 @@ window.LightweightChartsBlazor = {
 	subscribeToEvent: function (target, dotNetHandler, subscriptionMethod, methodName) {
 
 		var callbackWrapper = new Object();
-
-		callbackWrapper.eventCallback = function (eventArgs) {
+		callbackWrapper.eventCallback = async function (eventArgs) {
 
 			if (eventArgs.seriesPrices != undefined) {
 
@@ -52,7 +54,7 @@ window.LightweightChartsBlazor = {
 				eventArgs.hoveredSeries = eventArgs.hoveredSeries.UniqueJavascriptId;
 			}
 
-			dotNetHandler.invokeMethodAsync(methodName, eventArgs);
+			await dotNetHandler.invokeMethodAsync(methodName, eventArgs);
 		}
 
 		target[subscriptionMethod](callbackWrapper.eventCallback);
