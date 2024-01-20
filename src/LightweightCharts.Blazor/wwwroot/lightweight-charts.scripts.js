@@ -7,7 +7,6 @@ window.LightweightChartsBlazor = {
 		var container = document.getElementById(containerId);
 		return LightweightCharts.createChart(container, chartConfig);
 	},
-
 	lightweightChartsInvoke: async function (target, method /*args*/) {
 		var args = Array.prototype.slice.call(arguments, 2);
 		var result = target[method].apply(target, args);
@@ -15,56 +14,58 @@ window.LightweightChartsBlazor = {
 		if (typeof result === 'object' && typeof result.then === 'function')
 			result = await result;
 
-		if (result != undefined && result.UniqueJavascriptId == undefined)
-			result.UniqueJavascriptId = await DotNet.invokeMethodAsync('LightweightCharts.Blazor', 'GenerateGuidForJavascript');
+		if (result != undefined && result.uniqueJavascriptId == undefined)
+			result.uniqueJavascriptId = await DotNet.invokeMethodAsync('LightweightCharts.Blazor', 'GenerateGuidForJavascript');
 
 		return result;
 	},
-
-	registerSizeChangedEvent: function (elementId, dotNetHandler, methodName) {
-		var element = document.getElementById(elementId);
-		var resizeObserver = new ResizeObserver(entry => {
-			var boundingRect = entry[0].contentRect;
-			dotNetHandler.invokeMethodAsync(methodName, boundingRect.width, boundingRect.height);
-		});
-
-		resizeObserver.observe(element);
-	},
-
 	subscribeToEvent: function (target, dotNetHandler, subscriptionMethod, methodName) {
+		let callbackWrapper = {
+			eventCallback: async function (eventArgs) {
+				if (eventArgs.seriesData != undefined) {
+					var replacement = new Array();
+					for (let [key, value] of eventArgs.seriesData) {
+						replacement.push({
+							seriesId: key.uniqueJavascriptId,
+							seriesType: key.seriesType(),
+							dataItem: value
+						});
+					}
 
-		var callbackWrapper = new Object();
-		callbackWrapper.eventCallback = async function (eventArgs) {
-
-			if (eventArgs.seriesPrices != undefined) {
-
-				var replacement = new Array();
-				for (let [key, value] of eventArgs.seriesPrices) {
-					replacement.push({
-						seriesId: key.UniqueJavascriptId,
-						seriesType: key.seriesType(),
-						dataItem: value
-					});
+					eventArgs.seriesData = replacement;
 				}
 
-				eventArgs.seriesPrices = replacement;
-			}
+				if (eventArgs.hoveredSeries != undefined) {
+					eventArgs.hoveredSeries = eventArgs.hoveredSeries.uniqueJavascriptId;
+				}
 
-			if (eventArgs.hoveredSeries != undefined) {
-				eventArgs.hoveredSeries = eventArgs.hoveredSeries.UniqueJavascriptId;
-			}
+				//source event might contain a ref to the window object, which causes a circular exception in the json serialization process
+				if (eventArgs.sourceEvent != undefined)
+					eventArgs.sourceEvent = {
+						clientX: eventArgs.sourceEvent.clientX ?? 0,
+						clientY: eventArgs.sourceEvent.clientY ?? 0,
+						pageX: eventArgs.sourceEvent.pageX ?? 0,
+						pageY: eventArgs.sourceEvent.pageY ?? 0,
+						screenX: eventArgs.sourceEvent.screenX ?? 0,
+						screenY: eventArgs.sourceEvent.screenY ?? 0,
+						localX: eventArgs.sourceEvent.localX ?? 0,
+						localY: eventArgs.sourceEvent.localY ?? 0,
+						ctrlKey: eventArgs.sourceEvent.ctrlKey ?? false,
+						altKey: eventArgs.sourceEvent.altKey ?? false,
+						shiftKey: eventArgs.sourceEvent.shiftKey ?? false,
+						metaKey: eventArgs.sourceEvent.metaKey ?? false
+					};
 
-			await dotNetHandler.invokeMethodAsync(methodName, eventArgs);
-		}
+				await dotNetHandler.invokeMethodAsync(methodName, eventArgs);
+			}
+		};
 
 		target[subscriptionMethod](callbackWrapper.eventCallback);
 		return callbackWrapper;
 	},
-
 	unsubscribeFromEvent: function (target, callbackWrapper, unsubscriptionMethod) {
 		target[unsubscriptionMethod](callbackWrapper.eventCallback);
 	},
-
 	takeScreenshot: function (target) {
 		var canvas = target['takeScreenshot'].apply(target);
 		var context = canvas.getContext('2d');
@@ -72,6 +73,6 @@ window.LightweightChartsBlazor = {
 		return new Uint8Array(data.data);
 	},
 	getUniqueJavascriptId: function (target) {
-		return target.UniqueJavascriptId;
+		return target.uniqueJavascriptId;
 	}
 };

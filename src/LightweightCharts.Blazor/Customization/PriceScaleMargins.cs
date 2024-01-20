@@ -8,8 +8,8 @@ namespace LightweightCharts.Blazor.Customization
 	/// </summary>
 	public class PriceScaleMargins : BaseModel
 	{
-		double _Bottom = 0.1d;
-		double _Top = 0.2d;
+		double _Bottom;
+		double _Top;
 
 		/// <summary>
 		/// Bottom margin in percentages. Must be greater or equal to 0 and less than 1.

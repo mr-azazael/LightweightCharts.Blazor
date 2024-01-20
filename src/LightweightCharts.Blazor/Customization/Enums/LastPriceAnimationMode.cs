@@ -1,7 +1,4 @@
-﻿using LightweightCharts.Blazor.Converters;
-using System.Collections.Generic;
-
-namespace LightweightCharts.Blazor.Customization.Enums
+﻿namespace LightweightCharts.Blazor.Customization.Enums
 {
 	/// <summary>
 	/// Represents the type of the last price animation for series such as area or line.<br/>
@@ -12,26 +9,16 @@ namespace LightweightCharts.Blazor.Customization.Enums
 		/// <summary>
 		/// Animation is always disabled.
 		/// </summary>
-		Disabled = 0,
+		Disabled,
 
 		/// <summary>
 		/// Animation is always enabled.
 		/// </summary>
-		Continuous = 1,
+		Continuous,
 
 		/// <summary>
 		/// Animation is active after new data.
 		/// </summary>
-		OnDataUpdate = 2
-	}
-
-	internal class LastPriceAnimationModeConverter : BaseEnumJsonConverter<LastPriceAnimationMode>
-	{
-		protected override Dictionary<LastPriceAnimationMode, string> GetEnumMapping() => new Dictionary<LastPriceAnimationMode, string>
-		{
-			[LastPriceAnimationMode.Disabled] = "0",
-			[LastPriceAnimationMode.Continuous] = "1",
-			[LastPriceAnimationMode.OnDataUpdate] = "2"
-		};
+		OnDataUpdate
 	}
 }

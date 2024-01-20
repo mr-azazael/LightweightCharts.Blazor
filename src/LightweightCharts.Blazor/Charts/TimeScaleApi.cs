@@ -1,4 +1,5 @@
-﻿using LightweightCharts.Blazor.Customization.Chart;
+﻿using LightweightCharts.Blazor.Customization;
+using LightweightCharts.Blazor.Customization.Chart;
 using LightweightCharts.Blazor.Customization.Enums;
 using LightweightCharts.Blazor.Models;
 using LightweightCharts.Blazor.Models.Events;
@@ -12,7 +13,7 @@ namespace LightweightCharts.Blazor.Charts
 	/// Interface to chart time scale.<br/>
 	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ITimeScaleApi
 	/// </summary>
-	public interface ITimeScaleApi : IJsObjectWrapper
+	public interface ITimeScaleApi : IJsObjectWrapper, ICustomizableObject<TimeScaleOptions>
 	{
 		/// <summary>
 		/// Subscribe to the visible time range change events.<br/>
@@ -133,29 +134,13 @@ namespace LightweightCharts.Blazor.Charts
 		/// Returns a width of the time scale.<br/>
 		/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ITimeScaleApi#width
 		/// </summary>
-		/// <returns></returns>
 		Task<double> Width();
 
 		/// <summary>
 		/// Returns a height of the time scale.<br/>
 		/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ITimeScaleApi#height
 		/// </summary>
-		/// <returns></returns>
 		Task<double> Height();
-
-		/// <summary>
-		/// Applies new options to the time scale.<br/>
-		/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ITimeScaleApi#applyoptions
-		/// </summary>
-		/// <param name="options">Any subset of options.</param>
-		Task ApplyOptions(TimeScaleOptions options);
-
-		/// <summary>
-		/// Returns current options.<br/>
-		/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ITimeScaleApi#options
-		/// </summary>
-		/// <returns>Currently applied options.</returns>
-		Task<TimeScaleOptions> Options();
 	}
 
 	internal class TimeScaleApi : ITimeScaleApi, IAsyncDisposable
@@ -166,11 +151,6 @@ namespace LightweightCharts.Blazor.Charts
 
 		public IJSObjectReference JsObjectReference => _JsObjectRef;
 		public ChartComponent ChartLayout => _ChartLayout;
-
-		/// <summary>
-		/// Custom formatter for the time scale values.
-		/// </summary>
-		public Func<long, TickMarkType, string, Task<string>> TimeFormatter { get; set; }
 
 		internal TimeScaleApi(ChartComponent chartlayout, IJSObjectReference jsObjectRef, IJSRuntime jsRuntime)
 		{

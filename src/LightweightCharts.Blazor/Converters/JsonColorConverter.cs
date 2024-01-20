@@ -35,4 +35,25 @@ namespace LightweightCharts.Blazor.Converters
 			writer.WriteStringValue("#" + hexValue);
 		}
 	}
+
+	class JsonOptionalColorConverter : JsonConverter<Color?>
+	{
+		static JsonColorConverter _Default = new();
+
+		public override Color? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+		{
+			return _Default.Read(ref reader, typeToConvert, options);
+		}
+
+		public override void Write(Utf8JsonWriter writer, Color? value, JsonSerializerOptions options)
+		{
+			if (value == null)
+			{
+				writer.WriteNullValue();
+				return;
+			}
+
+			_Default.Write(writer, value.Value, options);
+		}
+	}
 }

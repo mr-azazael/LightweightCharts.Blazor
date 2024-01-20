@@ -19,7 +19,7 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		Color _BorderColor = Extensions.ParseHtmlCode("#2B2B43");
 		PriceScaleMargins _ScaleMargins = new();
 		bool _EntireTextOnly;
-		bool _DrawTicks = true;
+		bool _TicksVisible;
 
 		/// <summary>
 		/// Price scale mode.
@@ -96,11 +96,11 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		/// <summary>
 		/// Draw small horizontal line on price axis labels.
 		/// </summary>
-		[JsonPropertyName("drawTicks")]
-		public bool DrawTicks
+		[JsonPropertyName("ticksVisible")]
+		public bool TicksVisible
 		{
-			get => _DrawTicks;
-			set => SetValue(value, ref _DrawTicks);
+			get => _TicksVisible;
+			set => SetValue(value, ref _TicksVisible);
 		}
 	}
 }

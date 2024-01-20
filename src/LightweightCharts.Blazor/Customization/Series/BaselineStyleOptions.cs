@@ -20,12 +20,17 @@ namespace LightweightCharts.Blazor.Customization.Series
 		Color _BottomFillColor1 = Color.FromArgb(Convert.ToInt32(255 * 0.05), 239, 83, 80);
 		Color _BottomFillColor2 = Color.FromArgb(Convert.ToInt32(255 * 0.28), 239, 83, 80);
 		Color _BottomLineColor = Color.FromArgb(Convert.ToInt32(255 * 1.00), 239, 83, 80);
-		int _LineWidth = 1;
+		int _LineWidth = 3;
 		LineStyle _LineStyle = LineStyle.Solid;
+		LineType _LineType = LineType.Simple;
+		bool _LineVisible = true;
+		bool _PointMarkersVisible;
+		int? _PointMarkersRadius;
 		bool _CrosshairMarkerVisible = true;
 		int _CrosshairMarkerRadius = 4;
-		Color _CrosshairMarkerBorderColor = Color.Transparent;
-		Color _CrosshairMarkerBackgroundColor = Color.Transparent;
+		Color? _CrosshairMarkerBorderColor;
+		Color? _CrosshairMarkerBackgroundColor;
+		int _CrosshairMarkerBorderWidth = 2;
 		LastPriceAnimationMode _LastPriceAnimation = LastPriceAnimationMode.Disabled;
 
 		/// <summary>
@@ -125,6 +130,46 @@ namespace LightweightCharts.Blazor.Customization.Series
 		}
 
 		/// <summary>
+		/// Line type.
+		/// </summary>
+		[JsonPropertyName("lineType")]
+		public LineType LineType
+		{
+			get => _LineType;
+			set => SetValue(value, ref _LineType);
+		}
+
+		/// <summary>
+		/// Show series line.
+		/// </summary>
+		[JsonPropertyName("lineVisible")]
+		public bool LineVisible
+		{
+			get => _LineVisible;
+			set => SetValue(value, ref _LineVisible);
+		}
+
+		/// <summary>
+		/// Show circle markers on each point.
+		/// </summary>
+		[JsonPropertyName("pointMarkersVisible")]
+		public bool PointMarkersVisible
+		{
+			get => _PointMarkersVisible;
+			set => SetValue(value, ref _PointMarkersVisible);
+		}
+
+		/// <summary>
+		/// Circle markers radius in pixels.
+		/// </summary>
+		[JsonPropertyName("pointMarkersRadius")]
+		public int? PointMarkersRadius
+		{
+			get => _PointMarkersRadius;
+			set => SetValue(value, ref _PointMarkersRadius);
+		}
+
+		/// <summary>
 		/// Show the crosshair marker.
 		/// </summary>
 		[JsonPropertyName("crosshairMarkerVisible")]
@@ -148,8 +193,8 @@ namespace LightweightCharts.Blazor.Customization.Series
 		/// Crosshair marker border color. An empty string falls back to the the color of the series under the crosshair.
 		/// </summary>
 		[JsonPropertyName("crosshairMarkerBorderColor")]
-		[JsonConverter(typeof(JsonColorConverter))]
-		public Color CrosshairMarkerBorderColor
+		[JsonConverter(typeof(JsonOptionalColorConverter))]
+		public Color? CrosshairMarkerBorderColor
 		{
 			get => _CrosshairMarkerBorderColor;
 			set => SetValue(value, ref _CrosshairMarkerBorderColor);
@@ -159,11 +204,21 @@ namespace LightweightCharts.Blazor.Customization.Series
 		/// The crosshair marker background color. An empty string falls back to the the color of the series under the crosshair.
 		/// </summary>
 		[JsonPropertyName("crosshairMarkerBackgroundColor")]
-		[JsonConverter(typeof(JsonColorConverter))]
-		public Color CrosshairMarkerBackgroundColor
+		[JsonConverter(typeof(JsonOptionalColorConverter))]
+		public Color? CrosshairMarkerBackgroundColor
 		{
 			get => _CrosshairMarkerBackgroundColor;
 			set => SetValue(value, ref _CrosshairMarkerBackgroundColor);
+		}
+
+		/// <summary>
+		/// Crosshair marker border width in pixels.
+		/// </summary>
+		[JsonPropertyName("crosshairMarkerBorderWidth")]
+		public int CrosshairMarkerBorderWidth
+		{
+			get => _CrosshairMarkerBorderWidth;
+			set => SetValue(value, ref _CrosshairMarkerBorderWidth);
 		}
 
 		/// <summary>

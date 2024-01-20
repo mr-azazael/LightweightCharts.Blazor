@@ -13,8 +13,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 	{
 		Background _Background = new SolidColor { Color = Color.White };
 		Color _TextColor = Extensions.ParseHtmlCode("#191919");
-		int _FontSize = 11;
-		string _FontFamily = "Trebuchet MS";
+		int _FontSize = 12;
+		string _FontFamily = "-apple-system, BlinkMacSystemFont, 'Trebuchet MS', Roboto, Ubuntu, sans-serif";
 
 		/// <summary>
 		/// Chart and scales background color.

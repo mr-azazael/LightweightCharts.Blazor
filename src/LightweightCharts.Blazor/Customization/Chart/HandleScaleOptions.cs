@@ -8,10 +8,30 @@ namespace LightweightCharts.Blazor.Customization.Chart
 	/// </summary>
 	public class HandleScaleOptions : BaseModel
 	{
-		AxisPressedMouseMoveOptions _AxisPressedMouseMove = new();
-		bool _AxisDoubleClickReset = true;
 		bool _MouseWheel = true;
 		bool _Pinch = true;
+		AxisPressedMouseMoveOptions _AxisPressedMouseMove = new();
+		AxisDoubleClickOptions _AxisDoubleClickReset = new();
+
+		/// <summary>
+		/// Enable scaling with the mouse wheel.
+		/// </summary>
+		[JsonPropertyName("mouseWheel")]
+		public bool MouseWheel
+		{
+			get => _MouseWheel;
+			set => SetValue(value, ref _MouseWheel);
+		}
+		
+		/// <summary>
+		/// Enable scaling with pinch/zoom gestures.
+		/// </summary>
+		[JsonPropertyName("pinch")]
+		public bool Pinch
+		{
+			get => _Pinch;
+			set => SetValue(value, ref _Pinch);
+		}
 
 		/// <summary>
 		/// Enable scaling the price and/or time scales by holding down the left mouse button and moving the mouse.
@@ -27,30 +47,10 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		/// Enable resetting scaling by double-clicking the left mouse button.
 		/// </summary>
 		[JsonPropertyName("axisDoubleClickReset")]
-		public bool AxisDoubleClickReset
+		public AxisDoubleClickOptions AxisDoubleClickReset
 		{
 			get => _AxisDoubleClickReset;
 			set => SetValue(value, ref _AxisDoubleClickReset);
-		}
-
-		/// <summary>
-		/// Enable scaling with the mouse wheel.
-		/// </summary>
-		[JsonPropertyName("mouseWheel")]
-		public bool MouseWheel
-		{
-			get => _MouseWheel;
-			set => SetValue(value, ref _MouseWheel);
-		}
-
-		/// <summary>		
-		/// Enable scaling with pinch/zoom gestures.
-		/// </summary>
-		[JsonPropertyName("pinch")]
-		public bool Pinch
-		{
-			get => _Pinch;
-			set => SetValue(value, ref _Pinch);
-		}
+		}	
 	}
 }

@@ -6,7 +6,7 @@ namespace LightweightCharts.Blazor.Customization.Enums
 {
 	/// <summary>
 	/// Represents a type of color.<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api/enums/ColorType#verticalgradient
+	/// https://tradingview.github.io/lightweight-charts/docs/api/enums/ColorType
 	/// </summary>
 	[JsonConverter(typeof(ColorTypeConverter))]
 	public enum ColorType
@@ -14,12 +14,12 @@ namespace LightweightCharts.Blazor.Customization.Enums
 		/// <summary>
 		/// Solid color.
 		/// </summary>
-		Solid = 0,
+		Solid,
 
 		/// <summary>
 		/// Vertical gradient color.
 		/// </summary>
-		VerticalGradient = 1
+		VerticalGradient
 	}
 
 	internal class ColorTypeConverter : BaseEnumJsonConverter<ColorType>

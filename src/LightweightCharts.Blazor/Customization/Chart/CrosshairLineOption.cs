@@ -54,7 +54,9 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		}
 
 		/// <summary>
-		/// Display the crosshair line. See the link for notes.<br/>
+		/// Display the crosshair line.
+		/// Note that disabling crosshair lines does not disable crosshair marker on Line and Area series.<br/>
+		/// It can be disabled by using crosshairMarkerVisible option of a relevant series. See the link for more info.<br/>
 		/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/CrosshairLineOptions#visible
 		/// </summary>
 		[JsonPropertyName("visible")]

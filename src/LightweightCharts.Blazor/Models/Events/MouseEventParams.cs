@@ -24,21 +24,26 @@ namespace LightweightCharts.Blazor.Models.Events
 	/// Represents a mouse event.<br/>
 	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/MouseEventParams
 	/// </summary>
-	public class MouseEventArgs
+	public class MouseEventParams
 	{
 		/// <summary>
 		/// The ID of the marker at the point of the mouse event.
 		/// </summary>
-		public string HoveredMarkerId { get; init; }
+		public string HoveredObjectId { get; init; }
 
 		/// <summary>
-		/// Time of the data at the location of the mouse event.
+		/// Time of the data at the location of the mouse event.<br/>
 		/// The value will be null if the location of the event in the chart is outside the range of available data.
 		/// </summary>
 		public long? Time { get; init; }
 
 		/// <summary>
-		/// Location of the event in the chart.
+		/// Logical index.
+		/// </summary>
+		public double? Logical { get; set; }
+
+		/// <summary>
+		/// Location of the event in the chart.<br/>
 		/// The value will be undefined if the event is fired outside the chart, for example a mouse leave event.
 		/// </summary>
 		public Point Point { get; init; }
@@ -46,11 +51,16 @@ namespace LightweightCharts.Blazor.Models.Events
 		/// <summary>
 		/// Prices of all series at the location of the event in the chart.
 		/// </summary>
-		public IEnumerable<SeriesPrice> SeriesPrices { get; init; }
+		public SeriesPrice[] SeriesPrices { get; init; }
 
 		/// <summary>
 		/// The ISeriesApi for the series at the point of the mouse event.
 		/// </summary>
 		public ISeriesApi HoveredSeries { get; init; }
+
+		/// <summary>
+		/// The underlying source mouse or touch event data, if available
+		/// </summary>
+		public TouchMouseEventData SourceEvent { get; set; }
 	}
 }

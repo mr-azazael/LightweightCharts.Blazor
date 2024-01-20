@@ -15,11 +15,15 @@ namespace LightweightCharts.Blazor.Customization.Series
 		Color _Color = Extensions.ParseHtmlCode("#2196f3");
 		LineStyle _LineStyle = LineStyle.Solid;
 		int _LineWidth = 3;
+		LineType _LineType = LineType.Simple;
+		bool _LineVisible = true;
+		bool _PointMarkersVisible;
+		int? _PointMarkersRadius;
 		bool _CrosshairMarkerVisible = true;
 		int _CrosshairMarkerRadius = 4;
 		Color _CrosshairMarkerBorderColor = Color.Transparent;
 		Color _CrosshairMarkerBackgroundColor = Color.Transparent;
-		LineType _LineType = LineType.Simple;
+		int _CrosshairMarkerBorderWidth = 2;
 		LastPriceAnimationMode _LastPriceAnimation = LastPriceAnimationMode.Disabled;
 
 		/// <summary>
@@ -64,6 +68,36 @@ namespace LightweightCharts.Blazor.Customization.Series
 		}
 
 		/// <summary>
+		/// Show series line.
+		/// </summary>
+		[JsonPropertyName("lineVisible")]
+		public bool LineVisible
+		{
+			get => _LineVisible;
+			set => SetValue(value, ref _LineVisible);
+		}
+
+		/// <summary>
+		/// Show circle markers on each point.
+		/// </summary>
+		[JsonPropertyName("pointMarkersVisible")]
+		public bool PointMarkersVisible
+		{
+			get => _PointMarkersVisible;
+			set => SetValue(value, ref _PointMarkersVisible);
+		}
+
+		/// <summary>
+		/// Circle markers radius in pixels.
+		/// </summary>
+		[JsonPropertyName("pointMarkersRadius")]
+		public int? PointMarkersRadius
+		{
+			get => _PointMarkersRadius;
+			set => SetValue(value, ref _PointMarkersRadius);
+		}
+
+		/// <summary>
 		/// Show the crosshair marker.
 		/// </summary>
 		[JsonPropertyName("crosshairMarkerVisible")]
@@ -103,6 +137,16 @@ namespace LightweightCharts.Blazor.Customization.Series
 		{
 			get => _CrosshairMarkerBackgroundColor;
 			set => SetValue(value, ref _CrosshairMarkerBackgroundColor);
+		}
+
+		/// <summary>
+		/// Crosshair marker border width in pixels.
+		/// </summary>
+		[JsonPropertyName("crosshairMarkerBorderWidth")]
+		public int CrosshairMarkerBorderWidth
+		{
+			get => _CrosshairMarkerBorderWidth;
+			set => SetValue(value, ref _CrosshairMarkerBorderWidth);
 		}
 
 		/// <summary>

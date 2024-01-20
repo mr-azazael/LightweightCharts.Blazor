@@ -13,12 +13,12 @@ namespace LightweightCharts.Blazor.Customization.Series
 	{
 		Color _UpColor = Extensions.ParseHtmlCode("#26a69a");
 		Color _DownColor = Extensions.ParseHtmlCode("#ef5350");
-		bool _BorderVisible = true;
 		bool _WickVisible = true;
+		bool _BorderVisible = true;
 		Color _BorderColor = Extensions.ParseHtmlCode("#378658");
-		Color _WickColor = Extensions.ParseHtmlCode("#737375");
 		Color _BorderUpColor = Extensions.ParseHtmlCode("#26a69a");
 		Color _BorderDownColor = Extensions.ParseHtmlCode("#ef5350");
+		Color _WickColor = Extensions.ParseHtmlCode("#737375");
 		Color _WickUpColor = Extensions.ParseHtmlCode("#26a69a");
 		Color _WickDownColor = Extensions.ParseHtmlCode("#ef5350");
 
@@ -45,16 +45,6 @@ namespace LightweightCharts.Blazor.Customization.Series
 		}
 
 		/// <summary>
-		/// Enable candle borders.
-		/// </summary>
-		[JsonPropertyName("borderVisible")]
-		public bool BorderVisible
-		{
-			get => _BorderVisible;
-			set => SetValue(value, ref _BorderVisible);
-		}
-
-		/// <summary>
 		/// Enable high and low prices candle wicks.
 		/// </summary>
 		[JsonPropertyName("wickVisible")]
@@ -62,6 +52,16 @@ namespace LightweightCharts.Blazor.Customization.Series
 		{
 			get => _WickVisible;
 			set => SetValue(value, ref _WickVisible);
+		}
+
+		/// <summary>
+		/// Enable candle borders.
+		/// </summary>
+		[JsonPropertyName("borderVisible")]
+		public bool BorderVisible
+		{
+			get => _BorderVisible;
+			set => SetValue(value, ref _BorderVisible);
 		}
 
 		/// <summary>
@@ -73,17 +73,6 @@ namespace LightweightCharts.Blazor.Customization.Series
 		{
 			get => _BorderColor;
 			set => SetValue(value, ref _BorderColor);
-		}
-
-		/// <summary>
-		/// Wick color.
-		/// </summary>
-		[JsonPropertyName("wickColor")]
-		[JsonConverter(typeof(JsonColorConverter))]
-		public Color WickColor
-		{
-			get => _WickColor;
-			set => SetValue(value, ref _WickColor);
 		}
 
 		/// <summary>
@@ -106,6 +95,17 @@ namespace LightweightCharts.Blazor.Customization.Series
 		{
 			get => _BorderDownColor;
 			set => SetValue(value, ref _BorderDownColor);
+		}
+
+		/// <summary>
+		/// Wick color.
+		/// </summary>
+		[JsonPropertyName("wickColor")]
+		[JsonConverter(typeof(JsonColorConverter))]
+		public Color WickColor
+		{
+			get => _WickColor;
+			set => SetValue(value, ref _WickColor);
 		}
 
 		/// <summary>

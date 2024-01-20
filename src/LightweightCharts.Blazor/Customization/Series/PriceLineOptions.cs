@@ -1,7 +1,7 @@
-﻿using System.Drawing;
-using System.Text.Json.Serialization;
-using LightweightCharts.Blazor.Converters;
+﻿using LightweightCharts.Blazor.Converters;
 using LightweightCharts.Blazor.Customization.Enums;
+using System.Drawing;
+using System.Text.Json.Serialization;
 
 namespace LightweightCharts.Blazor.Customization.Series
 {
@@ -11,13 +11,26 @@ namespace LightweightCharts.Blazor.Customization.Series
 	/// </summary>
 	public class PriceLineOptions : BaseModel
 	{
+		string _Id;
 		double _Price;
-		Color _Color = Color.Transparent;
+		Color? _Color;
 		int _LineWidth = 1;
 		LineStyle _LineStyle = LineStyle.Solid;
 		bool _LineVisible = true;
 		bool _AxisLabelVisible = true;
 		string _Title;
+		Color? _AxisLabelColor;
+		Color? _AxisLabelTextColor;
+
+		/// <summary>
+		/// The optional ID of this price line.
+		/// </summary>
+		[JsonPropertyName("id")]
+		public string Id
+		{
+			get => _Id;
+			set => SetValue(value, ref _Id);
+		}
 
 		/// <summary>
 		/// Price line's value.
@@ -33,8 +46,8 @@ namespace LightweightCharts.Blazor.Customization.Series
 		/// Price line's color.
 		/// </summary>
 		[JsonPropertyName("color")]
-		[JsonConverter(typeof(JsonColorConverter))]
-		public Color Color
+		[JsonConverter(typeof(JsonOptionalColorConverter))]
+		public Color? Color
 		{
 			get => _Color;
 			set => SetValue(value, ref _Color);
@@ -88,6 +101,28 @@ namespace LightweightCharts.Blazor.Customization.Series
 		{
 			get => _Title;
 			set => SetValue(value, ref _Title);
+		}
+
+		/// <summary>
+		/// Background color for the axis label. Will default to the price line color if unspecified.
+		/// </summary>
+		[JsonPropertyName("axisLabelColor")]
+		[JsonConverter(typeof(JsonOptionalColorConverter))]
+		public Color? AxisLabelColor
+		{
+			get => _AxisLabelColor;
+			set => SetValue(value, ref _AxisLabelColor);
+		}
+
+		/// <summary>
+		/// Text color for the axis label.
+		/// </summary>
+		[JsonPropertyName("axisLabelTextColor")]
+		[JsonConverter(typeof(JsonOptionalColorConverter))]
+		public Color? AxisLabelTextColor
+		{
+			get => _AxisLabelTextColor;
+			set => SetValue(value, ref _AxisLabelTextColor);
 		}
 	}
 }

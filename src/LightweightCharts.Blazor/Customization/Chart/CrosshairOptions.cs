@@ -8,9 +8,9 @@ namespace LightweightCharts.Blazor.Customization.Chart
 	/// </summary>
 	public class CrosshairOptions : BaseModel
 	{
+		CrosshairMode _Mode = CrosshairMode.Magnet;
 		CrosshairLineOption _VerticalLine = new();
 		CrosshairLineOption _HorizontalLine = new();
-		CrosshairMode _Mode = CrosshairMode.Normal;
 
 		/// <summary>
 		/// Vertical line options.

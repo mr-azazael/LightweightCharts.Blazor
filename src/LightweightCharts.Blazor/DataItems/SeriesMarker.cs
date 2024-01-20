@@ -9,7 +9,7 @@ namespace LightweightCharts.Blazor.DataItems
 	/// Represents a series marker.<br/>
 	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/SeriesMarker
 	/// </summary>
-	public class Marker : WhitespaceData
+	public class SeriesMarker : WhitespaceData
 	{
 		/// <summary>
 		/// The position of the marker.
@@ -46,6 +46,6 @@ namespace LightweightCharts.Blazor.DataItems
 		/// The optional text of the marker.
 		/// </summary>
 		[JsonPropertyName("text")]
-		public string Text { get; set; } = string.Empty;
+		public string Text { get; set; }
 	}
 }

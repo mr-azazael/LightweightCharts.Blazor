@@ -10,70 +10,82 @@ namespace LightweightCharts.Blazor.Models
 	/// </summary>
 	public class BarsInfo
 	{
-		long _UnixFrom;
-		long _UnixTo;
+		long? _UnixFrom;
+		long? _UnixTo;
 
-		DateTime _FromDate;
-		DateTime _ToDate;
+		DateTime? _FromDate;
+		DateTime? _ToDate;
 
 		/// <summary>
 		/// The from value. The start of the range.
 		/// </summary>
 		[JsonPropertyName("from")]
-		public long UnixFrom
+		public long? UnixFrom
 		{
 			get => _UnixFrom;
 			set => Extensions.SetValue(ref _UnixFrom, value, OnUnixFromChanged);
 		}
 
-		void OnUnixFromChanged(long obj)
+		void OnUnixFromChanged(long? obj)
 		{
-			_FromDate = DateTimeOffset.FromUnixTimeSeconds(_UnixFrom).DateTime;
+			if (_UnixFrom != null)
+				_FromDate = DateTimeOffset.FromUnixTimeSeconds(_UnixFrom.Value).DateTime;
+			else
+				_FromDate = null;
 		}
 
 		/// <summary>
 		/// The to value. The end of the range.
 		/// </summary>
 		[JsonPropertyName("to")]
-		public long UnixTo
+		public long? UnixTo
 		{
 			get => _UnixTo;
 			set => Extensions.SetValue(ref _UnixTo, value, OnUnixToChanged);
 		}
 
-		void OnUnixToChanged(long obj)
+		void OnUnixToChanged(long? obj)
 		{
-			_ToDate = DateTimeOffset.FromUnixTimeSeconds(_UnixTo).DateTime;
+			if (_UnixTo != null)
+				_ToDate = DateTimeOffset.FromUnixTimeSeconds(_UnixTo.Value).DateTime;
+			else
+				_ToDate = null;
 		}
 
 		/// <summary>
 		/// Same as <see cref="UnixFrom"/> but as a <see cref="DateTime"/>
 		/// </summary>
 		[JsonIgnore]
-		public DateTime FromDate
+		public DateTime? FromDate
 		{
 			get => _FromDate;
 			set => Extensions.SetValue(ref _FromDate, value, OnFromDateChanged);
 		}
 
-		void OnFromDateChanged(DateTime obj)
+		void OnFromDateChanged(DateTime? obj)
 		{
-			_UnixFrom = new DateTimeOffset(_FromDate).ToUnixTimeSeconds();
+			if (_FromDate != null)
+				_UnixFrom = new DateTimeOffset(_FromDate.Value).ToUnixTimeSeconds();
+			else
+				_UnixFrom = null;
 		}
 
 		/// <summary>
 		/// Same as <see cref="UnixTo"/> but as a <see cref="DateTime"/>
 		/// </summary>
 		[JsonIgnore]
-		public DateTime ToDate
+		public DateTime? ToDate
 		{
 			get => _ToDate;
 			set => Extensions.SetValue(ref _ToDate, value, OnToDateChanged);
 		}
 
-		void OnToDateChanged(DateTime obj)
+		void OnToDateChanged(DateTime? obj)
 		{
-			_UnixTo = new DateTimeOffset(_ToDate).ToUnixTimeSeconds();
+			if (_ToDate != null)
+				_UnixTo = new DateTimeOffset(_ToDate.Value).ToUnixTimeSeconds();
+			else
+				_UnixTo = null;
 		}
 
 		/// <summary>

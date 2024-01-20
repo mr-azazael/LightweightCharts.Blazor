@@ -9,7 +9,7 @@ namespace LightweightCharts.Blazor.Customization.Series
 	/// Represents style options for a bar series.<br/>
 	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/BarStyleOptions
 	/// </summary>
-	public class BarSeriesOptions : SeriesOptionsCommon
+	public class BarStyleOptions : SeriesOptionsCommon
 	{
 		bool _ThinBars = true;
 		Color _UpColor = Extensions.ParseHtmlCode("#26a69a");

@@ -14,15 +14,20 @@ namespace LightweightCharts.Blazor.Customization.Series
 	public class AreaStyleOptions : SeriesOptionsCommon
 	{
 		Color _TopColor = Color.FromArgb(Convert.ToInt32(255 * 0.4), 46, 220, 135);
-		Color _BottomColor = Color.FromArgb(Convert.ToInt32(255 * 0), 46, 220, 135);
-		Color _LineColor = Extensions.ParseHtmlCode("33D778");
+		Color _BottomColor = Color.FromArgb(Convert.ToInt32(255 * 0), 40, 221, 100);
+		bool _InvertFilledArea;
+		Color _LineColor = Extensions.ParseHtmlCode("#33D778");
 		LineStyle _LineStyle = LineStyle.Solid;
 		int _LineWidth = 3;
 		LineType _LineType = LineType.Simple;
+		bool _LineVisible = true;
+		bool _PointMarkersVisible;
+		int? _PointMarkersRadius;
 		bool _CrosshairMarkerVisible = true;
 		int _CrosshairMarkerRadius = 4;
-		Color _CrosshairMarkerBorderColor;
-		Color _CrosshairMarkerBackgroundColor;
+		Color? _CrosshairMarkerBorderColor;
+		Color? _CrosshairMarkerBackgroundColor;
+		int _CrosshairMarkerBorderWidth = 2;
 		LastPriceAnimationMode _LastPriceAnimation = LastPriceAnimationMode.Disabled;
 
 		/// <summary>
@@ -45,6 +50,16 @@ namespace LightweightCharts.Blazor.Customization.Series
 		{
 			get => _BottomColor;
 			set => SetValue(value, ref _BottomColor);
+		}
+
+		/// <summary>
+		/// Invert the filled area. Fills the area above the line if set to true.
+		/// </summary>
+		[JsonPropertyName("invertFilledArea")]
+		public bool InvertFilledArea
+		{
+			get => _InvertFilledArea;
+			set => SetValue(value, ref _InvertFilledArea);
 		}
 
 		/// <summary>
@@ -89,6 +104,36 @@ namespace LightweightCharts.Blazor.Customization.Series
 		}
 
 		/// <summary>
+		/// Show series line.
+		/// </summary>
+		[JsonPropertyName("lineVisible")]
+		public bool LineVisible
+		{
+			get => _LineVisible;
+			set => SetValue(value, ref _LineVisible);
+		}
+
+		/// <summary>
+		/// Show circle markers on each point.
+		/// </summary>
+		[JsonPropertyName("pointMarkersVisible")]
+		public bool PointMarkersVisible
+		{
+			get => _PointMarkersVisible;
+			set => SetValue(value, ref _PointMarkersVisible);
+		}
+
+		/// <summary>
+		/// Circle markers radius in pixels.
+		/// </summary>
+		[JsonPropertyName("pointMarkersRadius")]
+		public int? PointMarkersRadius
+		{
+			get => _PointMarkersRadius;
+			set => SetValue(value, ref _PointMarkersRadius);
+		}
+
+		/// <summary>
 		/// Show the crosshair marker.
 		/// </summary>
 		[JsonPropertyName("crosshairMarkerVisible")]
@@ -112,8 +157,8 @@ namespace LightweightCharts.Blazor.Customization.Series
 		/// Crosshair marker border color. An empty string falls back to the the color of the series under the crosshair.
 		/// </summary>
 		[JsonPropertyName("crosshairMarkerBorderColor")]
-		[JsonConverter(typeof(JsonColorConverter))]
-		public Color CrosshairMarkerBorderColor
+		[JsonConverter(typeof(JsonOptionalColorConverter))]
+		public Color? CrosshairMarkerBorderColor
 		{
 			get => _CrosshairMarkerBorderColor;
 			set => SetValue(value, ref _CrosshairMarkerBorderColor);
@@ -123,11 +168,21 @@ namespace LightweightCharts.Blazor.Customization.Series
 		/// The crosshair marker background color. An empty string falls back to the the color of the series under the crosshair.
 		/// </summary>
 		[JsonPropertyName("crosshairMarkerBackgroundColor")]
-		[JsonConverter(typeof(JsonColorConverter))]
-		public Color CrosshairMarkerBackgroundColor
+		[JsonConverter(typeof(JsonOptionalColorConverter))]
+		public Color? CrosshairMarkerBackgroundColor
 		{
 			get => _CrosshairMarkerBackgroundColor;
 			set => SetValue(value, ref _CrosshairMarkerBackgroundColor);
+		}
+
+		/// <summary>
+		/// Crosshair marker border width in pixels.
+		/// </summary>
+		[JsonPropertyName("crosshairMarkerBorderWidth")]
+		public int CrosshairMarkerBorderWidth
+		{
+			get => _CrosshairMarkerBorderWidth;
+			set => SetValue(value, ref _CrosshairMarkerBorderWidth);
 		}
 
 		/// <summary>

@@ -14,7 +14,7 @@ namespace LightweightCharts.Blazor.DataItems
 		/// Optional color value for certain data item. If missed, color from options is used.
 		/// </summary>
 		[JsonPropertyName("color")]
-		[JsonConverter(typeof(JsonColorConverter))]
-		public Color Color { get; set; }
+		[JsonConverter(typeof(JsonOptionalColorConverter))]
+		public Color? Color { get; set; }
 	}
 }

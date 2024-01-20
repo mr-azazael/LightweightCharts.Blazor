@@ -5,7 +5,7 @@ using LightweightCharts.Blazor.Converters;
 namespace LightweightCharts.Blazor.Customization.Chart
 {
 	/// <summary>
-	/// Watermark options.
+	/// Watermark options.<br/>
 	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/WatermarkOptions
 	/// </summary>
 	public class WatermarkOptions : BaseModel
@@ -14,10 +14,10 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		bool _Visible;
 		string _Text;
 		int _FontSize = 48;
-		string _FontFamily = "Trebuchet MS";
+		string _FontFamily = "-apple-system, BlinkMacSystemFont, 'Trebuchet MS', Roboto, Ubuntu, sans-serif";
 		string _FontStyle;
-		HorizontalAlignment _HorizontalAlignment = Chart.HorizontalAlignment.Center;
-		VerticalAlignment _VerticalAlignment = Chart.VerticalAlignment.Center;
+		HorizontalAlignment _HorizontalAlignment = HorizontalAlignment.Center;
+		VerticalAlignment _VerticalAlignment = VerticalAlignment.Center;
 
 		/// <summary>
 		/// Watermark color.

@@ -12,20 +12,20 @@ namespace LightweightCharts.Blazor.Customization.Series
 	/// </summary>
 	public class SeriesOptionsCommon : BaseModel
 	{
-		string _PriceScaleId = "right";
+		bool _LastValueVisible = true;
 		string _Title;
+		string _PriceScaleId = "right";
 		bool _Visible = true;
 		bool _PriceLineVisible = true;
 		PriceLineSource _PriceLineSource = PriceLineSource.LastBar;
 		int _PriceLineWidth = 1;
-		Color _PriceLineColor = Color.Transparent;
-		LineStyle _PriceLineStyle = LineStyle.Dotted;
-		bool _LastValueVisible = true;
-		bool _BaseLineVisible = true;
-		int _BaseLineWidth = 1;
-		Color _BaseLineColor = Extensions.ParseHtmlCode("#B2B5BE");
-		LineStyle _BaseLineStyle = LineStyle.Solid;
+		Color? _PriceLineColor;
+		LineStyle _PriceLineStyle = LineStyle.Dashed;
 		PriceFormatOptions _PriceFormat = new();
+		bool _BaseLineVisible = true;
+		Color _BaseLineColor = Extensions.ParseHtmlCode("#B2B5BE");
+		int _BaseLineWidth = 1;
+		LineStyle _BaseLineStyle = LineStyle.Solid;
 
 		/// <summary>
 		/// Target price scale to bind new series to.
@@ -92,8 +92,8 @@ namespace LightweightCharts.Blazor.Customization.Series
 		/// Color of the price line. By default, its color is set by the last bar color (or by line color on Line and Area charts).
 		/// </summary>
 		[JsonPropertyName("priceLineColor")]
-		[JsonConverter(typeof(JsonColorConverter))]
-		public Color PriceLineColor
+		[JsonConverter(typeof(JsonOptionalColorConverter))]
+		public Color? PriceLineColor
 		{
 			get => _PriceLineColor;
 			set => SetValue(value, ref _PriceLineColor);
@@ -169,5 +169,7 @@ namespace LightweightCharts.Blazor.Customization.Series
 			get => _PriceFormat;
 			set => SetValue(value, ref _PriceFormat);
 		}
+
+		/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/SeriesOptionsCommon#autoscaleinfoprovider
 	}
 }

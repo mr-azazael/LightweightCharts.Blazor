@@ -8,6 +8,12 @@
 			UnsubscribeMethod = "unsubscribeClick"
 		};
 
+		public static readonly EventDescriptor DoubleClick = new EventDescriptor
+		{
+			SubscribeMethod = "subscribeDblClick",
+			UnsubscribeMethod = "unsubscribeDblClick"
+		};
+
 		public static readonly EventDescriptor CrosshairMove = new EventDescriptor
 		{
 			SubscribeMethod = "subscribeCrosshairMove",

@@ -4,25 +4,26 @@ namespace LightweightCharts.Blazor.Customization.Chart
 {
 	/// <summary>
 	/// Structure describing options of the chart. Series options are to be set separately.<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ChartOptions
+	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ChartOptionsBase
 	/// </summary>
-	public class ChartOptions : BaseModel
+	public class ChartOptionsBase : BaseModel
 	{
 		double _Width;
 		double _Height;
-		LocalizationOptions _Localization = new();
-		CrosshairOptions _Crosshair = new();
-		GridOptions _Grid = new();
+		bool _AutoSize;
 		WatermarkOptions _Watermark = new();
 		LayoutOptions _Layout = new();
 		PriceScaleOptions _LeftPriceScale = new();
 		PriceScaleOptions _RightPriceScale = new();
 		BasePriceScaleOptions _OverlayPriceScale = new();
+		TimeScaleOptions _TimeScale = new();
+		CrosshairOptions _Crosshair = new();
+		GridOptions _Grid = new();
 		HandleScrollOptions _HandleScroll = new();
 		HandleScaleOptions _HandleScale = new();
-		TimeScaleOptions _TimeScale = new();
 		KineticScrollOptions _KineticScroll = new();
 		TrackingModeOptions _TrackingMode = new();
+		LocalizationOptions _Localization = new();
 
 		/// <summary>
 		/// Width of the chart in pixels.
@@ -42,6 +43,22 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		{
 			get => _Height;
 			set => SetValue(value, ref _Height);
+		}
+
+		/// <summary>
+		/// Setting this flag to true will make the chart watch the chart container's size and automatically resize the chart to fit its container whenever the size changes.<br/>
+		/// This feature requires ResizeObserver class to be available in the global scope.<br/>
+		/// Note that calling code is responsible for providing a polyfill if required. If the global scope does not have<br/>
+		/// ResizeObserver, a warning will appear and the flag will be ignored.<br/>
+		/// Please pay attention that autoSize option and explicit sizes options width and height don't conflict with one another.<br/>
+		/// If you specify autoSize flag, then width and height options will be ignored unless ResizeObserver has failed. If it fails then the values will be used as fallback.<br/>
+		/// The flag autoSize could also be set with and unset with applyOptions function.
+		/// </summary>
+		[JsonPropertyName("autoSize")]
+		public bool AutoSize
+		{
+			get => _AutoSize;
+			set => SetValue(value, ref _AutoSize);
 		}
 
 		/// <summary>
@@ -128,16 +145,6 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		}
 
 		/// <summary>
-		/// Localization options.
-		/// </summary>
-		[JsonPropertyName("localization")]
-		public LocalizationOptions Localization
-		{
-			get => _Localization;
-			set => SetValue(value, ref _Localization);
-		}
-
-		/// <summary>
 		/// Scroll options.
 		/// </summary>
 		[JsonPropertyName("handleScroll")]
@@ -178,6 +185,16 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		{
 			get => _TrackingMode;
 			set => SetValue(value, ref _TrackingMode);
+		}
+
+		/// <summary>
+		/// Localization options.
+		/// </summary>
+		[JsonPropertyName("localization")]
+		public LocalizationOptions Localization
+		{
+			get => _Localization;
+			set => SetValue(value, ref _Localization);
 		}
 	}
 }
