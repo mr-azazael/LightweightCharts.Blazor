@@ -5,23 +5,49 @@ using LightweightCharts.Blazor.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace LightweightCharts.Blazor.Examples.Components.Pages;
 
 partial class BaselineSeries
 {
+	bool _InitChartComponent;
+	ChartComponent _ChartComponent;
+
 	[Inject]
 	IJSRuntime JsRuntime { get; set; }
 
 	ChartComponent ChartComponent
 	{
-		set => InitializeChartComponent(value);
+		set
+		{
+			if (_ChartComponent == value)
+				return;
+
+			_ChartComponent = value;
+			_InitChartComponent = true;
+			StateHasChanged();
+		}
 	}
 
-	async void InitializeChartComponent(ChartComponent chart)
+	protected override async Task OnAfterRenderAsync(bool firstRender)
 	{
-		await chart.InitializationCompleted;
-		await chart.ApplyOptions(new Customization.Chart.ChartOptions
+		await base.OnAfterRenderAsync(firstRender);
+
+		if (_InitChartComponent)
+		{
+			_InitChartComponent = false;
+			await InitializeChartComponent();
+		}
+	}
+
+	async Task InitializeChartComponent()
+	{
+		if (_ChartComponent == null)
+			return;
+
+		await _ChartComponent.InitializationCompleted;
+		await _ChartComponent.ApplyOptions(new Customization.Chart.ChartOptionsBase
 		{
 			LeftPriceScale = new Customization.Chart.PriceScaleOptions
 			{
@@ -37,11 +63,11 @@ partial class BaselineSeries
 			}
 		});
 
-		var series = await chart.AddBaselineSeriesAsync(new BaselineStyleOptions
+		var series = await _ChartComponent.AddBaselineSeriesAsync(new BaselineStyleOptions
 		{
 			BaseValue = new BaseValuePrice { Price = BtcUsdDataPoints.OneWeek.Average(x => x.ClosePrice) }
 		});
-		await series.SetData(BtcUsdDataPoints.OneWeek.OrderBy(x => x.OpenTime).Select(x => new SingleValueData
+		await series.SetData(BtcUsdDataPoints.OneWeek.OrderBy(x => x.OpenTime).Select(x => new BaselineData
 		{
 			Time = x.OpenTime,
 			Value = x.ClosePrice
@@ -49,7 +75,7 @@ partial class BaselineSeries
 
 		await JsRuntime.InvokeVoidAsync("javascriptHelpers.setAutoscaleInfoProvider", series.JsObjectReference);
 
-		var timeScale = await chart.TimeScaleAsync();
+		var timeScale = await _ChartComponent.TimeScaleAsync();
 		await timeScale.SetVisibleLogicalRange(new LogicalRange
 		{
 			From = -2,

@@ -18,16 +18,21 @@ partial class CandlestickSeries
 	ISeriesApi<HistogramStyleOptions> _Histogram;
 	IEnumerable<SeriesPrice> _MouseHoverPrices;
 	string _LastClickedId;
+	bool _InitChartComponent;
 	ChartComponent _ChartComponent;
-	ChartOptions _Options;
+	ChartOptionsBase _Options;
 
 	ChartComponent ChartComponent
 	{
 		get => _ChartComponent;
 		set
 		{
+			if (_ChartComponent == value)
+				return;
+
 			_ChartComponent = value;
-			InitializeChartComponent(value);
+			_InitChartComponent = true;
+			StateHasChanged();
 		}
 	}
 
@@ -46,17 +51,35 @@ partial class CandlestickSeries
 		}
 	}
 
-	async void InitializeChartComponent(ChartComponent chart)
+	protected override async Task OnAfterRenderAsync(bool firstRender)
 	{
-		await chart.InitializationCompleted;
-		
+		await base.OnAfterRenderAsync(firstRender);
+
+		if(_InitChartComponent)
+		{
+			_InitChartComponent = false;
+			await InitializeChartComponent();
+		}
+	}
+
+	async Task InitializeChartComponent()
+	{
+		if (_ChartComponent == null)
+			return;
+
+		await _ChartComponent.InitializationCompleted;
+
 		//clicking on markers seem to return the candlestick series
 		//no hovered series is sent when clicking on the actual series items...
-		chart.Clicked += OnChartClicked;
-		chart.CrosshairMoved += OnChartCrosshairMoved;
+		_ChartComponent.Clicked += OnChartClicked;
+		_ChartComponent.CrosshairMoved += OnChartCrosshairMoved;
 
-		await chart.ApplyOptions(new ChartOptions
+		await _ChartComponent.ApplyOptions(new ChartOptionsBase
 		{
+			Crosshair = new CrosshairOptions
+			{
+				Mode = CrosshairMode.Normal
+			},
 			LeftPriceScale = new PriceScaleOptions
 			{
 				Visible = false
@@ -79,21 +102,21 @@ partial class CandlestickSeries
 			}
 		});
 
-		_Options = await chart.Options();
+		_Options = await _ChartComponent.Options();
 		BackgroundType = "Solid";
 		StateHasChanged();
 
-		await SetupCandlestickSeries(chart);
-		await SetupHistogramSeries(chart);
+		await SetupCandlestickSeries();
+		await SetupHistogramSeries();
 
-		var timeScale = await chart.TimeScaleAsync();
+		var timeScale = await _ChartComponent.TimeScaleAsync();
 		await timeScale.FitContent();
 	}
 
-	async Task SetupCandlestickSeries(ChartComponent chart)
+	async Task SetupCandlestickSeries()
 	{
-		_Candlestick = await chart.AddCandlestickSeriesAsync();
-		await _Candlestick.SetData(BtcUsdDataPoints.OneWeek.OrderBy(x => x.OpenTime).Select(x => new OhlcData
+		_Candlestick = await _ChartComponent.AddCandlestickSeriesAsync();
+		await _Candlestick.SetData(BtcUsdDataPoints.OneWeek.OrderBy(x => x.OpenTime).Select(x => new CandlestickData
 		{
 			Time = x.OpenTime,
 			Open = x.OpenPrice,
@@ -108,50 +131,54 @@ partial class CandlestickSeries
 		var minClose = BtcUsdDataPoints.OneWeek.OrderBy(x => x.ClosePrice).First();
 		var maxClose = BtcUsdDataPoints.OneWeek.OrderByDescending(x => x.ClosePrice).First();
 
-		await _Candlestick.SetMarkers(new Marker[]
+		await _Candlestick.SetMarkers(new SeriesMarker[]
 		{
-				new Marker
-				{
-					Time = minLowPoint.OpenTime,
-					Position = SeriesMarkerPosition.BelowBar,
-					Shape = SeriesMarkerShape.Circle,
-					Color = Color.Purple,
-					Size = 1,
-					Text = "Minimum low"
-				},
-				new Marker
-				{
-					Time = maxHighPoint.OpenTime,
-					Position = SeriesMarkerPosition.AboveBar,
-					Shape = SeriesMarkerShape.Circle,
-					Color = Color.Purple,
-					Size = 1,
-					Text = "Maximum high"
-				},
-				new Marker
-				{
-					Time = minClose.OpenTime,
-					Position = SeriesMarkerPosition.BelowBar,
-					Shape = SeriesMarkerShape.ArrowUp,
-					Color = Color.Red,
-					Size = 3,
-					Text = "Minimum close"
-				},
-				new Marker
-				{
-					Time = maxClose.OpenTime,
-					Position = SeriesMarkerPosition.AboveBar,
-					Shape = SeriesMarkerShape.ArrowDown,
-					Color = Color.Red,
-					Size = 3,
-					Text = "Maximum close"
-				}
+			new SeriesMarker
+			{
+				Time = minLowPoint.OpenTime,
+				Position = SeriesMarkerPosition.BelowBar,
+				Shape = SeriesMarkerShape.Circle,
+				Color = Color.Purple,
+				Size = 1,
+				Text = "Minimum low",
+				Id = "min_low"
+			},
+			new SeriesMarker
+			{
+				Time = maxHighPoint.OpenTime,
+				Position = SeriesMarkerPosition.AboveBar,
+				Shape = SeriesMarkerShape.Circle,
+				Color = Color.Purple,
+				Size = 1,
+				Text = "Maximum high",
+				Id = "max_high"
+			},
+			new SeriesMarker
+			{
+				Time = minClose.OpenTime,
+				Position = SeriesMarkerPosition.BelowBar,
+				Shape = SeriesMarkerShape.ArrowUp,
+				Color = Color.Red,
+				Size = 3,
+				Text = "Minimum close",
+				Id = "min_close"
+			},
+			new SeriesMarker
+			{
+				Time = maxClose.OpenTime,
+				Position = SeriesMarkerPosition.AboveBar,
+				Shape = SeriesMarkerShape.ArrowDown,
+				Color = Color.Red,
+				Size = 3,
+				Text = "Maximum close",
+				Id = "max_close"
+			}
 		}.OrderBy(x => x.Time));
 	}
 
-	async Task SetupHistogramSeries(ChartComponent chart)
+	async Task SetupHistogramSeries()
 	{
-		_Histogram = await chart.AddHistogramSeriesAsync(new HistogramStyleOptions
+		_Histogram = await _ChartComponent.AddHistogramSeriesAsync(new HistogramStyleOptions
 		{
 			PriceScaleId = "overlay",
 			PriceLineVisible = false,
@@ -165,13 +192,13 @@ partial class CandlestickSeries
 		}));
 	}
 
-	void OnChartCrosshairMoved(object sender, MouseEventArgs e)
+	void OnChartCrosshairMoved(object sender, MouseEventParams e)
 	{
 		_MouseHoverPrices = e.SeriesPrices;
 		StateHasChanged();
 	}
 
-	async void OnChartClicked(object sender, MouseEventArgs e)
+	async void OnChartClicked(object sender, MouseEventParams e)
 	{
 		if (_LastClickedId == _Candlestick.UniqueJavascriptId)
 			await _Candlestick.ApplyOptions(new());

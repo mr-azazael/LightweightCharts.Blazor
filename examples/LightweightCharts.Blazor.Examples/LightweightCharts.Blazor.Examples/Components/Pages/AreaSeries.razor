@@ -1,10 +1,10 @@
 ﻿@page "/"
-@rendermode InteractiveServer
+@rendermode Configuration.RenderMode
 
 @using LightweightCharts.Blazor.Charts
 
 <PageTitle>Area Series & Auto-Resize</PageTitle>
 
 <div class="w-100 h-100">
-	<ChartComponent @ref=ChartComponent AutoResize=true />
+	<ChartComponent @ref=ChartComponent />
 </div>

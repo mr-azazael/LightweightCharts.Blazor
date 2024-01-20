@@ -12,33 +12,56 @@ namespace LightweightCharts.Blazor.Examples.Components.Pages;
 
 partial class BarSeries
 {
+	bool _InitChartComponent;
+	ChartComponent _ChartComponent;
+
 	[Inject]
 	IJSRuntime JsRuntime { get; set; }
 
 	ChartComponent ChartComponent
 	{
-		set => InitializeChartComponent(value);
+		set
+		{
+			if (_ChartComponent == value)
+				return;
+
+			_ChartComponent = value;
+			_InitChartComponent = true;
+			StateHasChanged();
+		}
 	}
 
-	async void InitializeChartComponent(ChartComponent chart)
+	protected override async Task OnAfterRenderAsync(bool firstRender)
 	{
-		await chart.InitializationCompleted;
+		await base.OnAfterRenderAsync(firstRender);
 
-		var series = await chart.AddBarSeriesAsync(new Customization.Series.BarSeriesOptions
+		if (_InitChartComponent)
+		{
+			_InitChartComponent = false;
+			await InitializeChartComponent();
+		}
+	}
+
+	async Task InitializeChartComponent()
+	{
+		if (_ChartComponent == null)
+			return;
+
+		await _ChartComponent.InitializationCompleted;
+		var series = await _ChartComponent.AddBarSeriesAsync(new Customization.Series.BarStyleOptions
 		{
 			ThinBars = false
 		});
 
-		var timeScale = await chart.TimeScaleAsync();
+		var timeScale = await _ChartComponent.TimeScaleAsync();
 		await JsRuntime.InvokeVoidAsync("javascriptHelpers.setTimeScaleTickMarkFormatter", timeScale.JsObjectReference);
 
-		Run(series, timeScale);
+		_ = Run(series, timeScale);
 	}
 
-	async void Run(ISeriesApi seriesApi, ITimeScaleApi timeScale)
+	async Task Run(ISeriesApi seriesApi, ITimeScaleApi timeScale)
 	{
 		var firstPoints = BtcUsdDataPoints.OneWeek.OrderBy(x => x.OpenTime).Take(30);
-
 		while (true)
 		{
 			await seriesApi.SetData(firstPoints.Select(x => new BarData

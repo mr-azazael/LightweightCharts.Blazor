@@ -1,5 +1,5 @@
 ﻿@page "/candlestickSeries"
-@rendermode InteractiveServer
+@rendermode Configuration.RenderMode
 
 @using LightweightCharts.Blazor.Charts
 @using LightweightCharts.Blazor.Customization.Chart
@@ -101,7 +101,7 @@
 				}
 			}
 		</div>
-		<ChartComponent @ref=ChartComponent AutoResize=false />
+		<ChartComponent @ref=ChartComponent />
 	</div>
 
 </div>
