@@ -9,7 +9,7 @@
 		<Description>A blazor wrapper for TradingView's Lightweight charts library.</Description>
 		<Copyright>Copyright 2024 TradingView, Inc.</Copyright>
 		<PackageProjectUrl>https://github.com/mr-azazael/LightweightCharts.Blazor</PackageProjectUrl>
-		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageReadmeFile>PACKAGE-README.md</PackageReadmeFile>
 		<RepositoryUrl>https://github.com/mr-azazael/LightweightCharts.Blazor</RepositoryUrl>
 		<RespositoryType>git</RespositoryType>
 		<PackageTags>Blazor;TradingView;Financial;Charts</PackageTags>
@@ -21,8 +21,8 @@
 		<RepositoryType>git</RepositoryType>
 	</PropertyGroup>
 
-	<ItemGroup>		
-		<None Include="..\..\README.md" Pack="True" PackagePath="" />
+	<ItemGroup>
+		<None Include="..\..\PACKAGE-README.md" Pack="True" PackagePath="" />
 		<None Include="..\..\resources\logo.png" Pack="True" PackagePath="" />
 		<None Include="LICENSE.txt" Pack="True" PackagePath="" />
 	</ItemGroup>
