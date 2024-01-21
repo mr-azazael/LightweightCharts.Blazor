@@ -1,8 +1,5 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Drawing;
-using LightweightCharts.Blazor.Customization;
-using Microsoft.JSInterop;
 
 namespace LightweightCharts.Blazor.Utilities
 {
@@ -23,38 +20,6 @@ namespace LightweightCharts.Blazor.Utilities
 
 		public static long DateTimeToUnixTime(DateTime dateTime)
 			=> new DateTimeOffset(dateTime).ToUnixTimeSeconds();
-
-		//public static void RegisterPropertyChangedInHierarchy(BaseModel root, PropertyChangedEventHandler handler)
-		//{
-		//	if (root != null)
-		//	{
-		//		root.PropertyChanged += handler;
-		//		foreach (var modelProperty in root.GetType().GetProperties())
-		//		{
-		//			var value = modelProperty.GetValue(root);
-		//			if (value is BaseModel model)
-		//				RegisterPropertyChangedInHierarchy(model, handler);
-		//		}
-		//	}
-		//}
-
-		//public static void UnregisterPropertyChangedInHierarchy(BaseModel root, PropertyChangedEventHandler handler)
-		//{
-		//	if (root != null)
-		//	{
-		//		root.PropertyChanged -= handler;
-		//		foreach (var modelProperty in root.GetType().GetProperties())
-		//		{
-		//			var value = modelProperty.GetValue(root);
-		//			if (value is BaseModel model)
-		//				RegisterPropertyChangedInHierarchy(model, handler);
-		//		}
-		//	}
-		//}
-
-		[JSInvokable]
-		public static Guid GenerateGuidForJavascript()
-			=> Guid.NewGuid();
 
 		/// <summary>
 		/// Accepted formats are RGB and RGBA with two values per channel (ex: #FF0000 = red, #00FF0088 = green, 50% alpha)
