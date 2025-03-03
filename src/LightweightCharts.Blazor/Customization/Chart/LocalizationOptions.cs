@@ -5,7 +5,7 @@ namespace LightweightCharts.Blazor.Customization.Chart
 {
 	/// <summary>
 	/// Represents options for formatting dates, times, and prices according to a locale.<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/LocalizationOptions
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/LocalizationOptions"/>
 	/// </summary>
 	public class LocalizationOptions : BaseModel
 	{

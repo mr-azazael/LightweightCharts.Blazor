@@ -5,7 +5,7 @@ namespace LightweightCharts.Blazor.Charts
 {
 	/// <summary>
 	/// This interface represents a label on the price or time axis.<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ISeriesPrimitiveAxisView
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ISeriesPrimitiveAxisView"/>
 	/// </summary>
 	public interface ISeriesPrimitiveAxisView
 	{
@@ -14,7 +14,7 @@ namespace LightweightCharts.Blazor.Charts
 		/// If you would like the label to be drawn at the exact coordinate under all circumstances then rather use fixedCoordinate.<br/>
 		/// For a price axis the value returned will represent the vertical distance (pixels) from the top.<br/>
 		/// For a time axis the value will represent the horizontal distance from the left.<br/>
-		/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ISeriesPrimitiveAxisView#coordinate
+		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ISeriesPrimitiveAxisView#coordinate"/>
 		/// </summary>
 		/// <returns>Distance from top for price axis, or distance from left for time axis.</returns>
 		Task<int> Coordinate();
@@ -25,37 +25,37 @@ namespace LightweightCharts.Blazor.Charts
 		/// unfixed labels doesn't leave a blank space for this label.<br/>
 		/// For a price axis the value returned will represent the vertical distance (pixels) from the top.<br/>
 		/// For a time axis the value will represent the horizontal distance from the left.<br/>
-		/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ISeriesPrimitiveAxisView#fixedcoordinate
+		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ISeriesPrimitiveAxisView#fixedcoordinate"/>
 		/// </summary>
 		/// <returns>Distance from top for price axis, or distance from left for time axis.</returns>
 		Task<int?> FixedCoordinate();
 
 		/// <summary>
-		/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ISeriesPrimitiveAxisView#text
+		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ISeriesPrimitiveAxisView#text"/>
 		/// </summary>
 		/// <returns>Text of the label.</returns>
 		Task<string> Text();
 
 		/// <summary>
-		/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ISeriesPrimitiveAxisView#textcolor
+		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ISeriesPrimitiveAxisView#textcolor"/>
 		/// </summary>
 		/// <returns>Text color of the label.</returns>
 		Task<Color> TextColor();
 
 		/// <summary>
-		/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ISeriesPrimitiveAxisView#backcolor
+		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ISeriesPrimitiveAxisView#backcolor"/>
 		/// </summary>
 		/// <returns>Background color of the label.</returns>
 		Task<Color> BackColor();
 
 		/// <summary>
-		/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ISeriesPrimitiveAxisView#visible
+		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ISeriesPrimitiveAxisView#visible"/>
 		/// </summary>
 		/// <returns>Whether the label should be visible (default: true)</returns>
 		Task<bool?> Visible();
 
 		/// <summary>
-		/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ISeriesPrimitiveAxisView#tickvisible
+		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ISeriesPrimitiveAxisView#tickvisible"/>
 		/// </summary>
 		/// <returns>Whether the tick mark line should be visible (default: true)</returns>
 		Task<bool?> TickVisible();

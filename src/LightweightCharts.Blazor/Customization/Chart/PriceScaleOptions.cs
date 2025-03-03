@@ -6,7 +6,7 @@ namespace LightweightCharts.Blazor.Customization.Chart
 {
 	/// <summary>
 	/// Structure that describes price scale options.<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/PriceScaleOptions
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/PriceScaleOptions"/>
 	/// </summary>
 	public class PriceScaleOptions : BasePriceScaleOptions
 	{

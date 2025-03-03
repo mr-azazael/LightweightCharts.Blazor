@@ -2,7 +2,7 @@
 {
 	/// <summary>
 	/// Represents the source of data to be used for the horizontal price line.<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api/enums/PriceLineSource
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/enums/PriceLineSource"/>
 	/// </summary>
 	public enum PriceLineSource
 	{

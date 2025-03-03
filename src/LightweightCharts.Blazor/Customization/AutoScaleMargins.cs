@@ -4,7 +4,7 @@ namespace LightweightCharts.Blazor.Customization
 {
 	/// <summary>
 	/// Represents the margin used when updating a price scale.<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/AutoScaleMargins
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/AutoScaleMargins"/>
 	/// </summary>
 	public class AutoScaleMargins : BaseModel
 	{

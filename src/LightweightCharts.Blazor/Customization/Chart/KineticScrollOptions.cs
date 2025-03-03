@@ -4,7 +4,7 @@ namespace LightweightCharts.Blazor.Customization.Chart
 {
 	/// <summary>
 	/// Represents options for enabling or disabling kinetic scrolling with mouse and touch gestures.<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/KineticScrollOptions
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/KineticScrollOptions"/>
 	/// </summary>
 	public class KineticScrollOptions : BaseModel
 	{

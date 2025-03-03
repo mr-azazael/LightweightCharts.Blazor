@@ -6,7 +6,7 @@ namespace LightweightCharts.Blazor.Customization.Enums
 {
 	/// <summary>
 	/// Represents the position of a series marker relative to a bar.<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api#seriesmarkerposition
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api#seriesmarkerposition"/>
 	/// </summary>
 	[JsonConverter(typeof(SeriesMarkerPositionConverter))]
 	public enum SeriesMarkerPosition

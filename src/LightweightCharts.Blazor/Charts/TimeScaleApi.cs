@@ -11,37 +11,37 @@ namespace LightweightCharts.Blazor.Charts
 {
 	/// <summary>
 	/// Interface to chart time scale.<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ITimeScaleApi
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ITimeScaleApi"/>
 	/// </summary>
 	public interface ITimeScaleApi : IJsObjectWrapper, ICustomizableObject<TimeScaleOptions>
 	{
 		/// <summary>
 		/// Subscribe to the visible time range change events.<br/>
-		/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ITimeScaleApi#subscribevisibletimerangechange
+		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ITimeScaleApi#subscribevisibletimerangechange"/>
 		/// </summary>
 		event EventHandler<TimeRange> VisibleTimeRangeChanged;
 
 		/// <summary>
 		/// Subscribe to the visible logical range change events.<br/>
-		/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ITimeScaleApi#subscribevisiblelogicalrangechange
+		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ITimeScaleApi#subscribevisiblelogicalrangechange"/>
 		/// </summary>
 		event EventHandler<LogicalRange> VisibleLogicalRangeChanged;
 
 		/// <summary>
 		/// Adds a subscription to time scale size changes.<br/>
-		/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ITimeScaleApi#subscribesizechange
+		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ITimeScaleApi#subscribesizechange"/>
 		/// </summary>
 		event EventHandler<SizeChangedArgs> SizeChanged;
 
 		/// <summary>
 		/// Return the distance from the right edge of the time scale to the lastest bar of the series measured in bars.<br/>
-		/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ITimeScaleApi#scrollposition
+		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ITimeScaleApi#scrollposition"/>
 		/// </summary>
 		Task<long> ScrollPosition();
 
 		/// <summary>
 		/// Scrolls the chart to the specified position.<br/>
-		/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ITimeScaleApi#scrolltoposition
+		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ITimeScaleApi#scrolltoposition"/>
 		/// </summary>
 		/// <param name="position">Target data position.</param>
 		/// <param name="animated">Setting this to true makes the chart scrolling smooth and adds animation.</param>
@@ -49,7 +49,7 @@ namespace LightweightCharts.Blazor.Charts
 
 		/// <summary>
 		/// Restores default scroll position of the chart. This process is always animated.<br/>
-		/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ITimeScaleApi#scrolltorealtime
+		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ITimeScaleApi#scrolltorealtime"/>
 		/// </summary>
 		Task ScrollToRealTime();
 
@@ -57,7 +57,7 @@ namespace LightweightCharts.Blazor.Charts
 		/// Returns current visible time range of the chart.<br/>
 		/// Note that this method cannot extrapolate time and will use the only currently existent data.<br/>
 		/// To get complete information about current visible range, please use <see cref="GetVisibleLogicalRange"/> and <see cref="Series.ISeriesApi.BarsInLogicalRange"/>.<br/>
-		/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ITimeScaleApi#getvisiblerange
+		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ITimeScaleApi#getvisiblerange"/>
 		/// </summary>
 		/// <returns>Visible range or null if the chart has no data at all.</returns>
 		Task<TimeRange> GetVisibleRange();
@@ -67,40 +67,40 @@ namespace LightweightCharts.Blazor.Charts
 		/// Note that this method cannot extrapolate time and will use the only currently existent data.<br/>
 		/// Thus, for example, if currently a chart doesn't have data prior 2018-01-01 date and you set visible range with from date 2016-01-01, it will be automatically adjusted to 2018-01-01 (and the same for to date).<br/>
 		/// But if you can approximate indexes on your own - you could use <see cref="SetVisibleLogicalRange"/> instead.<br/>
-		/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ITimeScaleApi#setvisiblerange
+		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ITimeScaleApi#setvisiblerange"/>
 		/// </summary>
 		/// <param name="timeRange">Target visible range of data.</param>
 		Task SetVisibleRange(TimeRange timeRange);
 
 		/// <summary>
 		/// Returns the current visible logical range of the chart as an object with the first and last time points of the logical range, or returns null if the chart has no data.<br/>
-		/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ITimeScaleApi#getvisiblelogicalrange
+		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ITimeScaleApi#getvisiblelogicalrange"/>
 		/// </summary>
 		/// <returns>Visible range or null if the chart has no data at all.</returns>
 		Task<LogicalRange> GetVisibleLogicalRange();
 
 		/// <summary>
 		/// Sets visible logical range of data.<br/>
-		/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ITimeScaleApi#setvisiblelogicalrange
+		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ITimeScaleApi#setvisiblelogicalrange"/>
 		/// </summary>
 		/// <param name="timeRange">Target visible logical range of data.</param>
 		Task SetVisibleLogicalRange(LogicalRange timeRange);
 
 		/// <summary>
 		/// Restores default zoom level and scroll position of the time scale.<br/>
-		/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ITimeScaleApi#resettimescale
+		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ITimeScaleApi#resettimescale"/>
 		/// </summary>
 		Task ResetTimeScale();
 
 		/// <summary>
 		/// Automatically calculates the visible range to fit all data from all series.<br/>
-		/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ITimeScaleApi#fitcontent
+		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ITimeScaleApi#fitcontent"/>
 		/// </summary>
 		Task FitContent();
 
 		/// <summary>
 		/// Converts a logical index to local x coordinate.<br/>
-		/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ITimeScaleApi#logicaltocoordinate
+		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ITimeScaleApi#logicaltocoordinate"/>
 		/// </summary>
 		/// <param name="logical">Logical index needs to be converted.</param>
 		/// <returns>x coordinate of that time or null if the chart doesn't have data.</returns>
@@ -108,7 +108,7 @@ namespace LightweightCharts.Blazor.Charts
 
 		/// <summary>
 		/// Converts a coordinate to logical index.<br/>
-		/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ITimeScaleApi#coordinatetological
+		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ITimeScaleApi#coordinatetological"/>
 		/// </summary>
 		/// <param name="coordinate">Coordinate needs to be converted.</param>
 		/// <returns>Logical index that is located on that coordinate or null if the chart doesn't have data.</returns>
@@ -116,7 +116,7 @@ namespace LightweightCharts.Blazor.Charts
 
 		/// <summary>
 		/// Converts a time to local x coordinate.<br/>
-		/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ITimeScaleApi#timetocoordinate
+		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ITimeScaleApi#timetocoordinate"/>
 		/// </summary>
 		/// <param name="time">Time needs to be converted.</param>
 		/// <returns>X coordinate of that time or null if no time found on time scale.</returns>
@@ -124,7 +124,7 @@ namespace LightweightCharts.Blazor.Charts
 
 		/// <summary>
 		/// Converts a coordinate to time.<br/>
-		/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ITimeScaleApi#coordinatetotime
+		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ITimeScaleApi#coordinatetotime"/>
 		/// </summary>
 		/// <param name="coordinate">Coordinate needs to be converted.</param>
 		/// <returns>Time of a bar that is located on that coordinate or null if there are no bars found on that coordinate.</returns>
@@ -132,13 +132,13 @@ namespace LightweightCharts.Blazor.Charts
 
 		/// <summary>
 		/// Returns a width of the time scale.<br/>
-		/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ITimeScaleApi#width
+		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ITimeScaleApi#width"/>
 		/// </summary>
 		Task<double> Width();
 
 		/// <summary>
 		/// Returns a height of the time scale.<br/>
-		/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ITimeScaleApi#height
+		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ITimeScaleApi#height"/>
 		/// </summary>
 		Task<double> Height();
 	}

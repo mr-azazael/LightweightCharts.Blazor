@@ -4,7 +4,7 @@
 	/// Determine how to exit the tracking mode.<br/>
 	/// By default, mobile users will long press to deactivate the scroll and have the ability to check values and dates.<br/>
 	/// Another press is required to activate the scroll, be able to move left/right, zoom, etc.<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api/enums/TrackingModeExitMode
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/enums/TrackingModeExitMode"/>
 	/// </summary>
 	public enum TrackingModeExitMode
 	{

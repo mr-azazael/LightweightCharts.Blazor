@@ -9,7 +9,7 @@ namespace LightweightCharts.Blazor.Customization.Series
 {
 	/// <summary>
 	/// Represents style options for an area series.<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/AreaStyleOptions
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/AreaStyleOptions"/>
 	/// </summary>
 	public class AreaStyleOptions : SeriesOptionsCommon
 	{

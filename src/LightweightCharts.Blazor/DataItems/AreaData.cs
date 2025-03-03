@@ -6,7 +6,7 @@ namespace LightweightCharts.Blazor.DataItems
 {
 	/// <summary>
 	/// Structure describing a single item of data for area series<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/AreaData
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/AreaData"/>
 	/// </summary>
 	public class AreaData : SingleValueData
 	{

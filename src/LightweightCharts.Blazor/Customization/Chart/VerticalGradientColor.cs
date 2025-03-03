@@ -7,7 +7,7 @@ namespace LightweightCharts.Blazor.Customization.Chart
 {
 	/// <summary>
 	/// Represents a vertical gradient of two colors.<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/VerticalGradientColor
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/VerticalGradientColor"/>
 	/// </summary>
 	public class VerticalGradientColor : Background
 	{

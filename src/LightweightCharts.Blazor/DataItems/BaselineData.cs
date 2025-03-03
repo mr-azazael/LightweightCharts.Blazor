@@ -6,7 +6,7 @@ namespace LightweightCharts.Blazor.DataItems
 {
 	/// <summary>
 	/// Structure describing a single item of data for baseline series.<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/BaselineData
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/BaselineData"/>
 	/// </summary>
 	public class BaselineData : SingleValueData
 	{

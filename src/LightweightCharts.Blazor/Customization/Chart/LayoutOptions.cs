@@ -7,7 +7,7 @@ namespace LightweightCharts.Blazor.Customization.Chart
 {
 	/// <summary>
 	/// Represents layout options.
-	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/LayoutOptions
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/LayoutOptions"/>
 	/// </summary>
 	public class LayoutOptions : BaseModel
 	{

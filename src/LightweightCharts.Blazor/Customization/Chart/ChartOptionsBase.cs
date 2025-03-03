@@ -4,7 +4,7 @@ namespace LightweightCharts.Blazor.Customization.Chart
 {
 	/// <summary>
 	/// Structure describing options of the chart. Series options are to be set separately.<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ChartOptionsBase
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ChartOptionsBase"/>
 	/// </summary>
 	public class ChartOptionsBase : BaseModel
 	{

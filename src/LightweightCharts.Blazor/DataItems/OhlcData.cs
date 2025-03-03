@@ -4,7 +4,7 @@ namespace LightweightCharts.Blazor.DataItems
 {
 	/// <summary>
 	/// Represents a bar with a Time and open, high, low, and close prices.<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/OhlcData
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/OhlcData"/>
 	/// </summary>
 	public class OhlcData : WhitespaceData
 	{

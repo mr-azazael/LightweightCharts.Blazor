@@ -8,7 +8,7 @@ namespace LightweightCharts.Blazor.Customization.Series
 {
 	/// <summary>
 	/// Represents style options for a line series.<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/LineStyleOptions
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/LineStyleOptions"/>
 	/// </summary>
 	public class LineSeriesOptions : SeriesOptionsCommon
 	{

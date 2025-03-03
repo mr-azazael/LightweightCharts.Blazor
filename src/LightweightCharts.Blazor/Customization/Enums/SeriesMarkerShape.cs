@@ -6,7 +6,7 @@ namespace LightweightCharts.Blazor.Customization.Enums
 {
 	/// <summary>
 	/// Represents the shape of a series marker.<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api#seriesmarkershape
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api#seriesmarkershape"/>
 	/// </summary>
 	[JsonConverter(typeof(SeriesMarkerShapeConverter))]
 	public enum SeriesMarkerShape

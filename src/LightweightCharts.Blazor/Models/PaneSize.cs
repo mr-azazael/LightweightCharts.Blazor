@@ -4,7 +4,7 @@ namespace LightweightCharts.Blazor.Models
 {
 	/// <summary>
 	/// Dimensions of the Chart Pane (the main chart area which excludes the time and price scales).<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/PaneSize
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/PaneSize"/>
 	/// </summary>
 	public class PaneSize
 	{

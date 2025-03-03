@@ -5,7 +5,7 @@ using LightweightCharts.Blazor.Converters;
 namespace LightweightCharts.Blazor.Customization.Enums
 {
 	/// <summary>
-	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/PriceFormatBuiltIn#type
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/PriceFormatBuiltIn#type"/>
 	/// </summary>
 	[JsonConverter(typeof(PriceFormatTypeConverter))]
 	public enum PriceFormatType

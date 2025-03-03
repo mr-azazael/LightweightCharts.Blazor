@@ -8,7 +8,7 @@ namespace LightweightCharts.Blazor.Customization.Series
 {
 	/// <summary>
 	/// Represents options common for all types of series.<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/SeriesOptionsCommon
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/SeriesOptionsCommon"/>
 	/// </summary>
 	public class SeriesOptionsCommon : BaseModel
 	{
@@ -170,6 +170,6 @@ namespace LightweightCharts.Blazor.Customization.Series
 			set => SetValue(value, ref _PriceFormat);
 		}
 
-		/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/SeriesOptionsCommon#autoscaleinfoprovider
+		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/SeriesOptionsCommon#autoscaleinfoprovider"/>
 	}
 }

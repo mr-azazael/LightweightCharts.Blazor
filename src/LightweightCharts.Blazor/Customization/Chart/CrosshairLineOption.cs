@@ -8,7 +8,7 @@ namespace LightweightCharts.Blazor.Customization.Chart
 {
 	/// <summary>
 	/// Structure describing a crosshair line (vertical or horizontal).<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/CrosshairLineOptions
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/CrosshairLineOptions"/>
 	/// </summary>
 	public class CrosshairLineOption : BaseModel
 	{
@@ -21,7 +21,7 @@ namespace LightweightCharts.Blazor.Customization.Chart
 
 		/// <summary>
 		/// Crosshair line color.<br/>
-		/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/CrosshairLineOptions#color
+		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/CrosshairLineOptions#color"/>
 		/// </summary>
 		[JsonPropertyName("color")]
 		[JsonConverter(typeof(JsonColorConverter))]
@@ -33,7 +33,7 @@ namespace LightweightCharts.Blazor.Customization.Chart
 
 		/// <summary>
 		/// Crosshair line width in pixels.<br/>
-		/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/CrosshairLineOptions#width
+		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/CrosshairLineOptions#width"/>
 		/// </summary>
 		[JsonPropertyName("width")]
 		public double Width
@@ -44,7 +44,7 @@ namespace LightweightCharts.Blazor.Customization.Chart
 
 		/// <summary>
 		/// Crosshair line style.<br/>
-		/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/CrosshairLineOptions#style
+		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/CrosshairLineOptions#style"/>
 		/// </summary>
 		[JsonPropertyName("style")]
 		public LineStyle Style
@@ -57,7 +57,7 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		/// Display the crosshair line.
 		/// Note that disabling crosshair lines does not disable crosshair marker on Line and Area series.<br/>
 		/// It can be disabled by using crosshairMarkerVisible option of a relevant series. See the link for more info.<br/>
-		/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/CrosshairLineOptions#visible
+		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/CrosshairLineOptions#visible"/>
 		/// </summary>
 		[JsonPropertyName("visible")]
 		public bool Visible
@@ -68,7 +68,7 @@ namespace LightweightCharts.Blazor.Customization.Chart
 
 		/// <summary>
 		/// If true, a data label is shown on a relevant scale.<br/>
-		/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/CrosshairLineOptions#labelvisible
+		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/CrosshairLineOptions#labelvisible"/>
 		/// </summary>
 		[JsonPropertyName("labelVisible")]
 		public bool LabelVisible
@@ -79,7 +79,7 @@ namespace LightweightCharts.Blazor.Customization.Chart
 
 		/// <summary>
 		/// Crosshair label background color.<br/>
-		/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/CrosshairLineOptions#labelbackgroundcolor
+		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/CrosshairLineOptions#labelbackgroundcolor"/>
 		/// </summary>
 		[JsonPropertyName("labelBackgroundColor")]
 		[JsonConverter(typeof(JsonColorConverter))]

@@ -4,7 +4,7 @@ namespace LightweightCharts.Blazor.Customization.Chart
 {
 	/// <summary>
 	/// Represents options for how the time and price axes react to mouse double click.
-	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/AxisDoubleClickOptions
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/AxisDoubleClickOptions"/>
 	/// </summary>
 	public class AxisDoubleClickOptions : BaseModel
 	{

@@ -4,7 +4,7 @@ namespace LightweightCharts.Blazor.Models
 {
 	/// <summary>
 	/// Represents a point on the time scale.<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/TimeScalePoint
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/TimeScalePoint"/>
 	/// </summary>
 	public class TimeScalePoint
 	{

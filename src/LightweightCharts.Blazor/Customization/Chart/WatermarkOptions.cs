@@ -6,7 +6,7 @@ namespace LightweightCharts.Blazor.Customization.Chart
 {
 	/// <summary>
 	/// Watermark options.<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/WatermarkOptions
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/WatermarkOptions"/>
 	/// </summary>
 	public class WatermarkOptions : BaseModel
 	{

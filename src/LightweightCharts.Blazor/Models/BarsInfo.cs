@@ -6,7 +6,7 @@ namespace LightweightCharts.Blazor.Models
 {
 	/// <summary>
 	/// Represents a range of bars and the number of bars outside the range.<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/BarsInfo
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/BarsInfo"/>
 	/// </summary>
 	public class BarsInfo
 	{

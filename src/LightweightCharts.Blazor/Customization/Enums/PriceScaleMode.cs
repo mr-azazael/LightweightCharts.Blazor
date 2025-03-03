@@ -2,7 +2,7 @@
 {
 	/// <summary>
 	/// Represents the price scale mode.<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api/enums/PriceScaleMode
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/enums/PriceScaleMode"/>
 	/// </summary>
 	public enum PriceScaleMode
 	{

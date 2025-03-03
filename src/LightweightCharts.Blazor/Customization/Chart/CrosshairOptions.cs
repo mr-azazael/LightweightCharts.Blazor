@@ -4,7 +4,7 @@ namespace LightweightCharts.Blazor.Customization.Chart
 {
 	/// <summary>
 	/// Structure describing crosshair options.<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/CrosshairOptions
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/CrosshairOptions"/>
 	/// </summary>
 	public class CrosshairOptions : BaseModel
 	{

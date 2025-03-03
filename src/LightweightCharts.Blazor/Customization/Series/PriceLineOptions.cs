@@ -7,7 +7,7 @@ namespace LightweightCharts.Blazor.Customization.Series
 {
 	/// <summary>
 	/// Represents a price line options.<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/PriceLineOptions
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/PriceLineOptions"/>
 	/// </summary>
 	public class PriceLineOptions : BaseModel
 	{

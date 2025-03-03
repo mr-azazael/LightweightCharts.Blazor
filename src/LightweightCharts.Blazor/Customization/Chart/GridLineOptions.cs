@@ -8,7 +8,7 @@ namespace LightweightCharts.Blazor.Customization.Chart
 {
 	/// <summary>
 	/// Grid line options.<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/GridLineOptions
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/GridLineOptions"/>
 	/// </summary>
 	public class GridLineOptions : BaseModel
 	{

@@ -7,7 +7,7 @@ namespace LightweightCharts.Blazor.Customization.Chart
 {
 	/// <summary>
 	/// Options for the time scale; the horizontal scale at the bottom of the chart that displays the time of data.<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/HorzScaleOptions
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/HorzScaleOptions"/>
 	/// </summary>
 	public class HorzScaleOptions : BaseModel
 	{

@@ -6,7 +6,7 @@
 	/// Indexes might have fractional parts, for instance 4.2, due to the time-scale being continuous rather than discrete.<br/>
 	/// Integer part of the logical index means index of the fully visible bar.<br/>
 	/// Thus, if we have 5.2 as the last visible logical index (to field), that means that the last visible bar has index 5, but we also have partially visible (for 20%) 6th bar.Half(e.g. 1.5, 3.5, 10.5) means exactly a middle of the bar.<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api#logicalrange
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api#logicalrange"/>
 	/// </summary>
 	public class LogicalRange : Range<double>
 	{

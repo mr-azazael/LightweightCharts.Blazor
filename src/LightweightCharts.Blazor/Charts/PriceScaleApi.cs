@@ -7,13 +7,13 @@ namespace LightweightCharts.Blazor.Charts
 {
 	/// <summary>
 	/// Interface to control chart's price scale.<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/IPriceScaleApi
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/IPriceScaleApi"/>
 	/// </summary>
 	public interface IPriceScaleApi : ICustomizableObject<PriceScaleOptions>
 	{
 		/// <summary>
 		/// Returns a width of the price scale if it's visible or 0 if invisible.<br/>
-		/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/IPriceScaleApi#width
+		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/IPriceScaleApi#width"/>
 		/// </summary>
 		Task<double> Width();
 	}

@@ -2,7 +2,7 @@
 {
 	/// <summary>
 	/// Represents the type of the last price animation for series such as area or line.<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api/enums/LastPriceAnimationMode
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/enums/LastPriceAnimationMode"/>
 	/// </summary>
 	public enum LastPriceAnimationMode
 	{

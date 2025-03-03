@@ -4,7 +4,7 @@ namespace LightweightCharts.Blazor.Models.Events
 {
 	/// <summary>
 	/// The TouchMouseEventData interface represents events that occur due to the user interacting with a pointing device (such as a mouse).<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/TouchMouseEventData
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/TouchMouseEventData"/>
 	/// </summary>
 	public class TouchMouseEventData
 	{

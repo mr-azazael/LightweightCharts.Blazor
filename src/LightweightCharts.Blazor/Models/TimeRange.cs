@@ -6,7 +6,7 @@ namespace LightweightCharts.Blazor.Models
 {
 	/// <summary>
 	/// Represents a Time range.
-	/// https://tradingview.github.io/lightweight-charts/docs/api#timerange
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api#timerange"/>
 	/// </summary>
 	public class TimeRange : Range<long>
 	{

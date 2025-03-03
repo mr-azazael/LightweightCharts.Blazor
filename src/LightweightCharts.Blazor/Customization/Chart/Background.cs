@@ -6,7 +6,7 @@ namespace LightweightCharts.Blazor.Customization.Chart
 	/// <summary>
 	/// Common class for <see cref="LayoutOptions.Background"/>.<br/>
 	/// Types that extend this class: <see cref="SolidColor"/>, <see cref="VerticalGradientColor"/>.<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api#background
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api#background"/>
 	/// </summary>
 	[JsonPolymorphic(TypeDiscriminatorPropertyName = "type")]
 	[JsonDerivedType(typeof(SolidColor), typeDiscriminator: "solid")]

@@ -8,7 +8,7 @@ namespace LightweightCharts.Blazor.Customization.Chart
 	/// <summary>
 	/// Structure that describes price scale options for all types of price scales.<br/>
 	/// Visible and AutoScale are implemented in <see cref="PriceScaleOptions"/>.<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/PriceScaleOptions
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/PriceScaleOptions"/>
 	/// </summary>
 	public class BasePriceScaleOptions : BaseModel
 	{

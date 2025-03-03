@@ -6,7 +6,7 @@ namespace LightweightCharts.Blazor.DataItems
 {
 	/// <summary>
 	/// Structure describing a single item of data for bar series.<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/BarData
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/BarData"/>
 	/// </summary>
 	public class BarData : OhlcData
 	{

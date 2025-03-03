@@ -6,7 +6,7 @@ namespace LightweightCharts.Blazor.DataItems
 {
 	/// <summary>
 	/// Structure describing a single item of data for histogram series.<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/HistogramData
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/HistogramData"/>
 	/// </summary>
 	public class HistogramData : SingleValueData
 	{

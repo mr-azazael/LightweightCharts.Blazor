@@ -2,7 +2,7 @@
 {
 	/// <summary>
 	/// The extent of the data change.<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api#datachangedscope
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api#datachangedscope"/>
 	/// </summary>
 	public enum DataChangedScope
 	{

@@ -6,7 +6,7 @@ namespace LightweightCharts.Blazor.Customization.Enums
 {
 	/// <summary>
 	/// Represents a type of color.<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api/enums/ColorType
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/enums/ColorType"/>
 	/// </summary>
 	[JsonConverter(typeof(ColorTypeConverter))]
 	public enum ColorType

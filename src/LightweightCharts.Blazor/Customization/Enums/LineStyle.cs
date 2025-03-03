@@ -2,7 +2,7 @@
 {
 	/// <summary>
 	/// Represents the possible line styles.<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api/enums/LineStyle
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/enums/LineStyle"/>
 	/// </summary>
 	public enum LineStyle
 	{

@@ -5,7 +5,7 @@ using LightweightCharts.Blazor.Converters;
 namespace LightweightCharts.Blazor.Customization.Enums
 {
 	/// <summary>
-	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/SeriesOptionsMap
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/SeriesOptionsMap"/>
 	/// </summary>
 	[JsonConverter(typeof(SeriesTypeConverter))]
 	public enum SeriesType

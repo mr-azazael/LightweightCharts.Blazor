@@ -4,7 +4,7 @@ namespace LightweightCharts.Blazor.Customization.Chart
 {
 	/// <summary>
 	/// Represents options for how the time and price axes react to mouse movements.<vr/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/AxisPressedMouseMoveOptions
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/AxisPressedMouseMoveOptions"/>
 	/// </summary>
 	public class AxisPressedMouseMoveOptions : BaseModel
 	{

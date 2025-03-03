@@ -5,7 +5,7 @@ namespace LightweightCharts.Blazor.Customization
 {
 	/// <summary>
 	/// Represents information used to update a price scale.<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/AutoscaleInfo
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/AutoscaleInfo"/>
 	/// </summary>
 	public class AutoscaleInfo : BaseModel
 	{

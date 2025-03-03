@@ -5,7 +5,7 @@ namespace LightweightCharts.Blazor.Customization.Series
 {
 	/// <summary>
 	/// Represents series value formatting options. The precision and minMove properties allow wide customization of formatting.<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/PriceFormatBuiltIn
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/PriceFormatBuiltIn"/>
 	/// </summary>
 	public class PriceFormatOptions : BaseModel
 	{

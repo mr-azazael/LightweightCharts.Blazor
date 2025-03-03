@@ -6,7 +6,7 @@ namespace LightweightCharts.Blazor.DataItems
 {
 	/// <summary>
 	///	Represents a whitespace data item, which is a data point without a value.<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/WhitespaceData
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/WhitespaceData"/>
 	/// </summary>
 	public class WhitespaceData : ISeriesData
 	{

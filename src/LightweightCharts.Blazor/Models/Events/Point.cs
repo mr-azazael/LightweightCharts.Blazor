@@ -4,7 +4,7 @@ namespace LightweightCharts.Blazor.Models.Events
 {
 	/// <summary>
 	/// Represents a point on the chart.<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/Point
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/Point"/>
 	/// </summary>
 	public class Point
 	{

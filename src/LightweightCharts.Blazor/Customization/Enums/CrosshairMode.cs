@@ -2,7 +2,7 @@
 {
 	/// <summary>
 	/// Represents the crosshair mode.<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api/enums/CrosshairMode
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/enums/CrosshairMode"/>
 	/// </summary>
 	public enum CrosshairMode
 	{

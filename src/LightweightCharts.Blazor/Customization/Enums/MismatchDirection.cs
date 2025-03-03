@@ -2,7 +2,7 @@
 {
 	/// <summary>
 	/// Search direction if no data found at provided index<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api/enums/MismatchDirection
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/enums/MismatchDirection"/>
 	/// </summary>
 	public enum MismatchDirection
 	{

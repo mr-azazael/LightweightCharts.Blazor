@@ -9,7 +9,7 @@ namespace LightweightCharts.Blazor.Customization.Series
 {
 	/// <summary>
 	/// Represents style options for a baseline series.<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/BaselineStyleOptions
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/BaselineStyleOptions"/>
 	/// </summary>
 	public class BaselineStyleOptions : SeriesOptionsCommon
 	{

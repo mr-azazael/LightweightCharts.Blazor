@@ -7,7 +7,7 @@ namespace LightweightCharts.Blazor.Customization.Chart
 	/// Represent options for the tracking mode's behavior.<br/>
 	/// Mobile users will not have the ability to see the values/dates like they do on desktop.<br/>
 	/// To see it, they should enter the tracking mode. The tracking mode will deactivate the scrolling and make it possible to check values and dates.<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/TrackingModeOptions
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/TrackingModeOptions"/>
 	/// </summary>
 	public class TrackingModeOptions : BaseModel
 	{

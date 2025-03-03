@@ -7,7 +7,7 @@ namespace LightweightCharts.Blazor.Customization.Chart
 {
 	/// <summary>
 	/// Represents a solid color.<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/SolidColor
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/SolidColor"/>
 	/// </summary>
 	public class SolidColor : Background
 	{

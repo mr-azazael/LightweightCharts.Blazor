@@ -4,7 +4,7 @@ namespace LightweightCharts.Blazor.Customization.Chart
 {
 	/// <summary>
 	/// Structure describing grid options.
-	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/GridOptions
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/GridOptions"/>
 	/// </summary>
 	public class GridOptions : BaseModel
 	{

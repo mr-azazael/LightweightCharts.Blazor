@@ -5,7 +5,7 @@ namespace LightweightCharts.Blazor.Models
 {
 	/// <summary>
 	/// Represents a generic range from one value to another.<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/Range
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/Range"/>
 	/// </summary>
 	public class Range<T>
 	{

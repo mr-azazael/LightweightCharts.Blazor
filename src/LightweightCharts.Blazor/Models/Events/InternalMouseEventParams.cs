@@ -21,7 +21,7 @@ namespace LightweightCharts.Blazor.Models.Events
 
 	/// <summary>
 	/// Represents a mouse event.<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/MouseEventParams
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/MouseEventParams"/>
 	/// </summary>
 	internal class InternalMouseEventParams
 	{

@@ -7,7 +7,7 @@ namespace LightweightCharts.Blazor.Customization.Series
 {
 	/// <summary>
 	/// Represents style options for a histogram series.<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/HistogramStyleOptions
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/HistogramStyleOptions"/>
 	/// </summary>
 	public class HistogramStyleOptions : SeriesOptionsCommon
 	{

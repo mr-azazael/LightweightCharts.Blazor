@@ -7,7 +7,7 @@ namespace LightweightCharts.Blazor.Customization.Series
 {
 	/// <summary>
 	/// Represents style options for a bar series.<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/BarStyleOptions
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/BarStyleOptions"/>
 	/// </summary>
 	public class BarStyleOptions : SeriesOptionsCommon
 	{

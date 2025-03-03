@@ -6,7 +6,7 @@ namespace LightweightCharts.Blazor.Customization.Chart
 {
 	/// <summary>
 	/// Represents a horizontal alignment.<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api#horzalign
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api#horzalign"/>
 	/// </summary>
 	[JsonConverter(typeof(HorizontalAlignmentConverter))]
 	public enum HorizontalAlignment

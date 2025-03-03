@@ -4,7 +4,7 @@ namespace LightweightCharts.Blazor.Models
 {
 	/// <summary>
 	/// Represents a price range.<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/PriceRange
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/PriceRange"/>
 	/// </summary>
 	public class PriceRange
 	{

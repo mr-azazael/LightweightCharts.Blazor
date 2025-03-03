@@ -6,7 +6,7 @@ namespace LightweightCharts.Blazor.DataItems
 {
 	/// <summary>
 	/// Structure describing a single item of data for line series.
-	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/LineData
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/LineData"/>
 	/// </summary>
 	public class LineData : SingleValueData
 	{

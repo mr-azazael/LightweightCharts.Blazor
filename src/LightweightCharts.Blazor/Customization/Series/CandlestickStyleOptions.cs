@@ -7,7 +7,7 @@ namespace LightweightCharts.Blazor.Customization.Series
 {
 	/// <summary>
 	/// Represents style options for a candlestick series.<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/CandlestickStyleOptions
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/CandlestickStyleOptions"/>
 	/// </summary>
 	public class CandlestickStyleOptions : SeriesOptionsCommon
 	{

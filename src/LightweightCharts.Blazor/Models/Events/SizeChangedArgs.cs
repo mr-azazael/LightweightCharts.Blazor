@@ -3,7 +3,7 @@
 namespace LightweightCharts.Blazor.Models.Events
 {
 	/// <summary>
-	/// https://tradingview.github.io/lightweight-charts/docs/api#sizechangeeventhandler
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api#sizechangeeventhandler"/>
 	/// </summary>
 	public class SizeChangedArgs
 	{

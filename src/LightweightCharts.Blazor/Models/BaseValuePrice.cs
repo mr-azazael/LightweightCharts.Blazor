@@ -4,7 +4,7 @@ namespace LightweightCharts.Blazor.Models
 {
 	/// <summary>
 	/// Represents a type of priced base value of baseline series type.<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/BaseValuePrice
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/BaseValuePrice"/>
 	/// </summary>
 	public class BaseValuePrice
 	{

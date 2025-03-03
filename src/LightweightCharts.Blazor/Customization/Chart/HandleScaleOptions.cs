@@ -4,7 +4,7 @@ namespace LightweightCharts.Blazor.Customization.Chart
 {
 	/// <summary>
 	/// Represents options for how the chart is scaled by the mouse and touch gestures.<br/>
-	/// https://tradingview.github.io/lightweight-charts/docs/api/interfaces/HandleScaleOptions
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/HandleScaleOptions"/>
 	/// </summary>
 	public class HandleScaleOptions : BaseModel
 	{
