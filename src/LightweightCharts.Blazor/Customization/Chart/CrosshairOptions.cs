@@ -6,20 +6,17 @@ namespace LightweightCharts.Blazor.Customization.Chart
 	/// Structure describing crosshair options.<br/>
 	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/CrosshairOptions"/>
 	/// </summary>
-	public class CrosshairOptions : BaseModel
+	[JsonConverter(typeof(JsonOptionsObjectConverter<CrosshairOptions>))]
+	public class CrosshairOptions : JsonOptionsObject
 	{
-		CrosshairMode _Mode = CrosshairMode.Magnet;
-		CrosshairLineOption _VerticalLine = new();
-		CrosshairLineOption _HorizontalLine = new();
-
 		/// <summary>
 		/// Vertical line options.
 		/// </summary>
 		[JsonPropertyName("vertLine")]
 		public CrosshairLineOption VerticalLine
 		{
-			get => _VerticalLine;
-			set => SetValue(value, ref _VerticalLine);
+			get => GetValue(() => new CrosshairLineOption());
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -28,8 +25,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("horzLine")]
 		public CrosshairLineOption HorizontalLine
 		{
-			get => _HorizontalLine;
-			set => SetValue(value, ref _HorizontalLine);
+			get => GetValue(() => new CrosshairLineOption());
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -38,8 +35,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("mode")]
 		public CrosshairMode Mode
 		{
-			get => _Mode;
-			set => SetValue(value, ref _Mode);
+			get => GetValue(() => CrosshairMode.Magnet);
+			set => SetValue(value);
 		}
 	}
 }

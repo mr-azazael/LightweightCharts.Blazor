@@ -11,9 +11,7 @@ namespace LightweightCharts.Blazor.Customization.Chart
 	/// </summary>
 	public class SolidColor : Background
 	{
-		Color _Color = Color.Transparent;
-
-		public override ColorType Type 
+		public override ColorType Type
 			=> ColorType.Solid;
 
 		/// <summary>
@@ -21,10 +19,6 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		/// </summary>
 		[JsonPropertyName("color")]
 		[JsonConverter(typeof(JsonColorConverter))]
-		public Color Color
-		{
-			get => _Color;
-			set => SetValue(value, ref _Color);
-		}
+		public Color Color { get; set; } = Color.Transparent;
 	}
 }

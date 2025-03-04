@@ -9,10 +9,9 @@ namespace LightweightCharts.Blazor.Customization.Chart
 	/// To see it, they should enter the tracking mode. The tracking mode will deactivate the scrolling and make it possible to check values and dates.<br/>
 	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/TrackingModeOptions"/>
 	/// </summary>
-	public class TrackingModeOptions : BaseModel
+	[JsonConverter(typeof(JsonOptionsObjectConverter<TrackingModeOptions>))]
+	public class TrackingModeOptions : JsonOptionsObject
 	{
-		TrackingModeExitMode _ExitMode = TrackingModeExitMode.OnNextTap;
-
 		/// <summary>
 		/// Determine how to exit the tracking mode.<br/>
 		/// By default, mobile users will long press to deactivate the scroll and have the ability to check values and dates.<br/>
@@ -20,9 +19,10 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		/// </summary>
 		[JsonPropertyName("exitMode")]
 		public TrackingModeExitMode ExitMode
+
 		{
-			get => _ExitMode;
-			set => SetValue(value, ref _ExitMode);
+			get => GetValue(() => TrackingModeExitMode.OnNextTap);
+			set => SetValue(value);
 		}
 	}
 }

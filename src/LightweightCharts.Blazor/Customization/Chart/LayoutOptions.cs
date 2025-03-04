@@ -9,21 +9,17 @@ namespace LightweightCharts.Blazor.Customization.Chart
 	/// Represents layout options.
 	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/LayoutOptions"/>
 	/// </summary>
-	public class LayoutOptions : BaseModel
+	[JsonConverter(typeof(JsonOptionsObjectConverter<LayoutOptions>))]
+	public class LayoutOptions : JsonOptionsObject
 	{
-		Background _Background = new SolidColor { Color = Color.White };
-		Color _TextColor = Extensions.ParseHtmlCode("#191919");
-		int _FontSize = 12;
-		string _FontFamily = "-apple-system, BlinkMacSystemFont, 'Trebuchet MS', Roboto, Ubuntu, sans-serif";
-
 		/// <summary>
 		/// Chart and scales background color.
 		/// </summary>
 		[JsonPropertyName("background")]
 		public Background Background
 		{
-			get => _Background;
-			set => SetValue(value, ref _Background);
+			get => GetValue(() => new SolidColor { Color = Color.White });
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -33,8 +29,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonConverter(typeof(JsonColorConverter))]
 		public Color TextColor
 		{
-			get => _TextColor;
-			set => SetValue(value, ref _TextColor);
+			get => GetValue(() => Extensions.ParseHtmlCode("#191919"));
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -43,8 +39,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("fontSize")]
 		public int FontSize
 		{
-			get => _FontSize;
-			set => SetValue(value, ref _FontSize);
+			get => GetValue(() => 12);
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -53,8 +49,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("fontFamily")]
 		public string FontFamily
 		{
-			get => _FontFamily;
-			set => SetValue(value, ref _FontFamily);
+			get => GetValue(() => "-apple-system, BlinkMacSystemFont, 'Trebuchet MS', Roboto, Ubuntu, sans-serif");
+			set => SetValue(value);
 		}
 	}
 }

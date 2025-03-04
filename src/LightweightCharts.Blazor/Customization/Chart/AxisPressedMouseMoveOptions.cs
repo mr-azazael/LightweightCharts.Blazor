@@ -6,19 +6,17 @@ namespace LightweightCharts.Blazor.Customization.Chart
 	/// Represents options for how the time and price axes react to mouse movements.<vr/>
 	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/AxisPressedMouseMoveOptions"/>
 	/// </summary>
-	public class AxisPressedMouseMoveOptions : BaseModel
+	[JsonConverter(typeof(JsonOptionsObjectConverter<AxisPressedMouseMoveOptions>))]
+	public class AxisPressedMouseMoveOptions : JsonOptionsObject
 	{
-		bool _Time = true;
-		bool _Price = true;
-
 		/// <summary>
 		/// Enable scaling the time axis by holding down the left mouse button and moving the mouse.
 		/// </summary>
 		[JsonPropertyName("time")]
 		public bool Time
 		{
-			get => _Time;
-			set => SetValue(value, ref _Time);
+			get => GetValue(() => true);
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -27,8 +25,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("price")]
 		public bool Price
 		{
-			get => _Price;
-			set => SetValue(value, ref _Price);
+			get => GetValue(() => true);
+			set => SetValue(value);
 		}
 	}
 }

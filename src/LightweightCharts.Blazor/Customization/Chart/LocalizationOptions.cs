@@ -7,19 +7,17 @@ namespace LightweightCharts.Blazor.Customization.Chart
 	/// Represents options for formatting dates, times, and prices according to a locale.<br/>
 	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/LocalizationOptions"/>
 	/// </summary>
-	public class LocalizationOptions : BaseModel
+	[JsonConverter(typeof(JsonOptionsObjectConverter<LocalizationOptions>))]
+	public class LocalizationOptions : JsonOptionsObject
 	{
-		string _Locale = CultureInfo.CurrentCulture.Name;
-		string _DateFormat = "dd MMM \'yy";
-
 		/// <summary>
 		/// Current locale used to format dates. Uses the browser's language settings by default.<br/>
 		/// </summary>
 		[JsonPropertyName("locale")]
 		public string Locale
 		{
-			get => _Locale;
-			set => SetValue(value, ref _Locale);
+			get => GetValue(() => CultureInfo.CurrentCulture.Name);
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -30,8 +28,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("dateFormat")]
 		public string DateFormat
 		{
-			get => _DateFormat;
-			set => SetValue(value, ref _DateFormat);
+			get => GetValue(() => "dd MMM \'yy");
+			set => SetValue(value);
 		}
 	}
 }

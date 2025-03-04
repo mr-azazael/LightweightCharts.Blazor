@@ -6,21 +6,17 @@ namespace LightweightCharts.Blazor.Customization.Chart
 	/// Represents options for how the chart is scrolled by the mouse and touch gestures.<br/>
 	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/HandleScrollOptions"/>
 	/// </summary>
-	public class HandleScrollOptions : BaseModel
+	[JsonConverter(typeof(JsonOptionsObjectConverter<HandleScrollOptions>))]
+	public class HandleScrollOptions : JsonOptionsObject
 	{
-		bool _MouseWheel = true;
-		bool _PressedMouseMove = true;
-		bool _HorizontalTouchDrag = true;
-		bool _VerticalTouchDrag = true;
-
 		/// <summary>
 		/// Enable scrolling with the mouse wheel.
 		/// </summary>
 		[JsonPropertyName("mouseWheel")]
 		public bool MouseWheel
 		{
-			get => _MouseWheel;
-			set => SetValue(value, ref _MouseWheel);
+			get => GetValue(() => true);
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -29,8 +25,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("pressedMouseMove")]
 		public bool PressedMouseMove
 		{
-			get => _PressedMouseMove;
-			set => SetValue(value, ref _PressedMouseMove);
+			get => GetValue(() => true);
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -40,8 +36,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("horzTouchDrag")]
 		public bool HorizontalTouchDrag
 		{
-			get => _HorizontalTouchDrag;
-			set => SetValue(value, ref _HorizontalTouchDrag);
+			get => GetValue(() => true);
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -51,8 +47,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("vertTouchDrag")]
 		public bool VerticalTouchDrag
 		{
-			get => _VerticalTouchDrag;
-			set => SetValue(value, ref _VerticalTouchDrag);
+			get => GetValue(() => true);
+			set => SetValue(value);
 		}
 	}
 }

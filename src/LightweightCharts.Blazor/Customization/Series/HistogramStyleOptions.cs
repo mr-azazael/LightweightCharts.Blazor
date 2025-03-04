@@ -1,7 +1,7 @@
-﻿using System.Drawing;
-using System.Text.Json.Serialization;
-using LightweightCharts.Blazor.Converters;
+﻿using LightweightCharts.Blazor.Converters;
 using LightweightCharts.Blazor.Utilities;
+using System.Drawing;
+using System.Text.Json.Serialization;
 
 namespace LightweightCharts.Blazor.Customization.Series
 {
@@ -9,11 +9,9 @@ namespace LightweightCharts.Blazor.Customization.Series
 	/// Represents style options for a histogram series.<br/>
 	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/HistogramStyleOptions"/>
 	/// </summary>
+	[JsonConverter(typeof(JsonOptionsObjectConverter<HistogramStyleOptions>))]
 	public class HistogramStyleOptions : SeriesOptionsCommon
 	{
-		Color _Color = Extensions.ParseHtmlCode("#26a69a");
-		int _Base;
-
 		/// <summary>
 		/// Column color.
 		/// </summary>
@@ -21,8 +19,8 @@ namespace LightweightCharts.Blazor.Customization.Series
 		[JsonConverter(typeof(JsonColorConverter))]
 		public Color Color
 		{
-			get => _Color;
-			set => SetValue(value, ref _Color);
+			get => GetValue(() => Extensions.ParseHtmlCode("#26a69a"));
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -31,8 +29,8 @@ namespace LightweightCharts.Blazor.Customization.Series
 		[JsonPropertyName("base")]
 		public int Base
 		{
-			get => _Base;
-			set => SetValue(value, ref _Base);
+			get => GetValue<int>();
+			set => SetValue(value);
 		}
 	}
 }

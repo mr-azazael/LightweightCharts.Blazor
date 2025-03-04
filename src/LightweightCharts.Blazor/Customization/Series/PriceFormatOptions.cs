@@ -1,5 +1,5 @@
-﻿using System.Text.Json.Serialization;
-using LightweightCharts.Blazor.Customization.Enums;
+﻿using LightweightCharts.Blazor.Customization.Enums;
+using System.Text.Json.Serialization;
 
 namespace LightweightCharts.Blazor.Customization.Series
 {
@@ -7,20 +7,17 @@ namespace LightweightCharts.Blazor.Customization.Series
 	/// Represents series value formatting options. The precision and minMove properties allow wide customization of formatting.<br/>
 	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/PriceFormatBuiltIn"/>
 	/// </summary>
-	public class PriceFormatOptions : BaseModel
+	[JsonConverter(typeof(JsonOptionsObjectConverter<PriceFormatOptions>))]
+	public class PriceFormatOptions : JsonOptionsObject
 	{
-		PriceFormatType _Type = PriceFormatType.Price;
-		int _Precision = 2;
-		double _MinimumMove = 0.01d;
-
 		/// <summary>
 		/// Sets a type of price displayed by series.
 		/// </summary>
 		[JsonPropertyName("type")]
 		public PriceFormatType Type
 		{
-			get => _Type;
-			set => SetValue(value, ref _Type);
+			get => GetValue(() => PriceFormatType.Price);
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -29,8 +26,8 @@ namespace LightweightCharts.Blazor.Customization.Series
 		[JsonPropertyName("precision")]
 		public int Precision
 		{
-			get => _Precision;
-			set => SetValue(value, ref _Precision);
+			get => GetValue(() => 2);
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -39,8 +36,8 @@ namespace LightweightCharts.Blazor.Customization.Series
 		[JsonPropertyName("minMove")]
 		public double MinimumMove
 		{
-			get => _MinimumMove;
-			set => SetValue(value, ref _MinimumMove);
+			get => GetValue(() => 0.01);
+			set => SetValue(value);
 		}
 	}
 }

@@ -6,19 +6,17 @@ namespace LightweightCharts.Blazor.Customization.Chart
 	/// Represents options for enabling or disabling kinetic scrolling with mouse and touch gestures.<br/>
 	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/KineticScrollOptions"/>
 	/// </summary>
-	public class KineticScrollOptions : BaseModel
+	[JsonConverter(typeof(JsonOptionsObjectConverter<KineticScrollOptions>))]
+	public class KineticScrollOptions : JsonOptionsObject
 	{
-		bool _Touch = true;
-		bool _Mouse = false;
-
 		/// <summary>
 		/// Enable kinetic scroll with touch gestures.
 		/// </summary>
 		[JsonPropertyName("touch")]
 		public bool Touch
 		{
-			get => _Touch;
-			set => SetValue(value, ref _Touch);
+			get => GetValue(() => true);
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -27,8 +25,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("mouse")]
 		public bool Mouse
 		{
-			get => _Mouse;
-			set => SetValue(value, ref _Mouse);
+			get => GetValue<bool>();
+			set => SetValue(value);
 		}
 	}
 }

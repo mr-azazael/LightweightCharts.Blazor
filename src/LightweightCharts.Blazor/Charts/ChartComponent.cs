@@ -20,10 +20,8 @@ namespace LightweightCharts.Blazor.Charts
 		public ChartComponent()
 		{
 			Id = Guid.NewGuid().ToString();
-			_DotNetObjectReference = DotNetObjectReference.Create(this);
 		}
 
-		DotNetObjectReference<ChartComponent> _DotNetObjectReference;
 		Dictionary<string, ISeriesApiInternal> _Series = new();
 		IJSObjectReference _Layout;
 		EventsHelper _EventsHelper;

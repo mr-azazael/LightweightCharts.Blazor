@@ -9,35 +9,17 @@ namespace LightweightCharts.Blazor.Customization.Chart
 	/// Options for the time scale; the horizontal scale at the bottom of the chart that displays the time of data.<br/>
 	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/HorzScaleOptions"/>
 	/// </summary>
-	public class HorzScaleOptions : BaseModel
+	[JsonConverter(typeof(JsonOptionsObjectConverter<HorzScaleOptions>))]
+	public class HorzScaleOptions : JsonOptionsObject
 	{
-		int _RightOffset;
-		int _BarSpacing = 6;
-		double _MinBarSpacing = 0.5;
-		bool _FixLeftEdge;
-		bool _FixRightEdge;
-		bool _LockVisibleTimeRangeOnResize;
-		bool _RightBarStaysOnScroll;
-		bool _BorderVisible = true;
-		Color _BorderColor = Extensions.ParseHtmlCode("#2B2B43");
-		bool _Visible = true;
-		bool _TimeVisible = false;
-		bool _SecondsVisible = true;
-		bool _ShiftVisibleRangeOnNewBar = true;
-		bool _AllowShiftVisibleRangeOnWhitespaceReplacement;
-		bool _TicksVisible;
-		int? _TickMarkMaxCharacterLength;
-		bool _UniformDistribution;
-		int _MinimumHeight;
-
 		/// <summary>
 		/// The margin space in bars from the right side of the chart.
 		/// </summary>
 		[JsonPropertyName("rightOffset")]
 		public int RightOffset
 		{
-			get => _RightOffset;
-			set => SetValue(value, ref _RightOffset);
+			get => GetValue<int>();
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -46,8 +28,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("barSpacing")]
 		public int BarSpacing
 		{
-			get => _BarSpacing;
-			set => SetValue(value, ref _BarSpacing);
+			get => GetValue(() => 6);
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -56,8 +38,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("minBarSpacing")]
 		public double MinBarSpacing
 		{
-			get => _MinBarSpacing;
-			set => SetValue(value, ref _MinBarSpacing);
+			get => GetValue(() => 0.5);
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -66,8 +48,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("fixLeftEdge")]
 		public bool FixLeftEdge
 		{
-			get => _FixLeftEdge;
-			set => SetValue(value, ref _FixLeftEdge);
+			get => GetValue<bool>();
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -76,8 +58,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("fixRightEdge")]
 		public bool FixRightEdge
 		{
-			get => _FixRightEdge;
-			set => SetValue(value, ref _FixRightEdge);
+			get => GetValue<bool>();
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -86,8 +68,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("lockVisibleTimeRangeOnResize")]
 		public bool LockVisibleTimeRangeOnResize
 		{
-			get => _LockVisibleTimeRangeOnResize;
-			set => SetValue(value, ref _LockVisibleTimeRangeOnResize);
+			get => GetValue<bool>();
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -96,8 +78,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("rightBarStaysOnScroll")]
 		public bool RightBarStaysOnScroll
 		{
-			get => _RightBarStaysOnScroll;
-			set => SetValue(value, ref _RightBarStaysOnScroll);
+			get => GetValue<bool>();
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -106,8 +88,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("borderVisible")]
 		public bool BorderVisible
 		{
-			get => _BorderVisible;
-			set => SetValue(value, ref _BorderVisible);
+			get => GetValue(() => true);
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -117,8 +99,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonConverter(typeof(JsonColorConverter))]
 		public Color BorderColor
 		{
-			get => _BorderColor;
-			set => SetValue(value, ref _BorderColor);
+			get => GetValue(() => Extensions.ParseHtmlCode("#2B2B43"));
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -127,8 +109,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("visible")]
 		public bool Visible
 		{
-			get => _Visible;
-			set => SetValue(value, ref _Visible);
+			get => GetValue(() => true);
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -137,8 +119,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("timeVisible")]
 		public bool TimeVisible
 		{
-			get => _TimeVisible;
-			set => SetValue(value, ref _TimeVisible);
+			get => GetValue<bool>();
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -147,8 +129,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("secondsVisible")]
 		public bool SecondsVisible
 		{
-			get => _SecondsVisible;
-			set => SetValue(value, ref _SecondsVisible);
+			get => GetValue(() => true);
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -158,8 +140,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("shiftVisibleRangeOnNewBar")]
 		public bool ShiftVisibleRangeOnNewBar
 		{
-			get => _ShiftVisibleRangeOnNewBar;
-			set => SetValue(value, ref _ShiftVisibleRangeOnNewBar);
+			get => GetValue(() => true);
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -169,8 +151,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("allowShiftVisibleRangeOnWhitespaceReplacement")]
 		public bool AllowShiftVisibleRangeOnWhitespaceReplacement
 		{
-			get => _AllowShiftVisibleRangeOnWhitespaceReplacement;
-			set => SetValue(value, ref _AllowShiftVisibleRangeOnWhitespaceReplacement);
+			get => GetValue<bool>();
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -179,8 +161,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("ticksVisible")]
 		public bool TicksVisible
 		{
-			get => _TicksVisible;
-			set => SetValue(value, ref _TicksVisible);
+			get => GetValue<bool>();
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -189,8 +171,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("tickMarkMaxCharacterLength")]
 		public int? TickMarkMaxCharacterLength
 		{
-			get => _TickMarkMaxCharacterLength;
-			set => SetValue(value, ref _TickMarkMaxCharacterLength);
+			get => GetValue<int?>();
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -199,8 +181,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("uniformDistribution")]
 		public bool UniformDistribution
 		{
-			get => _UniformDistribution;
-			set => SetValue(value, ref _UniformDistribution);
+			get => GetValue<bool>();
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -211,8 +193,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("minimumHeight")]
 		public int MinimumHeight
 		{
-			get => _MinimumHeight;
-			set => SetValue(value, ref _MinimumHeight);
+			get => GetValue<int>();
+			set => SetValue(value);
 		}
 	}
 }

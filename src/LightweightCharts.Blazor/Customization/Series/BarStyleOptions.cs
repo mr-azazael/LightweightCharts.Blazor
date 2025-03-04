@@ -9,21 +9,17 @@ namespace LightweightCharts.Blazor.Customization.Series
 	/// Represents style options for a bar series.<br/>
 	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/BarStyleOptions"/>
 	/// </summary>
+	[JsonConverter(typeof(JsonOptionsObjectConverter<BarStyleOptions>))]
 	public class BarStyleOptions : SeriesOptionsCommon
 	{
-		bool _ThinBars = true;
-		Color _UpColor = Extensions.ParseHtmlCode("#26a69a");
-		Color _DownColor = Extensions.ParseHtmlCode("#ef5350");
-		bool _OpenVisible = true;
-
 		/// <summary>
 		/// Show bars as sticks.
 		/// </summary>
 		[JsonPropertyName("thinBars")]
 		public bool ThinBars
 		{
-			get => _ThinBars;
-			set => SetValue(value, ref _ThinBars);
+			get => GetValue(() => true);
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -33,8 +29,8 @@ namespace LightweightCharts.Blazor.Customization.Series
 		[JsonConverter(typeof(JsonColorConverter))]
 		public Color UpColor
 		{
-			get => _UpColor;
-			set => SetValue(value, ref _UpColor);
+			get => GetValue(() => Extensions.ParseHtmlCode("#26a69a"));
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -44,8 +40,8 @@ namespace LightweightCharts.Blazor.Customization.Series
 		[JsonConverter(typeof(JsonColorConverter))]
 		public Color DownColor
 		{
-			get => _DownColor;
-			set => SetValue(value, ref _DownColor);
+			get => GetValue(() => Extensions.ParseHtmlCode("#ef5350"));
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -54,8 +50,8 @@ namespace LightweightCharts.Blazor.Customization.Series
 		[JsonPropertyName("openVisible")]
 		public bool OpenVisible
 		{
-			get => _OpenVisible;
-			set => SetValue(value, ref _OpenVisible);
+			get => GetValue(() => true);
+			set => SetValue(value);
 		}
 	}
 }

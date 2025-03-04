@@ -6,31 +6,27 @@ namespace LightweightCharts.Blazor.Customization.Chart
 	/// Represents options for how the chart is scaled by the mouse and touch gestures.<br/>
 	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/HandleScaleOptions"/>
 	/// </summary>
-	public class HandleScaleOptions : BaseModel
+	[JsonConverter(typeof(JsonOptionsObjectConverter<HandleScaleOptions>))]
+	public class HandleScaleOptions : JsonOptionsObject
 	{
-		bool _MouseWheel = true;
-		bool _Pinch = true;
-		AxisPressedMouseMoveOptions _AxisPressedMouseMove = new();
-		AxisDoubleClickOptions _AxisDoubleClickReset = new();
-
 		/// <summary>
 		/// Enable scaling with the mouse wheel.
 		/// </summary>
 		[JsonPropertyName("mouseWheel")]
 		public bool MouseWheel
 		{
-			get => _MouseWheel;
-			set => SetValue(value, ref _MouseWheel);
+			get => GetValue(() => true);
+			set => SetValue(value);
 		}
-		
+
 		/// <summary>
 		/// Enable scaling with pinch/zoom gestures.
 		/// </summary>
 		[JsonPropertyName("pinch")]
 		public bool Pinch
 		{
-			get => _Pinch;
-			set => SetValue(value, ref _Pinch);
+			get => GetValue(() => true);
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -39,8 +35,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("axisPressedMouseMove")]
 		public AxisPressedMouseMoveOptions AxisPressedMouseMove
 		{
-			get => _AxisPressedMouseMove;
-			set => SetValue(value, ref _AxisPressedMouseMove);
+			get => GetValue(() => new AxisPressedMouseMoveOptions());
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -49,8 +45,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("axisDoubleClickReset")]
 		public AxisDoubleClickOptions AxisDoubleClickReset
 		{
-			get => _AxisDoubleClickReset;
-			set => SetValue(value, ref _AxisDoubleClickReset);
-		}	
+			get => GetValue(() => new AxisDoubleClickOptions());
+			set => SetValue(value);
+		}
 	}
 }

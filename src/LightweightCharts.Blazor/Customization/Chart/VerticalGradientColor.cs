@@ -11,10 +11,7 @@ namespace LightweightCharts.Blazor.Customization.Chart
 	/// </summary>
 	public class VerticalGradientColor : Background
 	{
-		Color _TopColor = Color.Transparent;
-		Color _BottomColor = Color.Transparent;
-
-		public override ColorType Type 
+		public override ColorType Type
 			=> ColorType.VerticalGradient;
 
 		/// <summary>
@@ -22,21 +19,13 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		/// </summary>
 		[JsonPropertyName("topColor")]
 		[JsonConverter(typeof(JsonColorConverter))]
-		public Color TopColor
-		{
-			get => _TopColor;
-			set => SetValue(value, ref _TopColor);
-		}
+		public Color TopColor { get; set; } = Color.Transparent;
 
 		/// <summary>
 		/// Bottom color.
 		/// </summary>
 		[JsonPropertyName("bottomColor")]
 		[JsonConverter(typeof(JsonColorConverter))]
-		public Color BottomColor
-		{
-			get => _BottomColor;
-			set => SetValue(value, ref _BottomColor);
-		}
+		public Color BottomColor { get; set; } = Color.Transparent;
 	}
 }

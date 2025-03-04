@@ -1,8 +1,8 @@
-﻿using System.Drawing;
-using System.Text.Json.Serialization;
-using LightweightCharts.Blazor.Converters;
+﻿using LightweightCharts.Blazor.Converters;
 using LightweightCharts.Blazor.Customization.Enums;
 using LightweightCharts.Blazor.Utilities;
+using System.Drawing;
+using System.Text.Json.Serialization;
 
 namespace LightweightCharts.Blazor.Customization.Chart
 {
@@ -10,12 +10,9 @@ namespace LightweightCharts.Blazor.Customization.Chart
 	/// Grid line options.<br/>
 	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/GridLineOptions"/>
 	/// </summary>
-	public class GridLineOptions : BaseModel
+	[JsonConverter(typeof(JsonOptionsObjectConverter<GridLineOptions>))]
+	public class GridLineOptions : JsonOptionsObject
 	{
-		Color _Color = Extensions.ParseHtmlCode("#D6DCDE");
-		LineStyle _Style = LineStyle.Solid;
-		bool _Visible = true;
-
 		/// <summary>
 		/// Line color.
 		/// </summary>
@@ -23,8 +20,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonConverter(typeof(JsonColorConverter))]
 		public Color Color
 		{
-			get => _Color;
-			set => SetValue(value, ref _Color);
+			get => GetValue(() => Extensions.ParseHtmlCode("#D6DCDE"));
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -33,8 +30,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("style")]
 		public LineStyle Style
 		{
-			get => _Style;
-			set => SetValue(value, ref _Style);
+			get => GetValue(() => LineStyle.Solid);
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -43,8 +40,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("visible")]
 		public bool Visible
 		{
-			get => _Visible;
-			set => SetValue(value, ref _Visible);
+			get => GetValue(() => true);
+			set => SetValue(value);
 		}
 	}
 }

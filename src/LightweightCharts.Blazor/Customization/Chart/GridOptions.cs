@@ -6,19 +6,17 @@ namespace LightweightCharts.Blazor.Customization.Chart
 	/// Structure describing grid options.
 	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/GridOptions"/>
 	/// </summary>
-	public class GridOptions : BaseModel
+	[JsonConverter(typeof(JsonOptionsObjectConverter<GridOptions>))]
+	public class GridOptions : JsonOptionsObject
 	{
-		GridLineOptions _VerticalLines = new();
-		GridLineOptions _HorizontalLines = new();
-
 		/// <summary>
 		/// Vertical grid line options.
 		/// </summary>
 		[JsonPropertyName("vertLines")]
 		public GridLineOptions VerticalLines
 		{
-			get => _VerticalLines;
-			set => SetValue(value, ref _VerticalLines);
+			get => GetValue(() => new GridLineOptions());
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -27,8 +25,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("horzLines")]
 		public GridLineOptions HorizontalLines
 		{
-			get => _HorizontalLines;
-			set => SetValue(value, ref _HorizontalLines);
+			get => GetValue(() => new GridLineOptions());
+			set => SetValue(value);
 		}
 	}
 }

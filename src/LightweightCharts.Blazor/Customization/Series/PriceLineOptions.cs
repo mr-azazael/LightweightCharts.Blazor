@@ -9,27 +9,17 @@ namespace LightweightCharts.Blazor.Customization.Series
 	/// Represents a price line options.<br/>
 	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/PriceLineOptions"/>
 	/// </summary>
-	public class PriceLineOptions : BaseModel
+	[JsonConverter(typeof(JsonOptionsObjectConverter<PriceLineOptions>))]
+	public class PriceLineOptions : JsonOptionsObject
 	{
-		string _Id;
-		double _Price;
-		Color? _Color;
-		int _LineWidth = 1;
-		LineStyle _LineStyle = LineStyle.Solid;
-		bool _LineVisible = true;
-		bool _AxisLabelVisible = true;
-		string _Title;
-		Color? _AxisLabelColor;
-		Color? _AxisLabelTextColor;
-
 		/// <summary>
 		/// The optional ID of this price line.
 		/// </summary>
 		[JsonPropertyName("id")]
 		public string Id
 		{
-			get => _Id;
-			set => SetValue(value, ref _Id);
+			get => GetValue<string>();
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -38,8 +28,8 @@ namespace LightweightCharts.Blazor.Customization.Series
 		[JsonPropertyName("price")]
 		public double Price
 		{
-			get => _Price;
-			set => SetValue(value, ref _Price);
+			get => GetValue<double>();
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -49,8 +39,8 @@ namespace LightweightCharts.Blazor.Customization.Series
 		[JsonConverter(typeof(JsonOptionalColorConverter))]
 		public Color? Color
 		{
-			get => _Color;
-			set => SetValue(value, ref _Color);
+			get => GetValue<Color?>();
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -59,8 +49,8 @@ namespace LightweightCharts.Blazor.Customization.Series
 		[JsonPropertyName("lineWidth")]
 		public int LineWidth
 		{
-			get => _LineWidth;
-			set => SetValue(value, ref _LineWidth);
+			get => GetValue(() => 1);
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -69,8 +59,8 @@ namespace LightweightCharts.Blazor.Customization.Series
 		[JsonPropertyName("lineStyle")]
 		public LineStyle LineStyle
 		{
-			get => _LineStyle;
-			set => SetValue(value, ref _LineStyle);
+			get => GetValue(() => LineStyle.Solid);
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -79,8 +69,8 @@ namespace LightweightCharts.Blazor.Customization.Series
 		[JsonPropertyName("lineVisible")]
 		public bool LineVisible
 		{
-			get => _LineVisible;
-			set => SetValue(value, ref _LineVisible);
+			get => GetValue(() => true);
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -89,8 +79,8 @@ namespace LightweightCharts.Blazor.Customization.Series
 		[JsonPropertyName("axisLabelVisible")]
 		public bool AxisLabelVisible
 		{
-			get => _AxisLabelVisible;
-			set => SetValue(value, ref _AxisLabelVisible);
+			get => GetValue(() => true);
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -99,8 +89,8 @@ namespace LightweightCharts.Blazor.Customization.Series
 		[JsonPropertyName("title")]
 		public string Title
 		{
-			get => _Title;
-			set => SetValue(value, ref _Title);
+			get => GetValue<string>();
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -110,8 +100,8 @@ namespace LightweightCharts.Blazor.Customization.Series
 		[JsonConverter(typeof(JsonOptionalColorConverter))]
 		public Color? AxisLabelColor
 		{
-			get => _AxisLabelColor;
-			set => SetValue(value, ref _AxisLabelColor);
+			get => GetValue<Color?>();
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -121,8 +111,8 @@ namespace LightweightCharts.Blazor.Customization.Series
 		[JsonConverter(typeof(JsonOptionalColorConverter))]
 		public Color? AxisLabelTextColor
 		{
-			get => _AxisLabelTextColor;
-			set => SetValue(value, ref _AxisLabelTextColor);
+			get => GetValue<Color?>();
+			set => SetValue(value);
 		}
 	}
 }

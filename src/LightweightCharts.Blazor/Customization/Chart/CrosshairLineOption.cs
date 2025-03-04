@@ -1,8 +1,8 @@
-﻿using System.Drawing;
-using System.Text.Json.Serialization;
-using LightweightCharts.Blazor.Converters;
+﻿using LightweightCharts.Blazor.Converters;
 using LightweightCharts.Blazor.Customization.Enums;
 using LightweightCharts.Blazor.Utilities;
+using System.Drawing;
+using System.Text.Json.Serialization;
 
 namespace LightweightCharts.Blazor.Customization.Chart
 {
@@ -10,15 +10,9 @@ namespace LightweightCharts.Blazor.Customization.Chart
 	/// Structure describing a crosshair line (vertical or horizontal).<br/>
 	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/CrosshairLineOptions"/>
 	/// </summary>
-	public class CrosshairLineOption : BaseModel
+	[JsonConverter(typeof(JsonOptionsObjectConverter<CrosshairLineOption>))]
+	public class CrosshairLineOption : JsonOptionsObject
 	{
-		Color _Color = Extensions.ParseHtmlCode("#758696");
-		double _Width = 1;
-		LineStyle _Style = LineStyle.LargeDashed;
-		bool _Visible = true;
-		bool _LabelVisible = true;
-		Color _LabelBackgroundColor = Extensions.ParseHtmlCode("#4c525e");
-
 		/// <summary>
 		/// Crosshair line color.<br/>
 		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/CrosshairLineOptions#color"/>
@@ -27,8 +21,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonConverter(typeof(JsonColorConverter))]
 		public Color Color
 		{
-			get => _Color;
-			set => SetValue(value, ref _Color);
+			get => Extensions.ParseHtmlCode("#758696");
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -38,8 +32,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("width")]
 		public double Width
 		{
-			get => _Width;
-			set => SetValue(value, ref _Width);
+			get => GetValue(() => 1.0);
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -49,8 +43,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("style")]
 		public LineStyle Style
 		{
-			get => _Style;
-			set => SetValue(value, ref _Style);
+			get => GetValue(() => LineStyle.LargeDashed);
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -62,8 +56,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("visible")]
 		public bool Visible
 		{
-			get => _Visible;
-			set => SetValue(value, ref _Visible);
+			get => GetValue(() => true);
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -73,8 +67,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("labelVisible")]
 		public bool LabelVisible
 		{
-			get => _LabelVisible;
-			set => SetValue(value, ref _LabelVisible);
+			get => GetValue(() => true);
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -85,8 +79,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonConverter(typeof(JsonColorConverter))]
 		public Color LabelBackgroundColor
 		{
-			get => _LabelBackgroundColor;
-			set => SetValue(value, ref _LabelBackgroundColor);
+			get => GetValue(() => Extensions.ParseHtmlCode("#4c525e"));
+			set => SetValue(value);
 		}
 	}
 }

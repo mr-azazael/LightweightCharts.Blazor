@@ -8,13 +8,9 @@ namespace LightweightCharts.Blazor.Customization.Chart
 	/// Structure that describes price scale options.<br/>
 	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/PriceScaleOptions"/>
 	/// </summary>
+	[JsonConverter(typeof(JsonOptionsObjectConverter<PriceScaleOptions>))]
 	public class PriceScaleOptions : BasePriceScaleOptions
 	{
-		bool _AutoScale = true;
-		Color? _TextColor;
-		bool _Visible = true;
-		int _MinimumWidth;
-
 		/// <summary>
 		/// Autoscaling is a feature that automatically adjusts a price scale to fit the visible range of data.<br/>
 		/// Note that overlay price scales are always auto-scaled.
@@ -22,8 +18,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("autoScale")]
 		public bool AutoScale
 		{
-			get => _AutoScale;
-			set => SetValue(value, ref _AutoScale);
+			get => GetValue(() => true);
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -33,8 +29,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonConverter(typeof(JsonOptionalColorConverter))]
 		public Color? TextColor
 		{
-			get => _TextColor;
-			set => SetValue(value, ref _TextColor);
+			get => GetValue<Color?>();
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -43,8 +39,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("visible")]
 		public bool Visible
 		{
-			get => _Visible;
-			set => SetValue(value, ref _Visible);
+			get => GetValue(() => true);
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -55,8 +51,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("minimumWidth")]
 		public int MinimumWidth
 		{
-			get => _MinimumWidth;
-			set => SetValue(value, ref _MinimumWidth);
+			get => GetValue<int>();
+			set => SetValue(value);
 		}
 	}
 }

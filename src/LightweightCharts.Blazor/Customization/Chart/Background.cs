@@ -11,7 +11,7 @@ namespace LightweightCharts.Blazor.Customization.Chart
 	[JsonPolymorphic(TypeDiscriminatorPropertyName = "type")]
 	[JsonDerivedType(typeof(SolidColor), typeDiscriminator: "solid")]
 	[JsonDerivedType(typeof(VerticalGradientColor), typeDiscriminator: "gradient")]
-	public abstract class Background : BaseModel
+	public abstract class Background
 	{
 		/// <summary>
 		/// Type of color.

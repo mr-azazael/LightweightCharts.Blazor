@@ -1,6 +1,6 @@
-﻿using System.Drawing;
+﻿using LightweightCharts.Blazor.Converters;
+using System.Drawing;
 using System.Text.Json.Serialization;
-using LightweightCharts.Blazor.Converters;
 
 namespace LightweightCharts.Blazor.Customization.Chart
 {
@@ -8,17 +8,9 @@ namespace LightweightCharts.Blazor.Customization.Chart
 	/// Watermark options.<br/>
 	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/WatermarkOptions"/>
 	/// </summary>
-	public class WatermarkOptions : BaseModel
+	[JsonConverter(typeof(JsonOptionsObjectConverter<WatermarkOptions>))]
+	public class WatermarkOptions : JsonOptionsObject
 	{
-		Color _Color = Color.Transparent;
-		bool _Visible;
-		string _Text;
-		int _FontSize = 48;
-		string _FontFamily = "-apple-system, BlinkMacSystemFont, 'Trebuchet MS', Roboto, Ubuntu, sans-serif";
-		string _FontStyle;
-		HorizontalAlignment _HorizontalAlignment = HorizontalAlignment.Center;
-		VerticalAlignment _VerticalAlignment = VerticalAlignment.Center;
-
 		/// <summary>
 		/// Watermark color.
 		/// </summary>
@@ -26,8 +18,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonConverter(typeof(JsonColorConverter))]
 		public Color Color
 		{
-			get => _Color;
-			set => SetValue(value, ref _Color);
+			get => GetValue(() => Color.Transparent);
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -36,8 +28,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("visible")]
 		public bool Visible
 		{
-			get => _Visible;
-			set => SetValue(value, ref _Visible);
+			get => GetValue<bool>();
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -46,8 +38,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("text")]
 		public string Text
 		{
-			get => _Text;
-			set => SetValue(value, ref _Text);
+			get => GetValue<string>();
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -56,8 +48,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("fontSize")]
 		public int FontSize
 		{
-			get => _FontSize;
-			set => SetValue(value, ref _FontSize);
+			get => GetValue(() => 48);
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -66,8 +58,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("fontFamily")]
 		public string FontFamily
 		{
-			get => _FontFamily;
-			set => SetValue(value, ref _FontFamily);
+			get => GetValue(() => "-apple-system, BlinkMacSystemFont, 'Trebuchet MS', Roboto, Ubuntu, sans-serif");
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -76,8 +68,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("fontStyle")]
 		public string FontStyle
 		{
-			get => _FontStyle;
-			set => SetValue(value, ref _FontStyle);
+			get => GetValue<string>();
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -86,8 +78,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("horzAlign")]
 		public HorizontalAlignment HorizontalAlignment
 		{
-			get => _HorizontalAlignment;
-			set => SetValue(value, ref _HorizontalAlignment);
+			get => GetValue(() => HorizontalAlignment.Center);
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -96,8 +88,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("vertAlign")]
 		public VerticalAlignment VerticalAlignment
 		{
-			get => _VerticalAlignment;
-			set => SetValue(value, ref _VerticalAlignment);
+			get => GetValue(() => VerticalAlignment.Center);
+			set => SetValue(value);
 		}
 	}
 }

@@ -10,25 +10,17 @@ namespace LightweightCharts.Blazor.Customization.Chart
 	/// Visible and AutoScale are implemented in <see cref="PriceScaleOptions"/>.<br/>
 	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/PriceScaleOptions"/>
 	/// </summary>
-	public class BasePriceScaleOptions : BaseModel
+	[JsonConverter(typeof(JsonOptionsObjectConverter<BasePriceScaleOptions>))]
+	public class BasePriceScaleOptions : JsonOptionsObject
 	{
-		PriceScaleMode _Mode = PriceScaleMode.Normal;
-		bool _InvertScale;
-		bool _AlignLabels = true;
-		bool _BorderVisible = true;
-		Color _BorderColor = Extensions.ParseHtmlCode("#2B2B43");
-		PriceScaleMargins _ScaleMargins = new();
-		bool _EntireTextOnly;
-		bool _TicksVisible;
-
 		/// <summary>
 		/// Price scale mode.
 		/// </summary>
 		[JsonPropertyName("mode")]
 		public PriceScaleMode Mode
 		{
-			get => _Mode;
-			set => SetValue(value, ref _Mode);
+			get => GetValue(() => PriceScaleMode.Normal);
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -38,8 +30,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("invertScale")]
 		public bool InvertScale
 		{
-			get => _InvertScale;
-			set => SetValue(value, ref _InvertScale);
+			get => GetValue<bool>();
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -48,8 +40,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("alignLabels")]
 		public bool AlignLabels
 		{
-			get => _AlignLabels;
-			set => SetValue(value, ref _AlignLabels);
+			get => GetValue(() => true);
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -58,8 +50,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("scaleMargins")]
 		public PriceScaleMargins ScaleMargins
 		{
-			get => _ScaleMargins;
-			set => SetValue(value, ref _ScaleMargins);
+			get => GetValue(() => new PriceScaleMargins());
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -68,8 +60,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("borderVisible")]
 		public bool BorderVisible
 		{
-			get => _BorderVisible;
-			set => SetValue(value, ref _BorderVisible);
+			get => GetValue(() => true);
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -79,8 +71,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonConverter(typeof(JsonColorConverter))]
 		public Color BorderColor
 		{
-			get => _BorderColor;
-			set => SetValue(value, ref _BorderColor);
+			get => GetValue(() => Extensions.ParseHtmlCode("#2B2B43"));
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -89,8 +81,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("entireTextOnly")]
 		public bool EntireTextOnly
 		{
-			get => _EntireTextOnly;
-			set => SetValue(value, ref _EntireTextOnly);
+			get => GetValue<bool>();
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -99,8 +91,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("ticksVisible")]
 		public bool TicksVisible
 		{
-			get => _TicksVisible;
-			set => SetValue(value, ref _TicksVisible);
+			get => GetValue<bool>();
+			set => SetValue(value);
 		}
 	}
 }

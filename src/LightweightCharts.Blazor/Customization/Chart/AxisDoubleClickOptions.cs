@@ -6,19 +6,17 @@ namespace LightweightCharts.Blazor.Customization.Chart
 	/// Represents options for how the time and price axes react to mouse double click.
 	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/AxisDoubleClickOptions"/>
 	/// </summary>
-	public class AxisDoubleClickOptions : BaseModel
+	[JsonConverter(typeof(JsonOptionsObjectConverter<AxisDoubleClickOptions>))]
+	public class AxisDoubleClickOptions : JsonOptionsObject
 	{
-		bool _Time = true;
-		bool _Price = true;
-
 		/// <summary>
 		/// Enable resetting scaling the time axis by double-clicking the left mouse button.
 		/// </summary>
 		[JsonPropertyName("time")]
 		public bool Time
 		{
-			get => _Time;
-			set => SetValue(value, ref _Time);
+			get => GetValue(() => true);
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -27,8 +25,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("price")]
 		public bool Price
 		{
-			get => _Price;
-			set => SetValue(value, ref _Price);
+			get => GetValue(() => true);
+			set => SetValue(value);
 		}
 	}
 }

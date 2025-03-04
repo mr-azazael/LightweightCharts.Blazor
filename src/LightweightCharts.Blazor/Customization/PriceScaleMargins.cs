@@ -6,19 +6,17 @@ namespace LightweightCharts.Blazor.Customization
 	/// Defines margins of the price scale.<br/>
 	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/PriceScaleMargins"/>
 	/// </summary>
-	public class PriceScaleMargins : BaseModel
+	[JsonConverter(typeof(JsonOptionsObjectConverter<PriceScaleMargins>))]
+	public class PriceScaleMargins : JsonOptionsObject
 	{
-		double _Bottom;
-		double _Top;
-
 		/// <summary>
 		/// Bottom margin in percentages. Must be greater or equal to 0 and less than 1.
 		/// </summary>
 		[JsonPropertyName("bottom")]
 		public double Bottom
 		{
-			get => _Bottom;
-			set => SetValue(value, ref _Bottom);
+			get => GetValue<double>();
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -27,8 +25,8 @@ namespace LightweightCharts.Blazor.Customization
 		[JsonPropertyName("top")]
 		public double Top
 		{
-			get => _Top;
-			set => SetValue(value, ref _Top);
+			get => GetValue<double>();
+			set => SetValue(value);
 		}
 	}
 }

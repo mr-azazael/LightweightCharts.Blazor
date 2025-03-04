@@ -11,25 +11,9 @@ namespace LightweightCharts.Blazor.Customization.Series
 	/// Represents style options for an area series.<br/>
 	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/AreaStyleOptions"/>
 	/// </summary>
+	[JsonConverter(typeof(JsonOptionsObjectConverter<AreaStyleOptions>))]
 	public class AreaStyleOptions : SeriesOptionsCommon
 	{
-		Color _TopColor = Color.FromArgb(Convert.ToInt32(255 * 0.4), 46, 220, 135);
-		Color _BottomColor = Color.FromArgb(Convert.ToInt32(255 * 0), 40, 221, 100);
-		bool _InvertFilledArea;
-		Color _LineColor = Extensions.ParseHtmlCode("#33D778");
-		LineStyle _LineStyle = LineStyle.Solid;
-		int _LineWidth = 3;
-		LineType _LineType = LineType.Simple;
-		bool _LineVisible = true;
-		bool _PointMarkersVisible;
-		int? _PointMarkersRadius;
-		bool _CrosshairMarkerVisible = true;
-		int _CrosshairMarkerRadius = 4;
-		Color? _CrosshairMarkerBorderColor;
-		Color? _CrosshairMarkerBackgroundColor;
-		int _CrosshairMarkerBorderWidth = 2;
-		LastPriceAnimationMode _LastPriceAnimation = LastPriceAnimationMode.Disabled;
-
 		/// <summary>
 		/// Color of the top part of the area.
 		/// </summary>
@@ -37,8 +21,8 @@ namespace LightweightCharts.Blazor.Customization.Series
 		[JsonConverter(typeof(JsonColorConverter))]
 		public Color TopColor
 		{
-			get => _TopColor;
-			set => SetValue(value, ref _TopColor);
+			get => GetValue(() => Color.FromArgb(Convert.ToInt32(255 * 0.4), 46, 220, 135));
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -48,8 +32,8 @@ namespace LightweightCharts.Blazor.Customization.Series
 		[JsonConverter(typeof(JsonColorConverter))]
 		public Color BottomColor
 		{
-			get => _BottomColor;
-			set => SetValue(value, ref _BottomColor);
+			get => GetValue(() => Color.FromArgb(Convert.ToInt32(255 * 0), 40, 221, 100));
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -58,8 +42,8 @@ namespace LightweightCharts.Blazor.Customization.Series
 		[JsonPropertyName("invertFilledArea")]
 		public bool InvertFilledArea
 		{
-			get => _InvertFilledArea;
-			set => SetValue(value, ref _InvertFilledArea);
+			get => GetValue<bool>();
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -69,8 +53,8 @@ namespace LightweightCharts.Blazor.Customization.Series
 		[JsonConverter(typeof(JsonColorConverter))]
 		public Color LineColor
 		{
-			get => _LineColor;
-			set => SetValue(value, ref _LineColor);
+			get => GetValue(() => Extensions.ParseHtmlCode("#33D778"));
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -79,8 +63,8 @@ namespace LightweightCharts.Blazor.Customization.Series
 		[JsonPropertyName("lineStyle")]
 		public LineStyle LineStyle
 		{
-			get => _LineStyle;
-			set => SetValue(value, ref _LineStyle);
+			get => GetValue(() => LineStyle.Solid);
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -89,8 +73,8 @@ namespace LightweightCharts.Blazor.Customization.Series
 		[JsonPropertyName("lineWidth")]
 		public int LineWidth
 		{
-			get => _LineWidth;
-			set => SetValue(value, ref _LineWidth);
+			get => GetValue(() => 3);
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -99,8 +83,8 @@ namespace LightweightCharts.Blazor.Customization.Series
 		[JsonPropertyName("lineType")]
 		public LineType LineType
 		{
-			get => _LineType;
-			set => SetValue(value, ref _LineType);
+			get => GetValue(() => LineType.Simple);
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -109,8 +93,8 @@ namespace LightweightCharts.Blazor.Customization.Series
 		[JsonPropertyName("lineVisible")]
 		public bool LineVisible
 		{
-			get => _LineVisible;
-			set => SetValue(value, ref _LineVisible);
+			get => GetValue(() => true);
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -119,8 +103,8 @@ namespace LightweightCharts.Blazor.Customization.Series
 		[JsonPropertyName("pointMarkersVisible")]
 		public bool PointMarkersVisible
 		{
-			get => _PointMarkersVisible;
-			set => SetValue(value, ref _PointMarkersVisible);
+			get => GetValue<bool>();
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -129,8 +113,8 @@ namespace LightweightCharts.Blazor.Customization.Series
 		[JsonPropertyName("pointMarkersRadius")]
 		public int? PointMarkersRadius
 		{
-			get => _PointMarkersRadius;
-			set => SetValue(value, ref _PointMarkersRadius);
+			get => GetValue<int?>();
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -139,8 +123,8 @@ namespace LightweightCharts.Blazor.Customization.Series
 		[JsonPropertyName("crosshairMarkerVisible")]
 		public bool CrosshairMarkerVisible
 		{
-			get => _CrosshairMarkerVisible;
-			set => SetValue(value, ref _CrosshairMarkerVisible);
+			get => GetValue(() => true);
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -149,8 +133,8 @@ namespace LightweightCharts.Blazor.Customization.Series
 		[JsonPropertyName("crosshairMarkerRadius")]
 		public int CrosshairMarkerRadius
 		{
-			get => _CrosshairMarkerRadius;
-			set => SetValue(value, ref _CrosshairMarkerRadius);
+			get => GetValue(() => 4);
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -160,8 +144,8 @@ namespace LightweightCharts.Blazor.Customization.Series
 		[JsonConverter(typeof(JsonOptionalColorConverter))]
 		public Color? CrosshairMarkerBorderColor
 		{
-			get => _CrosshairMarkerBorderColor;
-			set => SetValue(value, ref _CrosshairMarkerBorderColor);
+			get => GetValue<Color?>();
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -171,8 +155,8 @@ namespace LightweightCharts.Blazor.Customization.Series
 		[JsonConverter(typeof(JsonOptionalColorConverter))]
 		public Color? CrosshairMarkerBackgroundColor
 		{
-			get => _CrosshairMarkerBackgroundColor;
-			set => SetValue(value, ref _CrosshairMarkerBackgroundColor);
+			get => GetValue<Color?>();
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -181,8 +165,8 @@ namespace LightweightCharts.Blazor.Customization.Series
 		[JsonPropertyName("crosshairMarkerBorderWidth")]
 		public int CrosshairMarkerBorderWidth
 		{
-			get => _CrosshairMarkerBorderWidth;
-			set => SetValue(value, ref _CrosshairMarkerBorderWidth);
+			get => GetValue(() => 2);
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -191,8 +175,8 @@ namespace LightweightCharts.Blazor.Customization.Series
 		[JsonPropertyName("lastPriceAnimation")]
 		public LastPriceAnimationMode LastPriceAnimation
 		{
-			get => _LastPriceAnimation;
-			set => SetValue(value, ref _LastPriceAnimation);
+			get => GetValue(() => LastPriceAnimationMode.Disabled);
+			set => SetValue(value);
 		}
 	}
 }

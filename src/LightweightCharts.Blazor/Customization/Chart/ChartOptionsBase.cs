@@ -6,33 +6,17 @@ namespace LightweightCharts.Blazor.Customization.Chart
 	/// Structure describing options of the chart. Series options are to be set separately.<br/>
 	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ChartOptionsBase"/>
 	/// </summary>
-	public class ChartOptionsBase : BaseModel
+	[JsonConverter(typeof(JsonOptionsObjectConverter<ChartOptionsBase>))]
+	public class ChartOptionsBase : JsonOptionsObject
 	{
-		double _Width;
-		double _Height;
-		bool _AutoSize;
-		WatermarkOptions _Watermark = new();
-		LayoutOptions _Layout = new();
-		PriceScaleOptions _LeftPriceScale = new();
-		PriceScaleOptions _RightPriceScale = new();
-		BasePriceScaleOptions _OverlayPriceScale = new();
-		TimeScaleOptions _TimeScale = new();
-		CrosshairOptions _Crosshair = new();
-		GridOptions _Grid = new();
-		HandleScrollOptions _HandleScroll = new();
-		HandleScaleOptions _HandleScale = new();
-		KineticScrollOptions _KineticScroll = new();
-		TrackingModeOptions _TrackingMode = new();
-		LocalizationOptions _Localization = new();
-
 		/// <summary>
 		/// Width of the chart in pixels.
 		/// </summary>
 		[JsonPropertyName("width")]
 		public double Width
 		{
-			get => _Width;
-			set => SetValue(value, ref _Width);
+			get => GetValue<double>();
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -41,8 +25,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("height")]
 		public double Height
 		{
-			get => _Height;
-			set => SetValue(value, ref _Height);
+			get => GetValue<double>();
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -57,8 +41,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("autoSize")]
 		public bool AutoSize
 		{
-			get => _AutoSize;
-			set => SetValue(value, ref _AutoSize);
+			get => GetValue<bool>();
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -70,8 +54,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("watermark")]
 		public WatermarkOptions Watermark
 		{
-			get => _Watermark;
-			set => SetValue(value, ref _Watermark);
+			get => GetValue(() => new WatermarkOptions());
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -80,8 +64,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("layout")]
 		public LayoutOptions Layout
 		{
-			get => _Layout;
-			set => SetValue(value, ref _Layout);
+			get => GetValue(() => new LayoutOptions());
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -90,8 +74,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("leftPriceScale")]
 		public PriceScaleOptions LeftPriceScale
 		{
-			get => _LeftPriceScale;
-			set => SetValue(value, ref _LeftPriceScale);
+			get => GetValue(() => new PriceScaleOptions());
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -100,8 +84,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("rightPriceScale")]
 		public PriceScaleOptions RightPriceScale
 		{
-			get => _RightPriceScale;
-			set => SetValue(value, ref _RightPriceScale);
+			get => GetValue(() => new PriceScaleOptions());
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -110,8 +94,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("overlayPriceScales")]
 		public BasePriceScaleOptions OverlayPriceScale
 		{
-			get => _OverlayPriceScale;
-			set => SetValue(value, ref _OverlayPriceScale);
+			get => GetValue(() => new BasePriceScaleOptions());
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -120,8 +104,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("timeScale")]
 		public TimeScaleOptions TimeScale
 		{
-			get => _TimeScale;
-			set => SetValue(value, ref _TimeScale);
+			get => GetValue(() => new TimeScaleOptions());
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -130,8 +114,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("crosshair")]
 		public CrosshairOptions Crosshair
 		{
-			get => _Crosshair;
-			set => SetValue(value, ref _Crosshair);
+			get => GetValue(() => new CrosshairOptions());
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -140,8 +124,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("grid")]
 		public GridOptions Grid
 		{
-			get => _Grid;
-			set => SetValue(value, ref _Grid);
+			get => GetValue(() => new GridOptions());
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -150,8 +134,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("handleScroll")]
 		public HandleScrollOptions HandleScroll
 		{
-			get => _HandleScroll;
-			set => SetValue(value, ref _HandleScroll);
+			get => GetValue(() => new HandleScrollOptions());
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -160,8 +144,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("handleScale")]
 		public HandleScaleOptions HandleScale
 		{
-			get => _HandleScale;
-			set => SetValue(value, ref _HandleScale);
+			get => GetValue(() => new HandleScaleOptions());
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -170,8 +154,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("kineticScroll")]
 		public KineticScrollOptions KineticScroll
 		{
-			get => _KineticScroll;
-			set => SetValue(value, ref _KineticScroll);
+			get => GetValue(() => new KineticScrollOptions());
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -183,8 +167,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("trackingMode")]
 		public TrackingModeOptions TrackingMode
 		{
-			get => _TrackingMode;
-			set => SetValue(value, ref _TrackingMode);
+			get => GetValue(() => new TrackingModeOptions());
+			set => SetValue(value);
 		}
 
 		/// <summary>
@@ -193,8 +177,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("localization")]
 		public LocalizationOptions Localization
 		{
-			get => _Localization;
-			set => SetValue(value, ref _Localization);
+			get => GetValue(() => new LocalizationOptions());
+			set => SetValue(value);
 		}
 	}
 }
