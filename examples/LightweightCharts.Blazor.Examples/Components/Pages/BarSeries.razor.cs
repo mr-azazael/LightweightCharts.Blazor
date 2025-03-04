@@ -48,13 +48,24 @@ partial class BarSeries
 			return;
 
 		await _ChartComponent.InitializationCompleted;
+		await _ChartComponent.ApplyOptions(new Customization.Chart.ChartOptionsBase
+		{
+			Localization = new Customization.Chart.LocalizationOptions
+			{
+				TimeFormatter = new Customization.JsDelegate("javascriptHelpers.customTimeFormatter")
+			}
+		});
 		var series = await _ChartComponent.AddBarSeriesAsync(new Customization.Series.BarStyleOptions
 		{
 			ThinBars = false
 		});
 
 		var timeScale = await _ChartComponent.TimeScaleAsync();
-		await JsRuntime.InvokeVoidAsync("javascriptHelpers.setTimeScaleTickMarkFormatter", timeScale.JsObjectReference);
+		await timeScale.ApplyOptions(new Customization.Chart.TimeScaleOptions
+		{
+			TimeVisible = true,
+			TickMarkFormatter = new Customization.JsDelegate("customTimeScaleTickMarkFormatter")
+		});
 
 		_ = Run(series, timeScale);
 	}

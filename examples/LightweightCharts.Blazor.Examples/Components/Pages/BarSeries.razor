@@ -6,3 +6,10 @@
 <PageTitle>Live Bar Series & Timescale Formatter</PageTitle>
 
 <ChartComponent @ref=ChartComponent />
+
+<script>
+	function customTimeScaleTickMarkFormatter(time, type, locale) {
+		var date = new Date(time * 1000);
+		return date.toLocaleString(locale, { day: 'numeric', month: 'short' });
+	}
+</script>

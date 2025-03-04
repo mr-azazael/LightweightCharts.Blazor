@@ -1,12 +1,4 @@
 ﻿window.javascriptHelpers = {
-	setTimeScaleTickMarkFormatter: function (timeScale) {
-		timeScale.applyOptions({
-			tickMarkFormatter: (time, type, locale) => {
-				var date = new Date(time * 1000);
-				return 'D/M: ' + date.toLocaleString(locale, { day: 'numeric', month: 'short' });
-			}
-		})
-	},
 	setAutoscaleInfoProvider: function (series) {
 		series.applyOptions({
 			autoscaleInfoProvider: () => ({
@@ -20,5 +12,9 @@
 				}
 			})
 		})
+	},
+	customTimeFormatter: function (time) {
+		var date = new Date(time * 1000);
+		return 'cross at: ' + date.toLocaleTimeString(navigator.language, { hour: 'numeric', minute: 'numeric' });
 	}
 };
