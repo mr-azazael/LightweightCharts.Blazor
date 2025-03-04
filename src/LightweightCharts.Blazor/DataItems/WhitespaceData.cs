@@ -14,7 +14,7 @@ namespace LightweightCharts.Blazor.DataItems
 		DateTime _Time;
 
 		/// <summary>
-		/// The time of the data in unix format.
+		/// <inheritdoc/>
 		/// </summary>
 		[JsonPropertyName("time")]
 		public long UnixTime
@@ -29,7 +29,7 @@ namespace LightweightCharts.Blazor.DataItems
 		}
 
 		/// <summary>
-		/// The time of the data as a <see cref="DateTime"/>.
+		/// <inheritdoc/>
 		/// </summary>
 		[JsonIgnore]
 		public DateTime Time

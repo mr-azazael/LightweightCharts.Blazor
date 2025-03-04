@@ -8,7 +8,7 @@ namespace LightweightCharts.Blazor.Series
 	{
 		public ISeriesApi Parent { get; }
 
-		internal PriceLine(IJSObjectReference jsObject, ISeriesApi parent) : base(jsObject)
+		internal PriceLine(IJSRuntime jsRuntime, IJSObjectReference jsObject, ISeriesApi parent) : base(jsRuntime, jsObject)
 		{
 			Parent = parent;
 		}

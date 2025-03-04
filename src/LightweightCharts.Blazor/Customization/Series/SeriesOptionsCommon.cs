@@ -156,7 +156,17 @@ namespace LightweightCharts.Blazor.Customization.Series
 			set => SetValue(value);
 		}
 
-#warning todo
-		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/SeriesOptionsCommon#autoscaleinfoprovider"/>
+		/// <summary>
+		/// Override the default AutoscaleInfo provider.<br/>
+		/// By default, the chart scales data automatically based on visible data range.<br/>
+		/// However, for some reasons one could require overriding this behavior.<br/>
+		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/type-aliases/AutoscaleInfoProvider"/>
+		/// </summary>
+		[JsonPropertyName("autoscaleInfoProvider")]
+		public JsDelegate AutoscaleInfoProvider
+		{
+			get => GetValue<JsDelegate>();
+			set => SetValue(value);
+		}
 	}
 }

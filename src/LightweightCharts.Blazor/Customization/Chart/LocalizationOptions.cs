@@ -31,5 +31,40 @@ namespace LightweightCharts.Blazor.Customization.Chart
 			get => GetValue(() => "dd MMM \'yy");
 			set => SetValue(value);
 		}
+
+		/// <summary>
+		/// Override formatting of the time scale crosshair label.<br/>
+		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/type-aliases/TimeFormatterFn"/>
+		/// </summary>
+		[JsonPropertyName("timeFormatter")]
+		public JsDelegate TimeFormatter
+		{
+			get => GetValue<JsDelegate>();
+			set => SetValue(value);
+		}
+
+		/// <summary>
+		/// Override formatting of the price scale tick marks, labels and crosshair labels.<br/>
+		/// Can be used for cases that can't be covered with built-in price formats.<br/>
+		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/type-aliases/PriceFormatterFn"/>
+		/// </summary>
+		[JsonPropertyName("priceFormatter")]
+		public JsDelegate PriceFormatter
+		{
+			get => GetValue<JsDelegate>();
+			set => SetValue(value);
+		}
+
+		/// <summary>
+		/// Override formatting of the percentage scale tick marks, labels and crosshair labels.<br/>
+		/// Can be used for cases that can't be covered with built-in percentage format.<br/>
+		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/type-aliases/PercentageFormatterFn"/>
+		/// </summary>
+		[JsonPropertyName("percentageFormatter")]
+		public JsDelegate PercentageFormatter
+		{
+			get => GetValue<JsDelegate>();
+			set => SetValue(value);
+		}
 	}
 }

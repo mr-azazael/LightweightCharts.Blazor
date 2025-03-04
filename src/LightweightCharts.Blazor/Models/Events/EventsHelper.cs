@@ -54,7 +54,7 @@ namespace LightweightCharts.Blazor.Models.Events
 				//create event wrapper and subscribe it to event
 				var eventHandler = new EventData<T>(this);
 				var dotnetRef = DotNetObjectReference.Create(eventHandler);
-				eventHandler.JavascriptCallback = await _JsRuntime.InvokeAsync<IJSObjectReference>("LightweightChartsBlazor.subscribeToEvent", _Target.JsObjectReference, dotnetRef, descriptor.SubscribeMethod, "RaiseEvent");
+				eventHandler.JavascriptCallback = await JsModule.SubscribeToEvent(_JsRuntime, _Target.JsObjectReference, dotnetRef, descriptor, "RaiseEvent");
 				_Events[descriptor] = eventHandler;
 			}
 
@@ -75,7 +75,7 @@ namespace LightweightCharts.Blazor.Models.Events
 			if (_Events[descriptor].Count == 0)
 			{
 				//unsubscribe if the invocation list is empty
-				await _JsRuntime.InvokeVoidAsync("LightweightChartsBlazor.unsubscribeFromEvent", _Target.JsObjectReference, _Events[descriptor].JavascriptCallback, descriptor.UnsubscribeMethod);
+				await JsModule.UnsubscribeFromEvent(_JsRuntime, _Target.JsObjectReference, _Events[descriptor].JavascriptCallback, descriptor);
 				_Events.Remove(descriptor);
 			}
 		}
@@ -85,7 +85,7 @@ namespace LightweightCharts.Blazor.Models.Events
 			await Task.WhenAll(_Events.Select(async descriptor =>
 			{
 				//unregister all events
-				await _JsRuntime.InvokeVoidAsync("LightweightChartsBlazor.unsubscribeFromEvent", _Target.JsObjectReference, descriptor.Value.JavascriptCallback, descriptor.Key.UnsubscribeMethod);
+				await JsModule.UnsubscribeFromEvent(_JsRuntime, _Target.JsObjectReference, descriptor.Value.JavascriptCallback, descriptor.Key);
 			}));
 
 			_Events.Clear();

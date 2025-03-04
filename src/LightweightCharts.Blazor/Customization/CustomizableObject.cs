@@ -22,20 +22,23 @@ namespace LightweightCharts.Blazor.Customization
 
 	internal abstract class CustomizableObject<O> : ICustomizableObject<O> where O : class, new()
 	{
-		public CustomizableObject(IJSObjectReference jsObjectReference)
+		public CustomizableObject(IJSRuntime jsRuntime, IJSObjectReference jsObjectReference)
 		{
+			JsRuntime = jsRuntime;
 			JsObjectReference = jsObjectReference;
 		}
 
 		protected virtual string _GetOptionsMethod => "options";
 		protected virtual string _SetOptionsMethod => "applyOptions";
 
+		public IJSRuntime JsRuntime { get; }
+
 		public IJSObjectReference JsObjectReference { get; }
 
 		public async Task<O> Options()
-			=> await JsObjectReference.InvokeAsync<O>(_GetOptionsMethod);
+			=> await JsModule.InvokeAsync<O>(JsRuntime, JsObjectReference, _GetOptionsMethod);
 
 		public async Task ApplyOptions(O options)
-			=> await JsObjectReference.InvokeVoidAsync(_SetOptionsMethod, options ?? new O());
+			=> await JsModule.InvokeVoidAsync(JsRuntime, JsObjectReference, _SetOptionsMethod, true, options ?? new O());
 	}
 }

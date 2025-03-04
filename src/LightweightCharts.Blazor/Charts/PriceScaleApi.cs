@@ -20,8 +20,8 @@ namespace LightweightCharts.Blazor.Charts
 
 	internal class PriceScaleApi : CustomizableObject<PriceScaleOptions>, IPriceScaleApi
 	{
-		public PriceScaleApi(IJSObjectReference jsObjectReference)
-			: base(jsObjectReference) { }
+		public PriceScaleApi(IJSRuntime jsRuntime, IJSObjectReference jsObjectReference)
+			: base(jsRuntime, jsObjectReference) { }
 
 		public async Task<double> Width()
 			=> await JsObjectReference.InvokeAsync<double>("width");

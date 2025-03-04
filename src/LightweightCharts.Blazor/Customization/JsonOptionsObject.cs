@@ -177,20 +177,9 @@ namespace LightweightCharts.Blazor.Customization
 				foreach (var (name, value) in instance._Properties)
 				{
 #if DEBUG
-					if (value is JsonOptionsObject)
-					{
-						var converter = value.GetType().GetCustomAttribute<JsonConverterAttribute>();
-						if (converter == null)
-							throw new InvalidOperationException("Custom converter expected");
-
-						if (converter.ConverterType.GetGenericTypeDefinition() != typeof(JsonOptionsObjectConverter<>))
-							throw new InvalidOperationException("Custom converter expected");
-
-						if (converter.ConverterType.GetGenericArguments()[0] != value.GetType())
-							throw new InvalidOperationException("Custom converter for the given type expected");
-					}
+					if (value is JsonOptionsObject jsonOptions)
+						ValidateConverterAttribute(jsonOptions);
 #endif
-
 					var property = metadata.GetPropertyByRuntimeName(name);
 					writer.WritePropertyName(property.JsonName);
 					if (property.PropertyConverter == null)
@@ -255,6 +244,20 @@ namespace LightweightCharts.Blazor.Customization
 		{
 			ArgumentException.ThrowIfNullOrEmpty(propertyName);
 			return _Properties.Remove(propertyName, out value);
+		}
+
+		internal static void ValidateConverterAttribute(JsonOptionsObject target)
+		{
+			var type = target.GetType();
+			var converter = type.GetCustomAttribute<JsonConverterAttribute>();
+			if (converter == null)
+				throw new InvalidOperationException("Custom converter expected");
+
+			if (converter.ConverterType.GetGenericTypeDefinition() != typeof(JsonOptionsObjectConverter<>))
+				throw new InvalidOperationException("Custom converter expected");
+
+			if (converter.ConverterType.GetGenericArguments()[0] != target.GetType())
+				throw new InvalidOperationException("Custom converter for the given type expected");
 		}
 	}
 }

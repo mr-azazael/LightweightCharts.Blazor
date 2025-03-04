@@ -20,8 +20,8 @@ namespace LightweightCharts.Blazor.Series
 	internal class SeriesApi<O> : CustomizableObject<O>, ISeriesApi<O>, ISeriesApiInternal
 		where O : SeriesOptionsCommon, new()
 	{
-		internal SeriesApi(string uniqueId, IJSObjectReference jsObject, ChartComponent parent, params Type[] dataItemTypes)
-			: base(jsObject)
+		internal SeriesApi(string uniqueId, IJSRuntime jsRuntime, IJSObjectReference jsObject, ChartComponent parent, params Type[] dataItemTypes)
+			: base(jsRuntime, jsObject)
 		{
 			UniqueJavascriptId = uniqueId;
 			Parent = parent;
@@ -91,7 +91,7 @@ namespace LightweightCharts.Blazor.Series
 		public async Task<IPriceLine> CreatePriceLine(PriceLineOptions options)
 		{
 			var priceLineRef = await JsObjectReference.InvokeAsync<IJSObjectReference>("createPriceLine", options ?? new PriceLineOptions());
-			var priceLine = new PriceLine(priceLineRef, this);
+			var priceLine = new PriceLine(JsRuntime, priceLineRef, this);
 			_PriceLines.Add(priceLine);
 			return priceLine;
 		}
@@ -122,7 +122,7 @@ namespace LightweightCharts.Blazor.Series
 			if (_PriceScale == null)
 			{
 				var reference = await JsObjectReference.InvokeAsync<IJSObjectReference>("priceScale");
-				_PriceScale = new PriceScaleApi(reference);
+				_PriceScale = new PriceScaleApi(JsRuntime, reference);
 			}
 
 			return _PriceScale;

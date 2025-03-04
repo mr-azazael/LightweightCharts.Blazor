@@ -1,16 +1,20 @@
 /*download 'https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js' into lightweight-charts.standalone.js for release builds*/
 /*use 'https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.development.js' for debugging*/
 
-window.LightweightChartsBlazor = {
+window.lightweightChartsBlazor = {
 
 	createChartLayout: function (containerId, chartConfig) {
 		var container = document.getElementById(containerId);
 		return LightweightCharts.createChart(container, chartConfig);
 	},
-	lightweightChartsInvoke: async function (target, method /*args*/) {
-		var args = Array.prototype.slice.call(arguments, 2);
-		var result = target[method].apply(target, args);
+	lightweightChartsInvoke: async function (target, method, replaceDelegates /*args*/) {
+		var args = Array.prototype.slice.call(arguments, 3);
+		if (replaceDelegates) {
+			for (let arg in args)
+				lightweightChartsBlazor.replaceJsDelegates(args[arg]);
+		}
 
+		var result = target[method].apply(target, args);
 		if (typeof result === 'object' && typeof result.then === 'function')
 			result = await result;
 
@@ -81,5 +85,27 @@ window.LightweightChartsBlazor = {
 		}
 
 		return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+	},
+	replaceJsDelegates: function (target) {
+		if (!target)
+			return;
+
+		for (let property in target) {
+			let value = target[property];
+			if (!value)
+				continue;
+
+			let source = window;
+			if (value?.objectType === 'JsDelegate') {
+				const path = value.delegateName.split('.');
+				for (let token of path) {
+					//error if source is undefined
+					source = source[token];
+				}
+				target[property] = source;
+			}
+			else if (typeof value === 'object')
+				lightweightChartsBlazor.replaceJsDelegates(value);
+		}
 	}
 };

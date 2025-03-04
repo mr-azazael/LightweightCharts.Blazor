@@ -1,6 +1,5 @@
 ﻿using LightweightCharts.Blazor.Customization;
 using LightweightCharts.Blazor.Customization.Chart;
-using LightweightCharts.Blazor.Customization.Enums;
 using LightweightCharts.Blazor.Models;
 using LightweightCharts.Blazor.Models.Events;
 using Microsoft.JSInterop;
@@ -148,14 +147,19 @@ namespace LightweightCharts.Blazor.Charts
 		IJSObjectReference _JsObjectRef;
 		EventsHelper _EventsHelper;
 		ChartComponent _ChartLayout;
+		IJSRuntime _JsRuntime;
 
-		public IJSObjectReference JsObjectReference => _JsObjectRef;
-		public ChartComponent ChartLayout => _ChartLayout;
+		public IJSObjectReference JsObjectReference
+			=> _JsObjectRef;
+
+		public ChartComponent ChartLayout
+			=> _ChartLayout;
 
 		internal TimeScaleApi(ChartComponent chartlayout, IJSObjectReference jsObjectRef, IJSRuntime jsRuntime)
 		{
 			_ChartLayout = chartlayout;
 			_JsObjectRef = jsObjectRef;
+			_JsRuntime = jsRuntime;
 			_EventsHelper = new EventsHelper(this, jsRuntime);
 		}
 
@@ -209,10 +213,10 @@ namespace LightweightCharts.Blazor.Charts
 			=> await _JsObjectRef.InvokeVoidAsync("fitContent");
 
 		public async Task ApplyOptions(TimeScaleOptions options)
-			=> await _JsObjectRef.InvokeVoidAsync("applyOptions", options);
+			=> await JsModule.InvokeVoidAsync(_JsRuntime, _JsObjectRef, "applyOptions", true, options);
 
 		public async Task<TimeScaleOptions> Options()
-			=> await _JsObjectRef.InvokeAsync<TimeScaleOptions>("options");
+			=> await JsModule.InvokeAsync<TimeScaleOptions>(_JsRuntime, _JsObjectRef, "options");
 
 		public async Task<double?> TimeToCoordinate(long time)
 			=> await _JsObjectRef.InvokeAsync<double?>("timeToCoordinate", time);
