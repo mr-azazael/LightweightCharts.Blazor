@@ -68,7 +68,7 @@ namespace LightweightCharts.Blazor.Series
 		/// Sets or replaces series data.<br/>
 		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ISeriesApi#setdata"/>
 		/// </summary>
-		/// <param name="items">Ordered (earlier time point goes first) array of data items. Old data is fully replaced with the new one.</param>
+		/// <param name="data">Ordered (earlier time point goes first) array of data items. Old data is fully replaced with the new one.</param>
 		Task SetData(IEnumerable<ISeriesData> data);
 
 		/// <summary>

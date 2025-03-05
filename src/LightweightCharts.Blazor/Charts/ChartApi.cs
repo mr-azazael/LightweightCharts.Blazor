@@ -7,7 +7,7 @@ namespace LightweightCharts.Blazor.Charts
 	/// The main interface of a single chart using time for horizontal scale.<br/>
 	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/IChartApi"/>
 	/// </summary>
-	public interface IChartApi : IChartApiBase, ICustomizableObject<ChartOptionsBase>
+	public interface IChartApi : IChartApiBase, ICustomizableObject<ChartOptions>
 	{
 		
 	}

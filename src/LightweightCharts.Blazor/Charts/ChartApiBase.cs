@@ -123,14 +123,14 @@ namespace LightweightCharts.Blazor.Charts
 		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/IChartApiBase#applyoptions"/>
 		/// </summary>
 		/// <param name="options">Any subset of options.</param>
-		Task ApplyOptions(ChartOptionsBase options);
+		Task ApplyOptions(ChartOptions options);
 
 		/// <summary>
 		/// Returns currently applied options.<br/>
 		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/IChartApiBase#options"/>
 		/// </summary>
 		/// <returns>Full set of currently applied options, including defaults.</returns>
-		Task<ChartOptionsBase> Options();
+		Task<ChartOptions> Options();
 
 		/// <summary>
 		/// Make a screenshot of the chart with all the elements excluding crosshair.<br/>

@@ -2,6 +2,9 @@
 
 namespace LightweightCharts.Blazor
 {
+	/// <summary>
+	/// wrapper interface for a <see cref="IJSObjectReference"/>
+	/// </summary>
 	public interface IJsObjectWrapper
 	{
 		/// <summary>

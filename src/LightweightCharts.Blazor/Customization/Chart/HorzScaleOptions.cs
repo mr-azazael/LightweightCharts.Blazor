@@ -146,7 +146,7 @@ namespace LightweightCharts.Blazor.Customization.Chart
 
 		/// <summary>
 		/// Allow the visible range to be shifted to the right when a new bar is added which is replacing an existing whitespace time point on the chart.<br/>
-		/// Note that this only applies when the last bar is visible & shiftVisibleRangeOnNewBar is enabled.
+		/// Note that this only applies when the last bar is visible and shiftVisibleRangeOnNewBar is enabled.
 		/// </summary>
 		[JsonPropertyName("allowShiftVisibleRangeOnWhitespaceReplacement")]
 		public bool AllowShiftVisibleRangeOnWhitespaceReplacement

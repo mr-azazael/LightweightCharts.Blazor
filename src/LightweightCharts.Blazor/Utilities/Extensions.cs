@@ -3,6 +3,9 @@ using System.Drawing;
 
 namespace LightweightCharts.Blazor.Utilities
 {
+	/// <summary>
+	/// expension methods
+	/// </summary>
 	public static class Extensions
 	{
 		internal static void SetValue<T>(ref T field, T value, Action<T> propertyChanged)
@@ -15,9 +18,19 @@ namespace LightweightCharts.Blazor.Utilities
 			}
 		}
 
+		/// <summary>
+		/// unix timestamp to DateTime
+		/// </summary>
+		/// <param name="unixTime"></param>
+		/// <returns></returns>
 		public static DateTime UnixTimeToDateTime(long unixTime)
 			=> DateTimeOffset.FromUnixTimeSeconds(unixTime).DateTime;
 
+		/// <summary>
+		/// DateTime to unix timestamp
+		/// </summary>
+		/// <param name="dateTime"></param>
+		/// <returns></returns>
 		public static long DateTimeToUnixTime(DateTime dateTime)
 			=> new DateTimeOffset(dateTime).ToUnixTimeSeconds();
 

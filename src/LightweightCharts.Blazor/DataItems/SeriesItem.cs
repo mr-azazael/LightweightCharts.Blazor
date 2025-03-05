@@ -2,6 +2,9 @@
 
 namespace LightweightCharts.Blazor.DataItems
 {
+	/// <summary>
+	/// base interface for all <see cref="DateTime"/> data points
+	/// </summary>
 	public interface ISeriesData
 	{
 		/// <summary>

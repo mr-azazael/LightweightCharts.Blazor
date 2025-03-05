@@ -13,11 +13,19 @@ namespace LightweightCharts.Blazor.Models
 		DateTime _FromTime;
 		DateTime _ToTime;
 
+		/// <summary>
+		/// <inheritdoc/>
+		/// </summary>
+		/// <param name="obj"><inheritdoc/></param>
 		protected override void OnFromChanged(long obj)
 		{
 			_FromTime = DateTimeOffset.FromUnixTimeSeconds(_From).DateTime;
 		}
 
+		/// <summary>
+		/// <inheritdoc/>
+		/// </summary>
+		/// <param name="obj"><inheritdoc/></param>
 		protected override void OnToChanged(long obj)
 		{
 			_ToTime = DateTimeOffset.FromUnixTimeSeconds(_To).DateTime;

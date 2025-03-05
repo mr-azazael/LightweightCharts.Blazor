@@ -6,8 +6,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 	/// Structure describing options of the chart. Series options are to be set separately.<br/>
 	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ChartOptionsBase"/>
 	/// </summary>
-	[JsonConverter(typeof(JsonOptionsObjectConverter<ChartOptionsBase>))]
-	public class ChartOptionsBase : JsonOptionsObject
+	[JsonConverter(typeof(JsonOptionsObjectConverter<ChartOptions>))]
+	public class ChartOptions : JsonOptionsObject
 	{
 		/// <summary>
 		/// Width of the chart in pixels.

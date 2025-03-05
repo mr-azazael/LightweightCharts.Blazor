@@ -11,6 +11,9 @@ namespace LightweightCharts.Blazor.Customization.Chart
 	/// </summary>
 	public class VerticalGradientColor : Background
 	{
+		/// <summary>
+		/// <inheritdoc/>
+		/// </summary>
 		public override ColorType Type
 			=> ColorType.VerticalGradient;
 

@@ -29,6 +29,7 @@ namespace LightweightCharts.Blazor.Customization
 	/// <param name="PropertyName">runtime property name</param>
 	/// <param name="JsonName">json member name</param>
 	/// <param name="PropertyType">runtime property type</param>
+	/// <param name="PropertyConverter">wrapper for the converter decorated on the property</param>
 	file record PropertyMetadata(string PropertyName, string JsonName, Type PropertyType, IJsonPropertyConverter PropertyConverter);
 
 	/// <summary>

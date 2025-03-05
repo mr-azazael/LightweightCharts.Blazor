@@ -11,9 +11,24 @@ namespace LightweightCharts.Blazor.Customization.Enums
 	[JsonConverter(typeof(SeriesMarkerShapeConverter))]
 	public enum SeriesMarkerShape
 	{
+		/// <summary>
+		/// circle
+		/// </summary>
 		Circle,
+
+		/// <summary>
+		/// square
+		/// </summary>
 		Square,
+
+		/// <summary>
+		/// arrowUp
+		/// </summary>
 		ArrowUp,
+
+		/// <summary>
+		/// arrowDown
+		/// </summary>
 		ArrowDown
 	}
 

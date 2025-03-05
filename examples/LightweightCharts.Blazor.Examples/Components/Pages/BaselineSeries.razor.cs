@@ -47,7 +47,7 @@ partial class BaselineSeries
 			return;
 
 		await _ChartComponent.InitializationCompleted;
-		await _ChartComponent.ApplyOptions(new Customization.Chart.ChartOptionsBase
+		await _ChartComponent.ApplyOptions(new Customization.Chart.ChartOptions
 		{
 			LeftPriceScale = new Customization.Chart.PriceScaleOptions
 			{

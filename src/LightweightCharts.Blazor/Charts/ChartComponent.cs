@@ -179,7 +179,7 @@ namespace LightweightCharts.Blazor.Charts
 
 			if (firstRender)
 			{
-				_Layout = await JsModule.CreateChartLayout(JsRuntime, Id, new ChartOptionsBase());
+				_Layout = await JsModule.CreateChartLayout(JsRuntime, Id, new ChartOptions());
 				_EventsHelper = new EventsHelper(this, JsRuntime);
 
 				_EventsHelper.AddEvent<InternalMouseEventParams>(OnClicked, Events.Click);
@@ -193,16 +193,16 @@ namespace LightweightCharts.Blazor.Charts
 		/// <summary>
 		/// <inheritdoc cref="IChartApiBase.Options"/>
 		/// </summary>
-		public async Task<ChartOptionsBase> Options()
+		public async Task<ChartOptions> Options()
 		{
 			await InitializationCompleted;
-			return await JsModule.InvokeAsync<ChartOptionsBase>(JsRuntime, JsObjectReference, "options", false);
+			return await JsModule.InvokeAsync<ChartOptions>(JsRuntime, JsObjectReference, "options", false);
 		}
 
 		/// <summary>
 		/// <inheritdoc cref="IChartApiBase.ApplyOptions"/>
 		/// </summary>
-		public async Task ApplyOptions(ChartOptionsBase options)
+		public async Task ApplyOptions(ChartOptions options)
 		{
 			await InitializationCompleted;
 			await JsModule.InvokeVoidAsync(JsRuntime, _Layout, "applyOptions", true, options ?? new());

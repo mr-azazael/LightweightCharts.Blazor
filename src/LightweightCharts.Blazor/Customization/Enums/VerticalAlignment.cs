@@ -11,8 +11,19 @@ namespace LightweightCharts.Blazor.Customization.Chart
 	[JsonConverter(typeof(VerticalAlignmentConverter))]
 	public enum VerticalAlignment
 	{
+		/// <summary>
+		/// top
+		/// </summary>
 		Top,
+
+		/// <summary>
+		/// top
+		/// </summary>
 		Center,
+
+		/// <summary>
+		/// top
+		/// </summary>
 		Bottom
 	}
 

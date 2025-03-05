@@ -48,7 +48,7 @@ partial class BarSeries
 			return;
 
 		await _ChartComponent.InitializationCompleted;
-		await _ChartComponent.ApplyOptions(new Customization.Chart.ChartOptionsBase
+		await _ChartComponent.ApplyOptions(new Customization.Chart.ChartOptions
 		{
 			Localization = new Customization.Chart.LocalizationOptions
 			{

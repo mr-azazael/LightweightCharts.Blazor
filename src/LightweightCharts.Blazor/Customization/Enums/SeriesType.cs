@@ -10,11 +10,34 @@ namespace LightweightCharts.Blazor.Customization.Enums
 	[JsonConverter(typeof(SeriesTypeConverter))]
 	public enum SeriesType
 	{
+		/// <summary>
+		/// Line
+		/// </summary>
 		Line,
+
+		/// <summary>
+		/// Area
+		/// </summary>
 		Area,
+
+		/// <summary>
+		/// Bar
+		/// </summary>
 		Bar,
+
+		/// <summary>
+		/// Candlestick
+		/// </summary>
 		Candlestick,
+
+		/// <summary>
+		/// Histogram
+		/// </summary>
 		Histogram,
+
+		/// <summary>
+		/// Baseline
+		/// </summary>
 		Baseline
 	}
 

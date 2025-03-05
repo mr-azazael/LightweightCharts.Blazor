@@ -9,7 +9,13 @@ namespace LightweightCharts.Blazor.Models
 	/// </summary>
 	public class Range<T>
 	{
+		/// <summary>
+		/// backing field for <see cref="From"/> property
+		/// </summary>
 		protected T _From;
+		/// <summary>
+		/// backing field for <see cref="To"/> property
+		/// </summary>
 		protected T _To;
 
 		/// <summary>
@@ -22,6 +28,10 @@ namespace LightweightCharts.Blazor.Models
 			set => Extensions.SetValue(ref _From, value, OnFromChanged);
 		}
 
+		/// <summary>
+		/// change callback for <see cref="From"/>
+		/// </summary>
+		/// <param name="obj">old value</param>
 		protected virtual void OnFromChanged(T obj)
 		{
 
@@ -37,6 +47,10 @@ namespace LightweightCharts.Blazor.Models
 			set => Extensions.SetValue(ref _To, value, OnToChanged);
 		}
 
+		/// <summary>
+		/// change callback for <see cref="To"/>
+		/// </summary>
+		/// <param name="obj">old value</param>
 		protected virtual void OnToChanged(T obj)
 		{
 

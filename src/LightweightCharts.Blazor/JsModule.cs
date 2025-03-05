@@ -52,7 +52,7 @@ namespace LightweightCharts.Blazor
 			return jsRuntime.InvokeVoidAsync("lightweightChartsBlazor.lightweightChartsInvoke", javascriptArgs);
 		}
 
-		public static ValueTask<IJSObjectReference> CreateChartLayout(IJSRuntime jsRuntime, string id, ChartOptionsBase options)
+		public static ValueTask<IJSObjectReference> CreateChartLayout(IJSRuntime jsRuntime, string id, ChartOptions options)
 			=> jsRuntime.InvokeAsync<IJSObjectReference>("lightweightChartsBlazor.createChartLayout", id, options);
 
 		public static ValueTask<string> GetUniqueJavascriptId(IJSRuntime jsRuntime, IJSObjectReference jSObject)

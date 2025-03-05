@@ -6,7 +6,14 @@
 	/// </summary>
 	public enum DataChangedScope
 	{
+		/// <summary>
+		/// 
+		/// </summary>
 		Full,
+
+		/// <summary>
+		/// 
+		/// </summary>
 		Update
 	}
 }

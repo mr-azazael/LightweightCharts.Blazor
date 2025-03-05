@@ -11,6 +11,9 @@ namespace LightweightCharts.Blazor.Customization.Chart
 	/// </summary>
 	public class SolidColor : Background
 	{
+		/// <summary>
+		/// <inheritdoc/>
+		/// </summary>
 		public override ColorType Type
 			=> ColorType.Solid;
 

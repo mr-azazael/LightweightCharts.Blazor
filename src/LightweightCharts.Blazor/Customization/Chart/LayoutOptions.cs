@@ -18,7 +18,7 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonPropertyName("background")]
 		public Background Background
 		{
-			get => GetValue(() => new SolidColor { Color = Color.White });
+			get => GetValue<Background>(() => new SolidColor { Color = Color.White });
 			set => SetValue(value);
 		}
 

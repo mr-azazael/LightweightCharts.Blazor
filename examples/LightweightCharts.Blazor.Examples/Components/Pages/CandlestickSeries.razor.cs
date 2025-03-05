@@ -20,7 +20,7 @@ partial class CandlestickSeries
 	string _LastClickedId;
 	bool _InitChartComponent;
 	ChartComponent _ChartComponent;
-	ChartOptionsBase _Options;
+	ChartOptions _Options;
 
 	ChartComponent ChartComponent
 	{
@@ -74,7 +74,7 @@ partial class CandlestickSeries
 		_ChartComponent.Clicked += OnChartClicked;
 		_ChartComponent.CrosshairMoved += OnChartCrosshairMoved;
 
-		await _ChartComponent.ApplyOptions(new ChartOptionsBase
+		await _ChartComponent.ApplyOptions(new ChartOptions
 		{
 			Crosshair = new CrosshairOptions
 			{

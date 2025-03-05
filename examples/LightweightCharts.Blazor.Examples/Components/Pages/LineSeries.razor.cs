@@ -69,7 +69,7 @@ partial class LineSeries
 			return;
 
 		await _LineChartComponent.InitializationCompleted;
-		await _LineChartComponent.ApplyOptions(new Customization.Chart.ChartOptionsBase
+		await _LineChartComponent.ApplyOptions(new Customization.Chart.ChartOptions
 		{
 			LeftPriceScale = new Customization.Chart.PriceScaleOptions
 			{
@@ -122,7 +122,7 @@ partial class LineSeries
 			return;
 
 		await _AreaChartComponent.InitializationCompleted;
-		await _AreaChartComponent.ApplyOptions(new Customization.Chart.ChartOptionsBase
+		await _AreaChartComponent.ApplyOptions(new Customization.Chart.ChartOptions
 		{
 			LeftPriceScale = new Customization.Chart.PriceScaleOptions
 			{
