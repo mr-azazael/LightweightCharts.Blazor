@@ -10,6 +10,16 @@ namespace LightweightCharts.Blazor.Customization.Chart
 	public class TimeScaleOptions : HorzScaleOptions
 	{
 		/// <summary>
+		/// Allow major time scale labels to be rendered in a bolder font weight.
+		/// </summary>
+		[JsonPropertyName("allowBoldLabels")]
+		public bool AllowBoldLabels
+		{
+			get => GetValue(() => true);
+			set => SetValue(value);
+		}
+
+		/// <summary>
 		/// Tick marks formatter can be used to customize tick marks labels on the time axis.<br/>
 		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/type-aliases/TickMarkFormatter"/>
 		/// </summary>

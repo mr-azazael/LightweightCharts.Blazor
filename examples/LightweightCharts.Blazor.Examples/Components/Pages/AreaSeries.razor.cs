@@ -43,6 +43,10 @@ partial class AreaSeries
 		}));
 
 		var timeScale = await _ChartComponent.TimeScaleAsync();
+		await timeScale.ApplyOptions(new Customization.Chart.TimeScaleOptions
+		{
+			AllowBoldLabels = false
+		});
 		await timeScale.SetVisibleLogicalRange(new LogicalRange
 		{
 			From = -2,
