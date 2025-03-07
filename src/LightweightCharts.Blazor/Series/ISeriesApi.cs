@@ -1,9 +1,11 @@
 ﻿using LightweightCharts.Blazor.Charts;
 using LightweightCharts.Blazor.Customization;
+using LightweightCharts.Blazor.Customization.Chart;
 using LightweightCharts.Blazor.Customization.Enums;
 using LightweightCharts.Blazor.Customization.Series;
 using LightweightCharts.Blazor.DataItems;
 using LightweightCharts.Blazor.Models;
+using LightweightCharts.Blazor.Plugins;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -95,19 +97,6 @@ namespace LightweightCharts.Blazor.Series
 		Task<IEnumerable<ISeriesData>> Data();
 
 		/// <summary>
-		/// Allows to set/replace all existing series markers with new ones.<br/>
-		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ISeriesApi#setmarkers"/>
-		/// </summary>
-		/// <param name="markers">An array of series markers. This array should be sorted by time. Several markers with same time are allowed.</param>
-		Task SetMarkers(IEnumerable<SeriesMarker> markers);
-
-		/// <summary>
-		/// Returns an array of series markers.<br/>
-		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ISeriesApi#markers"/>
-		/// </summary>
-		Task<IEnumerable<SeriesMarker>> Markers();
-
-		/// <summary>
 		/// Creates a new price line.<br/>
 		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ISeriesApi#createpriceline"/>
 		/// </summary>
@@ -127,6 +116,40 @@ namespace LightweightCharts.Blazor.Series
 		/// </summary>
 		/// <returns>Type of the series.</returns>
 		Task<SeriesType> SeriesType();
+
+		/// <summary>
+		/// Move the series to another pane.<br/>
+		/// If the pane with the specified index does not exist, the pane will be created.<br/>
+		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ISeriesApi#movetopane"/>
+		/// </summary>
+		/// <param name="paneIndex">The index of the pane. Should be a number between 0 and the total number of panes.</param>
+		Task MoveToPane(int paneIndex);
+
+		/// <summary>
+		/// Returns the pane to which the series is currently attached.<br/>
+		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ISeriesApi#getpane"/>
+		/// </summary>
+		/// <returns>Pane API object to control the pane</returns>
+		Task<IPaneApi> GetPane();
+
+		#region plugins
+
+		/// <summary>
+		/// A function to create a series markers primitive.<br/>
+		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/functions/createSeriesMarkers"/>
+		/// </summary>
+		/// <param name="markers">An array of markers to be displayed on the series.</param>
+		ValueTask<ISeriesMarkersPluginApi> CreateSeriesMarkers(IEnumerable<SeriesMarker> markers);
+
+		/// <summary>
+		/// Creates and attaches the Series Up Down Markers Plugin.<br/>
+		/// Only works with Line and Area series, otherwise it throws an <see cref="InvalidOperationException"/>
+		/// </summary>
+		/// <param name="options">options for the Up Down Markers Plugin</param>
+		/// <returns>Api for Series Up Down Marker Plugin.</returns>
+		ValueTask<ISeriesUpDownMarkerPluginApi> CreateUpDownMarkers(UpDownMarkersPluginOptions options = null);
+
+		#endregion
 	}
 
 	/// <summary>

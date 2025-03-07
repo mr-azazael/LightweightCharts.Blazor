@@ -1,4 +1,5 @@
 ﻿using LightweightCharts.Blazor.Charts;
+using LightweightCharts.Blazor.Customization.Series;
 using LightweightCharts.Blazor.DataItems;
 using LightweightCharts.Blazor.Series;
 using System.Linq;
@@ -77,7 +78,7 @@ partial class LineSeries
 			}
 		});
 
-		_LineSeries = await _LineChartComponent.AddLineSeriesAsync();
+		_LineSeries = await _LineChartComponent.AddSeries(Customization.Enums.SeriesType.Line);
 		await _LineSeries.SetData(BtcUsdDataPoints.OneWeek.OrderBy(x => x.OpenTime).Select(x => new LineData
 		{
 			Time = x.OpenTime,
@@ -130,7 +131,7 @@ partial class LineSeries
 			}
 		});
 
-		_AreaSeries = await _AreaChartComponent.AddAreaSeriesAsync();
+		_AreaSeries = await _AreaChartComponent.AddSeries(Customization.Enums.SeriesType.Area);
 		await _AreaSeries.SetData(BtcUsdDataPoints.OneWeek.OrderBy(x => x.OpenTime).Select(x => new AreaData
 		{
 			Time = x.OpenTime,

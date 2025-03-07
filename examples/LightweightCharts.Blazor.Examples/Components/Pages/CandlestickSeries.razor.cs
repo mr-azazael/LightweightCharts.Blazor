@@ -55,7 +55,7 @@ partial class CandlestickSeries
 	{
 		await base.OnAfterRenderAsync(firstRender);
 
-		if(_InitChartComponent)
+		if (_InitChartComponent)
 		{
 			_InitChartComponent = false;
 			await InitializeChartComponent();
@@ -80,10 +80,6 @@ partial class CandlestickSeries
 			{
 				Mode = CrosshairMode.Normal
 			},
-			LeftPriceScale = new PriceScaleOptions
-			{
-				Visible = false
-			},
 			RightPriceScale = new PriceScaleOptions
 			{
 				ScaleMargins = new Customization.PriceScaleMargins
@@ -98,6 +94,13 @@ partial class CandlestickSeries
 				{
 					Bottom = 0,
 					Top = 0.9d
+				}
+			},
+			Layout = new LayoutOptions
+			{
+				Panes = new LayoutPanesOptions
+				{
+					SeparatorColor = Color.Gray
 				}
 			}
 		});
@@ -115,7 +118,7 @@ partial class CandlestickSeries
 
 	async Task SetupCandlestickSeries()
 	{
-		_Candlestick = await _ChartComponent.AddCandlestickSeriesAsync();
+		_Candlestick = (ISeriesApi<CandlestickStyleOptions>)await _ChartComponent.AddSeries(SeriesType.Candlestick);
 		await _Candlestick.SetData(BtcUsdDataPoints.OneWeek.OrderBy(x => x.OpenTime).Select(x => new CandlestickData
 		{
 			Time = x.OpenTime,
@@ -131,7 +134,7 @@ partial class CandlestickSeries
 		var minClose = BtcUsdDataPoints.OneWeek.OrderBy(x => x.ClosePrice).First();
 		var maxClose = BtcUsdDataPoints.OneWeek.OrderByDescending(x => x.ClosePrice).First();
 
-		await _Candlestick.SetMarkers(new SeriesMarker[]
+		await _Candlestick.CreateSeriesMarkers(new SeriesMarker[]
 		{
 			new SeriesMarker
 			{
@@ -178,12 +181,13 @@ partial class CandlestickSeries
 
 	async Task SetupHistogramSeries()
 	{
-		_Histogram = await _ChartComponent.AddHistogramSeriesAsync(new HistogramStyleOptions
+		_Histogram = await _ChartComponent.AddSeries(SeriesType.Histogram, new HistogramStyleOptions
 		{
-			PriceScaleId = "overlay",
+			//PriceScaleId = "left",
 			PriceLineVisible = false,
 			LastValueVisible = false
 		});
+		await _Histogram.MoveToPane(1);
 		await _Histogram.SetData(BtcUsdDataPoints.OneWeek.OrderBy(x => x.OpenTime).Select(x => new HistogramData
 		{
 			Time = x.OpenTime,

@@ -25,6 +25,17 @@ namespace LightweightCharts.Blazor.Customization.Series
 		}
 
 		/// <summary>
+		/// Gradient is relative to the base value and the currently visible range.<br/>
+		/// If it is false, the gradient is relative to the top and bottom of the chart.
+		/// </summary>
+		[JsonPropertyName("relativeGradient")]
+		public bool RelativeGradient
+		{
+			get => GetValue<bool>();
+			set => SetValue(value);
+		}
+
+		/// <summary>
 		/// The first color of the top area.
 		/// </summary>
 		[JsonPropertyName("topFillColor1")]

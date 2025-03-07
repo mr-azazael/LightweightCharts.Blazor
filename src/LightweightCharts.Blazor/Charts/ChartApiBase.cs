@@ -1,4 +1,4 @@
-﻿using LightweightCharts.Blazor.Customization.Chart;
+﻿using LightweightCharts.Blazor.Customization.Enums;
 using LightweightCharts.Blazor.Customization.Series;
 using LightweightCharts.Blazor.Models;
 using LightweightCharts.Blazor.Models.Events;
@@ -49,52 +49,26 @@ namespace LightweightCharts.Blazor.Charts
 		Task ResizeAsync(double width, double height, bool repaint);
 
 		/// <summary>
-		/// Creates an area series with specified parameters.<br/>
-		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/IChartApi#addareaseries"/>
+		/// Creates a series with specified parameters.<br/>
+		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/IChartApiBase#addseries"/>
 		/// </summary>
+		/// <typeparam name="O">series options type</typeparam>
+		/// <param name="type">Series type.</param>
 		/// <param name="options">Customization parameters of the series being created.</param>
+		/// <param name="paneIndex">An index of the pane where the series should be created.</param>
 		/// <returns>An interface of the created series.</returns>
-		Task<ISeriesApi<AreaStyleOptions>> AddAreaSeriesAsync(AreaStyleOptions options = null);
+		Task<ISeriesApi<O>> AddSeries<O>(SeriesType type, O options = null, int? paneIndex = null)
+			where O : SeriesOptionsCommon, new();
 
 		/// <summary>
-		/// Creates a baseline series with specified parameters.<br/>
-		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/IChartApi#addbaselineseries"/>
+		/// Creates a series with specified parameters.<br/>
+		/// Shorthand for <see cref="AddSeries{O}(SeriesType, O, int?)"/>, with the options being a default instance.<br/>
+		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/IChartApiBase#addseries"/>
 		/// </summary>
-		/// <param name="options">Customization parameters of the series being created.</param>
+		/// <param name="type">Series type.</param>
+		/// <param name="paneIndex">An index of the pane where the series should be created.</param>
 		/// <returns>An interface of the created series.</returns>
-		Task<ISeriesApi<BaselineStyleOptions>> AddBaselineSeriesAsync(BaselineStyleOptions options = null);
-
-		/// <summary>
-		/// Creates a bar series with specified parameters.<br/>
-		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/IChartApi#addbarseries"/>
-		/// </summary>
-		/// <param name="options">Customization parameters of the series being created.</param>
-		/// <returns>An interface of the created series.</returns>
-		Task<ISeriesApi<BarStyleOptions>> AddBarSeriesAsync(BarStyleOptions options = null);
-
-		/// <summary>
-		/// Creates a candlestick series with specified parameters.<br/>
-		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/IChartApi#addcandlestickseries"/>
-		/// </summary>
-		/// <param name="options">Customization parameters of the series being created.</param>
-		/// <returns>An interface of the created series.</returns>
-		Task<ISeriesApi<CandlestickStyleOptions>> AddCandlestickSeriesAsync(CandlestickStyleOptions options = null);
-
-		/// <summary>
-		/// Creates a histogram series with specified parameters.<br/>
-		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/IChartApi#addhistogramseries"/>
-		/// </summary>
-		/// <param name="options">Customization parameters of the series being created.</param>
-		/// <returns>An interface of the created series.</returns>
-		Task<ISeriesApi<HistogramStyleOptions>> AddHistogramSeriesAsync(HistogramStyleOptions options = null);
-
-		/// <summary>
-		/// Creates a line series with specified parameters.<br/>
-		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/IChartApi#addlineseries"/>
-		/// </summary>
-		/// <param name="options">Customization parameters of the series being created.</param>
-		/// <returns>An interface of the created series.</returns>
-		Task<ISeriesApi<LineSeriesOptions>> AddLineSeriesAsync(LineSeriesOptions options = null);
+		Task<ISeriesApi> AddSeries(SeriesType type, int? paneIndex = null);
 
 		/// <summary>
 		/// Removes a series of any type. This is an irreversible operation, you cannot do anything with the series after removing it.<br/>
@@ -119,25 +93,33 @@ namespace LightweightCharts.Blazor.Charts
 		Task<ITimeScaleApi> TimeScaleAsync();
 
 		/// <summary>
-		/// Applies new options to the chart.<br/>
-		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/IChartApiBase#applyoptions"/>
-		/// </summary>
-		/// <param name="options">Any subset of options.</param>
-		Task ApplyOptions(ChartOptions options);
-
-		/// <summary>
-		/// Returns currently applied options.<br/>
-		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/IChartApiBase#options"/>
-		/// </summary>
-		/// <returns>Full set of currently applied options, including defaults.</returns>
-		Task<ChartOptions> Options();
-
-		/// <summary>
 		/// Make a screenshot of the chart with all the elements excluding crosshair.<br/>
 		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/IChartApiBase#takescreenshot"/>
 		/// </summary>
 		/// <returns>Returns the canvas data.</returns>
 		Task<byte[]> TakeScreenshotAsync();
+
+		/// <summary>
+		/// Returns array of panes' API.<br/>
+		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/IChartApiBase#panes"/>
+		/// </summary>
+		/// <returns>Returns array of panes' API</returns>
+		Task<IPaneApi[]> Panes();
+
+		/// <summary>
+		/// Removes a pane with index.<br/>
+		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/IChartApiBase#removepane"/>
+		/// </summary>
+		/// <param name="index">the pane to be removed</param>
+		Task RemovePane(int index);
+
+		/// <summary>
+		/// Swap the position of two panes.<br/>
+		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/IChartApiBase#swappanes"/>
+		/// </summary>
+		/// <param name="first">the first index</param>
+		/// <param name="second">the second index</param>
+		Task SwapPanes(int first, int second);
 
 		/// <summary>
 		/// Returns the active state of the autoSize option. This can be used to check whether the chart is handling resizing automatically with a ResizeObserver.<br/>
@@ -167,7 +149,18 @@ namespace LightweightCharts.Blazor.Charts
 		/// Returns the dimensions of the chart pane (the plot surface which excludes time and price scales). This would typically only be useful for plugin development.<br/>
 		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/IChartApiBase#panesize"/>
 		/// </summary>
-		/// <returns>Dimensions of the chart pane.</returns>
-		Task<PaneSize> PaneSize();
+		/// <param name="paneIndex">The index of the pane</param>
+		/// <returns>Dimensions of the chart pane</returns>
+		Task<PaneSize> PaneSize(int? paneIndex);
+
+		#region plugins
+
+		/// <summary>
+		/// Returns the current version as a string. For example '3.3.0'.<br/>
+		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/functions/version"/>
+		/// </summary>
+		ValueTask<string> Version();
+
+		#endregion
 	}
 }

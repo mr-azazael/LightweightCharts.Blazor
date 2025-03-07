@@ -55,7 +55,7 @@ partial class BarSeries
 				TimeFormatter = new Customization.JsDelegate("javascriptHelpers.customTimeFormatter")
 			}
 		});
-		var series = await _ChartComponent.AddBarSeriesAsync(new Customization.Series.BarStyleOptions
+		var series = await _ChartComponent.AddSeries(Customization.Enums.SeriesType.Bar, new Customization.Series.BarStyleOptions
 		{
 			ThinBars = false
 		});

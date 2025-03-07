@@ -13,23 +13,13 @@ namespace LightweightCharts.Blazor.Customization.Series
 	public class BarStyleOptions : SeriesOptionsCommon
 	{
 		/// <summary>
-		/// Show bars as sticks.
-		/// </summary>
-		[JsonPropertyName("thinBars")]
-		public bool ThinBars
-		{
-			get => GetValue(() => true);
-			set => SetValue(value);
-		}
-
-		/// <summary>
 		/// Color of rising bars.
 		/// </summary>
 		[JsonPropertyName("upColor")]
 		[JsonConverter(typeof(JsonColorConverter))]
 		public Color UpColor
 		{
-			get => GetValue(() => Extensions.ParseHtmlCode("#26a69a"));
+			get => GetValue(() => Extensions.ParseColorCode("#26a69a"));
 			set => SetValue(value);
 		}
 
@@ -40,7 +30,7 @@ namespace LightweightCharts.Blazor.Customization.Series
 		[JsonConverter(typeof(JsonColorConverter))]
 		public Color DownColor
 		{
-			get => GetValue(() => Extensions.ParseHtmlCode("#ef5350"));
+			get => GetValue(() => Extensions.ParseColorCode("#ef5350"));
 			set => SetValue(value);
 		}
 
@@ -49,6 +39,16 @@ namespace LightweightCharts.Blazor.Customization.Series
 		/// </summary>
 		[JsonPropertyName("openVisible")]
 		public bool OpenVisible
+		{
+			get => GetValue(() => true);
+			set => SetValue(value);
+		}
+
+		/// <summary>
+		/// Show bars as sticks.
+		/// </summary>
+		[JsonPropertyName("thinBars")]
+		public bool ThinBars
 		{
 			get => GetValue(() => true);
 			set => SetValue(value);

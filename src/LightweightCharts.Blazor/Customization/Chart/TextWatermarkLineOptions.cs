@@ -1,15 +1,15 @@
 ﻿using LightweightCharts.Blazor.Converters;
+using LightweightCharts.Blazor.Utilities;
 using System.Drawing;
 using System.Text.Json.Serialization;
 
 namespace LightweightCharts.Blazor.Customization.Chart
 {
 	/// <summary>
-	/// Watermark options.<br/>
-	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/WatermarkOptions"/>
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/TextWatermarkLineOptions"/>
 	/// </summary>
-	[JsonConverter(typeof(JsonOptionsObjectConverter<WatermarkOptions>))]
-	public class WatermarkOptions : JsonOptionsObject
+	[JsonConverter(typeof(JsonOptionsObjectConverter<TextWatermarkLineOptions>))]
+	public class TextWatermarkLineOptions : JsonOptionsObject
 	{
 		/// <summary>
 		/// Watermark color.
@@ -18,17 +18,7 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonConverter(typeof(JsonColorConverter))]
 		public Color Color
 		{
-			get => GetValue(() => Color.Transparent);
-			set => SetValue(value);
-		}
-
-		/// <summary>
-		/// Display the watermark.
-		/// </summary>
-		[JsonPropertyName("visible")]
-		public bool Visible
-		{
-			get => GetValue<bool>();
+			get => GetValue(() => Extensions.ParseColorCode("rgba(0, 0, 0, 0.5)"));
 			set => SetValue(value);
 		}
 
@@ -53,6 +43,16 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		}
 
 		/// <summary>
+		/// Line height in pixels.
+		/// </summary>
+		[JsonPropertyName("fontSize")]
+		public int? LineHeight
+		{
+			get => GetValue(() => (int)(1.2 * FontSize));
+			set => SetValue(value);
+		}
+
+		/// <summary>
 		/// Font family.
 		/// </summary>
 		[JsonPropertyName("fontFamily")]
@@ -65,30 +65,10 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		/// <summary>
 		/// Font style.
 		/// </summary>
-		[JsonPropertyName("fontStyle")]
+		[JsonPropertyName("fontFamily")]
 		public string FontStyle
 		{
 			get => GetValue<string>();
-			set => SetValue(value);
-		}
-
-		/// <summary>
-		/// Horizontal alignment inside the chart area.
-		/// </summary>
-		[JsonPropertyName("horzAlign")]
-		public HorizontalAlignment HorizontalAlignment
-		{
-			get => GetValue(() => HorizontalAlignment.Center);
-			set => SetValue(value);
-		}
-
-		/// <summary>
-		/// Vertical alignment inside the chart area.
-		/// </summary>
-		[JsonPropertyName("vertAlign")]
-		public VerticalAlignment VerticalAlignment
-		{
-			get => GetValue(() => VerticalAlignment.Center);
 			set => SetValue(value);
 		}
 	}

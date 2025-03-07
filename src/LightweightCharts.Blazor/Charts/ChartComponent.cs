@@ -1,4 +1,5 @@
-﻿using LightweightCharts.Blazor.Customization.Chart;
+﻿using LightweightCharts.Blazor.Customization;
+using LightweightCharts.Blazor.Customization.Chart;
 using LightweightCharts.Blazor.Customization.Enums;
 using LightweightCharts.Blazor.Customization.Series;
 using LightweightCharts.Blazor.DataItems;
@@ -10,6 +11,7 @@ using Microsoft.AspNetCore.Components.Rendering;
 using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -29,7 +31,7 @@ namespace LightweightCharts.Blazor.Charts
 		}
 
 		Dictionary<string, ISeriesApiInternal> _Series = new();
-		IJSObjectReference _Layout;
+		IJSObjectReference _JsObjectReference;
 		EventsHelper _EventsHelper;
 		TaskCompletionSource _InitializationCompleted = new TaskCompletionSource();
 		ITimeScaleApi _TimeScale;
@@ -44,7 +46,7 @@ namespace LightweightCharts.Blazor.Charts
 		/// Javascript chart object reference.
 		/// </summary>
 		public IJSObjectReference JsObjectReference
-			=> _Layout;
+			=> _JsObjectReference;
 
 		/// <summary>
 		/// A task that completes when the chart is ready.
@@ -179,7 +181,7 @@ namespace LightweightCharts.Blazor.Charts
 
 			if (firstRender)
 			{
-				_Layout = await JsModule.CreateChartLayout(JsRuntime, Id, new ChartOptions());
+				_JsObjectReference = await JsModule.CreateChart(JsRuntime, Id, new ChartOptions());
 				_EventsHelper = new EventsHelper(this, JsRuntime);
 
 				_EventsHelper.AddEvent<InternalMouseEventParams>(OnClicked, Events.Click);
@@ -191,7 +193,7 @@ namespace LightweightCharts.Blazor.Charts
 		}
 
 		/// <summary>
-		/// <inheritdoc cref="IChartApiBase.Options"/>
+		/// <inheritdoc cref="ICustomizableObject{ChartOptions}.Options"/>
 		/// </summary>
 		public async Task<ChartOptions> Options()
 		{
@@ -200,12 +202,12 @@ namespace LightweightCharts.Blazor.Charts
 		}
 
 		/// <summary>
-		/// <inheritdoc cref="IChartApiBase.ApplyOptions"/>
+		/// <inheritdoc cref="ICustomizableObject{ChartOptions}.ApplyOptions"/>
 		/// </summary>
 		public async Task ApplyOptions(ChartOptions options)
 		{
 			await InitializationCompleted;
-			await JsModule.InvokeVoidAsync(JsRuntime, _Layout, "applyOptions", true, options ?? new());
+			await JsModule.InvokeVoidAsync(JsRuntime, _JsObjectReference, "applyOptions", true, options ?? new());
 		}
 
 		#region Api
@@ -231,6 +233,99 @@ namespace LightweightCharts.Blazor.Charts
 		}
 
 		/// <summary>
+		/// <inheritdoc/>
+		/// </summary>
+		/// <typeparam name="O"><inheritdoc/></typeparam>
+		/// <param name="type"><inheritdoc/></param>
+		/// <param name="options"><inheritdoc/></param>
+		/// <param name="paneIndex"><inheritdoc/></param>
+		/// <returns><inheritdoc/></returns>
+		public async Task<ISeriesApi<O>> AddSeries<O>(SeriesType type, O options = null, int? paneIndex = null)
+			where O : SeriesOptionsCommon, new()
+		{
+			bool ThrowIfOptionsTypeDoesntMatch<C, R>()
+				=> typeof(C) == typeof(R) ? true : throw new InvalidOperationException($"Series type {type} requires options of type {typeof(R)}");
+
+			//validate options type and resolve expected data item type
+			Type dataItemType = null;
+			switch (type)
+			{
+				case SeriesType.Line:
+					{
+						ThrowIfOptionsTypeDoesntMatch<O, LineStyleOptions>();
+						dataItemType = typeof(LineData);
+						break;
+					}
+				case SeriesType.Area:
+					{
+						ThrowIfOptionsTypeDoesntMatch<O, AreaStyleOptions>();
+						dataItemType = typeof(AreaData);
+						break;
+					}
+				case SeriesType.Bar:
+					{
+						ThrowIfOptionsTypeDoesntMatch<O, BarStyleOptions>();
+						dataItemType = typeof(BarData);
+						break;
+					}
+				case SeriesType.Candlestick:
+					{
+						ThrowIfOptionsTypeDoesntMatch<O, CandlestickStyleOptions>();
+						dataItemType = typeof(CandlestickData);
+						break;
+					}
+				case SeriesType.Histogram:
+					{
+						ThrowIfOptionsTypeDoesntMatch<O, HistogramStyleOptions>();
+						dataItemType = typeof(HistogramData);
+						break;
+					}
+				case SeriesType.Baseline:
+					{
+						ThrowIfOptionsTypeDoesntMatch<O, BaselineStyleOptions>();
+						dataItemType = typeof(BaselineData);
+						break;
+					}
+				default:
+					throw new NotImplementedException("chart type not handled");
+			};
+
+			await InitializationCompleted;
+			var javascriptRef = await JsModule.AddChartSeries(JsRuntime, _JsObjectReference, type, options ?? new O());
+			var uniqueId = await JsModule.GetUniqueJavascriptId(JsRuntime, javascriptRef);
+			var series = new SeriesApi<O>(uniqueId, JsRuntime, javascriptRef, this, type, dataItemType);
+			_Series.Add(uniqueId, series);
+			return series;
+		}
+
+		/// <summary>
+		/// <inheritdoc/>
+		/// </summary>
+		/// <param name="type"><inheritdoc/></param>
+		/// <param name="paneIndex"><inheritdoc/></param>
+		/// <returns><inheritdoc/></returns>
+		public async Task<ISeriesApi> AddSeries(SeriesType type, int? paneIndex = null)
+		{
+			switch (type)
+			{
+				case SeriesType.Line:
+					return await AddSeries<LineStyleOptions>(type, new(), paneIndex);
+				case SeriesType.Area:
+					return await AddSeries<AreaStyleOptions>(type, new(), paneIndex);
+				case SeriesType.Bar:
+					return await AddSeries<BarStyleOptions>(type, new(), paneIndex);
+				case SeriesType.Candlestick:
+					return await AddSeries<CandlestickStyleOptions>(type, new(), paneIndex);
+				case SeriesType.Histogram:
+					return await AddSeries<HistogramStyleOptions>(type, new(), paneIndex);
+				case SeriesType.Baseline:
+					return await AddSeries<BaselineStyleOptions>(type, new(), paneIndex);
+				default:
+					throw new NotImplementedException("chart type not handled");
+			}
+		}
+
+		/// <summary>
 		/// <inheritdoc cref="IChartApiBase.RemoveSeriesAsync"/>
 		/// </summary>
 		public async Task RemoveSeriesAsync(ISeriesApi series)
@@ -238,87 +333,9 @@ namespace LightweightCharts.Blazor.Charts
 			await InitializationCompleted;
 			if (_Series.ContainsKey(series.UniqueJavascriptId))
 			{
-				await JsModule.InvokeVoidAsync(JsRuntime, _Layout, "removeSeries", false, series.JsObjectReference);
+				await JsModule.InvokeVoidAsync(JsRuntime, _JsObjectReference, "removeSeries", false, series.JsObjectReference);
 				_Series.Remove(series.UniqueJavascriptId);
 			}
-		}
-
-		/// <summary>
-		/// <inheritdoc cref="IChartApiBase.AddLineSeriesAsync"/>
-		/// </summary>
-		public async Task<ISeriesApi<LineSeriesOptions>> AddLineSeriesAsync(LineSeriesOptions options = null)
-		{
-			await InitializationCompleted;
-			var javascriptRef = await JsModule.InvokeAsync<IJSObjectReference>(JsRuntime, _Layout, "addLineSeries", true, [options ?? new LineSeriesOptions()]);
-			var uniqueId = await JsModule.GetUniqueJavascriptId(JsRuntime, javascriptRef);
-			var series = new SeriesApi<LineSeriesOptions>(uniqueId, JsRuntime, javascriptRef, this, typeof(LineData));
-			_Series.Add(uniqueId, series);
-			return series;
-		}
-
-		/// <summary>
-		/// <inheritdoc cref="IChartApiBase.AddBaselineSeriesAsync"/>
-		/// </summary>
-		public async Task<ISeriesApi<BaselineStyleOptions>> AddBaselineSeriesAsync(BaselineStyleOptions options = null)
-		{
-			await InitializationCompleted;
-			var javascriptRef = await JsModule.InvokeAsync<IJSObjectReference>(JsRuntime, _Layout, "addBaselineSeries", true, [options ?? new BaselineStyleOptions()]);
-			var uniqueId = await JsModule.GetUniqueJavascriptId(JsRuntime, javascriptRef);
-			var series = new SeriesApi<BaselineStyleOptions>(uniqueId, JsRuntime, javascriptRef, this, typeof(BaselineData));
-			_Series.Add(uniqueId, series);
-			return series;
-		}
-
-		/// <summary>
-		/// <inheritdoc cref="IChartApiBase.AddCandlestickSeriesAsync"/>
-		/// </summary>
-		public async Task<ISeriesApi<CandlestickStyleOptions>> AddCandlestickSeriesAsync(CandlestickStyleOptions options = null)
-		{
-			await InitializationCompleted;
-			var javascriptRef = await JsModule.InvokeAsync<IJSObjectReference>(JsRuntime, _Layout, "addCandlestickSeries", true, [options ?? new CandlestickStyleOptions()]);
-			var uniqueId = await JsModule.GetUniqueJavascriptId(JsRuntime, javascriptRef);
-			var series = new SeriesApi<CandlestickStyleOptions>(uniqueId, JsRuntime, javascriptRef, this, typeof(CandlestickData));
-			_Series.Add(uniqueId, series);
-			return series;
-		}
-
-		/// <summary>
-		/// <inheritdoc cref="IChartApiBase.AddAreaSeriesAsync"/>
-		/// </summary>
-		public async Task<ISeriesApi<AreaStyleOptions>> AddAreaSeriesAsync(AreaStyleOptions options = null)
-		{
-			await InitializationCompleted;
-			var javascriptRef = await JsModule.InvokeAsync<IJSObjectReference>(JsRuntime, _Layout, "addAreaSeries", true, options ?? new AreaStyleOptions());
-			var uniqueId = await JsModule.GetUniqueJavascriptId(JsRuntime, javascriptRef);
-			var series = new SeriesApi<AreaStyleOptions>(uniqueId, JsRuntime, javascriptRef, this, typeof(AreaData));
-			_Series.Add(uniqueId, series);
-			return series;
-		}
-
-		/// <summary>
-		/// <inheritdoc cref="IChartApiBase.AddBarSeriesAsync"/>
-		/// </summary>
-		public async Task<ISeriesApi<BarStyleOptions>> AddBarSeriesAsync(BarStyleOptions options = null)
-		{
-			await InitializationCompleted;
-			var javascriptRef = await JsModule.InvokeAsync<IJSObjectReference>(JsRuntime, _Layout, "addBarSeries", true, [options ?? new BarStyleOptions()]);
-			var uniqueId = await JsModule.GetUniqueJavascriptId(JsRuntime, javascriptRef);
-			var series = new SeriesApi<BarStyleOptions>(uniqueId, JsRuntime, javascriptRef, this, typeof(BarData));
-			_Series.Add(uniqueId, series);
-			return series;
-		}
-
-		/// <summary>
-		/// <inheritdoc cref="IChartApiBase.AddHistogramSeriesAsync"/>
-		/// </summary>
-		public async Task<ISeriesApi<HistogramStyleOptions>> AddHistogramSeriesAsync(HistogramStyleOptions options = null)
-		{
-			await InitializationCompleted;
-			var javascriptRef = await JsModule.InvokeAsync<IJSObjectReference>(JsRuntime, _Layout, "addHistogramSeries", true, [options ?? new HistogramStyleOptions()]);
-			var uniqueId = await JsModule.GetUniqueJavascriptId(JsRuntime, javascriptRef);
-			var series = new SeriesApi<HistogramStyleOptions>(uniqueId, JsRuntime, javascriptRef, this, typeof(HistogramData));
-			_Series.Add(uniqueId, series);
-			return series;
 		}
 
 		/// <summary>
@@ -329,7 +346,7 @@ namespace LightweightCharts.Blazor.Charts
 			await InitializationCompleted;
 			if (_TimeScale == null)
 			{
-				var reference = await JsModule.InvokeAsync<IJSObjectReference>(JsRuntime, _Layout, "timeScale", false);
+				var reference = await JsModule.InvokeAsync<IJSObjectReference>(JsRuntime, _JsObjectReference, "timeScale", false);
 				_TimeScale = new TimeScaleApi(this, reference, JsRuntime);
 			}
 
@@ -344,9 +361,9 @@ namespace LightweightCharts.Blazor.Charts
 			await InitializationCompleted;
 			if (!_PriceScales.ContainsKey(id))
 			{
-				var priceScale = await JsModule.InvokeAsync<IPriceScaleApi>(JsRuntime, JsObjectReference, "priceScale", false, id);
+				var priceScale = await JsModule.InvokeAsync<IJSObjectReference>(JsRuntime, JsObjectReference, "priceScale", false, id);
 				if (priceScale != null)
-					_PriceScales[id] = priceScale;
+					_PriceScales[id] = new PriceScaleApi(JsRuntime, priceScale);
 				else
 					return null;
 			}
@@ -384,7 +401,7 @@ namespace LightweightCharts.Blazor.Charts
 		public async Task SetCrosshairPosition(double price, long horizontalPosition, ISeriesApi series)
 		{
 			await InitializationCompleted;
-			await JsModule.InvokeVoidAsync(JsRuntime, _Layout, "setCrosshairPosition", false, price, horizontalPosition, series.JsObjectReference);
+			await JsModule.InvokeVoidAsync(JsRuntime, _JsObjectReference, "setCrosshairPosition", false, price, horizontalPosition, series.JsObjectReference);
 		}
 
 		/// <summary>
@@ -393,8 +410,59 @@ namespace LightweightCharts.Blazor.Charts
 		public async Task ClearCrosshairPosition()
 		{
 			await InitializationCompleted;
-			await JsModule.InvokeVoidAsync(JsRuntime, _Layout, "clearCrosshairPosition", false);
+			await JsModule.InvokeVoidAsync(JsRuntime, _JsObjectReference, "clearCrosshairPosition", false);
 		}
+
+		/// <summary>
+		/// <inheritdoc/>
+		/// </summary>
+		public async Task<IPaneApi[]> Panes()
+		{
+			await InitializationCompleted;
+			var panes = await JsModule.InvokeAsync<IJSObjectReference[]>(JsRuntime, JsObjectReference, "panes");
+			return panes.Select(x => new PaneApi(JsRuntime, this, x)).ToArray();
+		}
+
+		/// <summary>
+		/// <inheritdoc/>
+		/// </summary>
+		/// <param name="index"><inheritdoc/></param>
+		/// <returns><inheritdoc/></returns>
+		public async Task RemovePane(int index)
+		{
+			await InitializationCompleted;
+			await JsModule.InvokeVoidAsync(JsRuntime, _JsObjectReference, "removePane");
+		}
+
+		/// <summary>
+		/// <inheritdoc/>
+		/// </summary>
+		/// <param name="first"><inheritdoc/></param>
+		/// <param name="second"><inheritdoc/></param>
+		/// <returns><inheritdoc/></returns>
+		public async Task SwapPanes(int first, int second)
+		{
+			await InitializationCompleted;
+			await JsModule.InvokeVoidAsync(JsRuntime, _JsObjectReference, "swapPanes", false, first, second);
+		}
+
+		/// <summary>
+		/// <inheritdoc/>
+		/// </summary>
+		/// <param name="paneIndex"><inheritdoc/></param>
+		/// <returns><inheritdoc/></returns>
+		public async Task<PaneSize> PaneSize(int? paneIndex)
+		{
+			await InitializationCompleted;
+			return await JsModule.InvokeAsync<PaneSize>(JsRuntime, _JsObjectReference, "paneSize", false, paneIndex);
+		}
+
+		/// <summary>
+		/// <inheritdoc/>
+		/// </summary>
+		/// <returns><inheritdoc/></returns>
+		public ValueTask<string> Version()
+			=> JsModule.Version(JsRuntime);
 
 		#endregion
 
@@ -410,5 +478,8 @@ namespace LightweightCharts.Blazor.Charts
 				_EventsHelper = null;
 			}
 		}
+
+		internal ISeriesApi[] ResolveSeriesFromIds(string[] seriesIds)
+			=> seriesIds.Select(x => _Series.TryGetValue(x, out var api) ? api : null).Where(x => x != null).ToArray();
 	}
 }

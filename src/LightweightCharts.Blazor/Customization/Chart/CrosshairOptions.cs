@@ -10,6 +10,16 @@ namespace LightweightCharts.Blazor.Customization.Chart
 	public class CrosshairOptions : JsonOptionsObject
 	{
 		/// <summary>
+		/// Crosshair mode.
+		/// </summary>
+		[JsonPropertyName("mode")]
+		public CrosshairMode Mode
+		{
+			get => GetValue(() => CrosshairMode.Magnet);
+			set => SetValue(value);
+		}
+
+		/// <summary>
 		/// Vertical line options.
 		/// </summary>
 		[JsonPropertyName("vertLine")]
@@ -26,16 +36,6 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		public CrosshairLineOption HorizontalLine
 		{
 			get => GetValue(() => new CrosshairLineOption());
-			set => SetValue(value);
-		}
-
-		/// <summary>
-		/// Crosshair mode.
-		/// </summary>
-		[JsonPropertyName("mode")]
-		public CrosshairMode Mode
-		{
-			get => GetValue(() => CrosshairMode.Magnet);
 			set => SetValue(value);
 		}
 	}

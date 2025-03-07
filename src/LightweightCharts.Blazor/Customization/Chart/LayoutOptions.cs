@@ -29,7 +29,7 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonConverter(typeof(JsonColorConverter))]
 		public Color TextColor
 		{
-			get => GetValue(() => Extensions.ParseHtmlCode("#191919"));
+			get => GetValue(() => Extensions.ParseColorCode("#191919"));
 			set => SetValue(value);
 		}
 
@@ -50,6 +50,16 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		public string FontFamily
 		{
 			get => GetValue(() => "-apple-system, BlinkMacSystemFont, 'Trebuchet MS', Roboto, Ubuntu, sans-serif");
+			set => SetValue(value);
+		}
+
+		/// <summary>
+		/// Panes options.
+		/// </summary>
+		[JsonPropertyName("panes")]
+		public LayoutPanesOptions Panes
+		{
+			get => GetValue(() => new LayoutPanesOptions());
 			set => SetValue(value);
 		}
 

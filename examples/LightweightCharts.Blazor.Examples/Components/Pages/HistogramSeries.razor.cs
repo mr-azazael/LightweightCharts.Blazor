@@ -1,4 +1,5 @@
 ﻿using LightweightCharts.Blazor.Charts;
+using LightweightCharts.Blazor.Customization.Series;
 using LightweightCharts.Blazor.DataItems;
 using LightweightCharts.Blazor.Models;
 using System.Drawing;
@@ -42,7 +43,7 @@ partial class HistogramSeries
 			return;
 
 		await _ChartComponent.InitializationCompleted;
-		var series = await _ChartComponent.AddHistogramSeriesAsync();
+		var series = await _ChartComponent.AddSeries(Customization.Enums.SeriesType.Histogram);
 		await series.SetData(BtcUsdDataPoints.OneWeek.OrderBy(x => x.OpenTime).Select(x => new HistogramData
 		{
 			Time = x.OpenTime,

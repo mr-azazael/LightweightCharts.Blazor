@@ -10,8 +10,8 @@ namespace LightweightCharts.Blazor.Customization.Series
 	/// Represents style options for a line series.<br/>
 	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/LineStyleOptions"/>
 	/// </summary>
-	[JsonConverter(typeof(JsonOptionsObjectConverter<LineSeriesOptions>))]
-	public class LineSeriesOptions : SeriesOptionsCommon
+	[JsonConverter(typeof(JsonOptionsObjectConverter<LineStyleOptions>))]
+	public class LineStyleOptions : SeriesOptionsCommon
 	{
 		/// <summary>
 		/// Line color.
@@ -20,7 +20,7 @@ namespace LightweightCharts.Blazor.Customization.Series
 		[JsonConverter(typeof(JsonColorConverter))]
 		public Color Color
 		{
-			get => GetValue(() => Extensions.ParseHtmlCode("#2196f3"));
+			get => GetValue(() => Extensions.ParseColorCode("#2196f3"));
 			set => SetValue(value);
 		}
 

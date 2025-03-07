@@ -19,7 +19,7 @@ namespace LightweightCharts.Blazor.Customization.Series
 		[JsonConverter(typeof(JsonColorConverter))]
 		public Color UpColor
 		{
-			get => GetValue(() => Extensions.ParseHtmlCode("#26a69a"));
+			get => GetValue(() => Extensions.ParseColorCode("#26a69a"));
 			set => SetValue(value);
 		}
 
@@ -30,7 +30,7 @@ namespace LightweightCharts.Blazor.Customization.Series
 		[JsonConverter(typeof(JsonColorConverter))]
 		public Color DownColor
 		{
-			get => GetValue(() => Extensions.ParseHtmlCode("#ef5350"));
+			get => GetValue(() => Extensions.ParseColorCode("#ef5350"));
 			set => SetValue(value);
 		}
 
@@ -61,7 +61,7 @@ namespace LightweightCharts.Blazor.Customization.Series
 		[JsonConverter(typeof(JsonColorConverter))]
 		public Color BorderColor
 		{
-			get => GetValue(() => Extensions.ParseHtmlCode("#378658"));
+			get => GetValue(() => Extensions.ParseColorCode("#378658"));
 			set => SetValue(value);
 		}
 
@@ -72,7 +72,7 @@ namespace LightweightCharts.Blazor.Customization.Series
 		[JsonConverter(typeof(JsonColorConverter))]
 		public Color BorderUpColor
 		{
-			get => GetValue(() => Extensions.ParseHtmlCode("#26a69a"));
+			get => GetValue(() => Extensions.ParseColorCode("#26a69a"));
 			set => SetValue(value);
 		}
 
@@ -83,7 +83,7 @@ namespace LightweightCharts.Blazor.Customization.Series
 		[JsonConverter(typeof(JsonColorConverter))]
 		public Color BorderDownColor
 		{
-			get => GetValue(() => Extensions.ParseHtmlCode("#ef5350"));
+			get => GetValue(() => Extensions.ParseColorCode("#ef5350"));
 			set => SetValue(value);
 		}
 
@@ -94,7 +94,7 @@ namespace LightweightCharts.Blazor.Customization.Series
 		[JsonConverter(typeof(JsonColorConverter))]
 		public Color WickColor
 		{
-			get => GetValue(() => Extensions.ParseHtmlCode("#737375"));
+			get => GetValue(() => Extensions.ParseColorCode("#737375"));
 			set => SetValue(value);
 		}
 
@@ -105,7 +105,7 @@ namespace LightweightCharts.Blazor.Customization.Series
 		[JsonConverter(typeof(JsonColorConverter))]
 		public Color WickUpColor
 		{
-			get => GetValue(() => Extensions.ParseHtmlCode("#26a69a"));
+			get => GetValue(() => Extensions.ParseColorCode("#26a69a"));
 			set => SetValue(value);
 		}
 
@@ -116,7 +116,7 @@ namespace LightweightCharts.Blazor.Customization.Series
 		[JsonConverter(typeof(JsonColorConverter))]
 		public Color WickDownColor
 		{
-			get => GetValue(() => Extensions.ParseHtmlCode("#ef5350"));
+			get => GetValue(() => Extensions.ParseColorCode("#ef5350"));
 			set => SetValue(value);
 		}
 	}

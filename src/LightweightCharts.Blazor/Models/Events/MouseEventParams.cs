@@ -1,6 +1,5 @@
 ﻿using LightweightCharts.Blazor.DataItems;
 using LightweightCharts.Blazor.Series;
-using System.Collections.Generic;
 
 namespace LightweightCharts.Blazor.Models.Events
 {
@@ -27,11 +26,6 @@ namespace LightweightCharts.Blazor.Models.Events
 	public class MouseEventParams
 	{
 		/// <summary>
-		/// The ID of the marker at the point of the mouse event.
-		/// </summary>
-		public string HoveredObjectId { get; init; }
-
-		/// <summary>
 		/// Time of the data at the location of the mouse event.<br/>
 		/// The value will be null if the location of the event in the chart is outside the range of available data.
 		/// </summary>
@@ -49,6 +43,11 @@ namespace LightweightCharts.Blazor.Models.Events
 		public Point Point { get; init; }
 
 		/// <summary>
+		/// The index of the Pane.
+		/// </summary>
+		int? PaneIndex { get; set; }
+
+		/// <summary>
 		/// Prices of all series at the location of the event in the chart.
 		/// </summary>
 		public SeriesPrice[] SeriesPrices { get; init; }
@@ -57,6 +56,11 @@ namespace LightweightCharts.Blazor.Models.Events
 		/// The ISeriesApi for the series at the point of the mouse event.
 		/// </summary>
 		public ISeriesApi HoveredSeries { get; init; }
+
+		/// <summary>
+		/// The ID of the marker at the point of the mouse event.
+		/// </summary>
+		public string HoveredObjectId { get; init; }
 
 		/// <summary>
 		/// The underlying source mouse or touch event data, if available

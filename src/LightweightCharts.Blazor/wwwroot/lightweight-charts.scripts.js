@@ -2,10 +2,39 @@
 /*use 'https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.development.js' for debugging*/
 
 window.lightweightChartsBlazor = {
-
 	createChartLayout: function (containerId, chartConfig) {
 		var container = document.getElementById(containerId);
 		return LightweightCharts.createChart(container, chartConfig);
+	},
+	addSeries: function (chart, type, options) {
+		lightweightChartsBlazor.replaceJsDelegates(options);
+		let descriptor = null;
+		switch (type) {
+			case 'Line':
+				descriptor = LightweightCharts.LineSeries;
+				break;
+			case 'Area':
+				descriptor = LightweightCharts.AreaSeries;
+				break;
+			case 'Bar':
+				descriptor = LightweightCharts.BarSeries;
+				break;
+			case 'Candlestick':
+				descriptor = LightweightCharts.CandlestickSeries;
+				break;
+			case 'Histogram':
+				descriptor = LightweightCharts.HistogramSeries;
+				break;
+			case 'Baseline':
+				descriptor = LightweightCharts.BaselineSeries;
+				break;
+		}
+
+		let series = chart.addSeries(descriptor, options);
+		if (series != undefined && series.uniqueJavascriptId == undefined)
+			series.uniqueJavascriptId = this.generateJavascriptId();
+
+		return series;
 	},
 	lightweightChartsInvoke: async function (target, method, replaceDelegates /*args*/) {
 		var args = Array.prototype.slice.call(arguments, 3);
@@ -107,5 +136,22 @@ window.lightweightChartsBlazor = {
 			else if (typeof value === 'object')
 				lightweightChartsBlazor.replaceJsDelegates(value);
 		}
+	},
+	createImageWatermark: function (pane, imageUrl, options) {
+		lightweightChartsBlazor.replaceJsDelegates(options);
+		return LightweightCharts.createImageWatermark(pane, imageUrl, options);
+	},
+	createTextWatermark: function (pane, options) {
+		lightweightChartsBlazor.replaceJsDelegates(options);
+		return LightweightCharts.createTextWatermark(pane, options);
+	},
+	createSeriesMarkers: function (series, markers) {
+		return LightweightCharts.createSeriesMarkers(series, markers);
+	},
+	createUpDownMarkers: function (series, options) {
+		return LightweightCharts.createUpDownMarkers(series, options);
+	},
+	version: function () {
+		return LightweightCharts.version();
 	}
 };

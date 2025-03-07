@@ -9,6 +9,8 @@ using LightweightCharts.Blazor.Models;
 using LightweightCharts.Blazor.Customization;
 using LightweightCharts.Blazor.DataItems;
 using System;
+using LightweightCharts.Blazor.Plugins;
+using LightweightCharts.Blazor.Customization.Chart;
 
 namespace LightweightCharts.Blazor.Series
 {
@@ -20,14 +22,16 @@ namespace LightweightCharts.Blazor.Series
 	internal class SeriesApi<O> : CustomizableObject<O>, ISeriesApi<O>, ISeriesApiInternal
 		where O : SeriesOptionsCommon, new()
 	{
-		internal SeriesApi(string uniqueId, IJSRuntime jsRuntime, IJSObjectReference jsObject, ChartComponent parent, params Type[] dataItemTypes)
+		public SeriesApi(string uniqueId, IJSRuntime jsRuntime, IJSObjectReference jsObject, ChartComponent parent, SeriesType seriesType, params Type[] dataItemTypes)
 			: base(jsRuntime, jsObject)
 		{
 			UniqueJavascriptId = uniqueId;
 			Parent = parent;
 			_AllowedDataItemTypes = dataItemTypes;
+			_SeriesType = seriesType;
 		}
 
+		SeriesType _SeriesType;
 		Type[] _AllowedDataItemTypes;
 		List<IPriceLine> _PriceLines = new();
 		IPriceScaleApi _PriceScale;
@@ -80,14 +84,6 @@ namespace LightweightCharts.Blazor.Series
 			return await JsObjectReference.InvokeAsync<ISeriesData[]>("data");
 		}
 
-		public async Task SetMarkers(IEnumerable<SeriesMarker> markers)
-			=> await JsObjectReference.InvokeVoidAsync("setMarkers", markers);
-
-		public async Task<IEnumerable<SeriesMarker>> Markers()
-		{
-			return await JsObjectReference.InvokeAsync<SeriesMarker[]>("markers");
-		}
-
 		public async Task<IPriceLine> CreatePriceLine(PriceLineOptions options)
 		{
 			var priceLineRef = await JsObjectReference.InvokeAsync<IJSObjectReference>("createPriceLine", options ?? new PriceLineOptions());
@@ -126,6 +122,26 @@ namespace LightweightCharts.Blazor.Series
 			}
 
 			return _PriceScale;
+		}
+
+		public async Task MoveToPane(int paneIndex)
+			=> await JsObjectReference.InvokeVoidAsync("moveToPane", paneIndex);
+
+		public async Task<IPaneApi> GetPane()
+		{
+			var paneReference = await JsObjectReference.InvokeAsync<IJSObjectReference>("getPane");
+			return new PaneApi(JsRuntime, Parent, paneReference);
+		}
+
+		public ValueTask<ISeriesMarkersPluginApi> CreateSeriesMarkers(IEnumerable<SeriesMarker> markers)
+			=> JsModule.CreateSeriesMarkers(JsRuntime, this, markers?.ToArray() ?? []);
+
+		public ValueTask<ISeriesUpDownMarkerPluginApi> CreateUpDownMarkers(UpDownMarkersPluginOptions options = null)
+		{
+			if (_SeriesType != Customization.Enums.SeriesType.Line && _SeriesType != Customization.Enums.SeriesType.Area)
+				throw new InvalidOperationException("Method only available for Line and Area series");
+
+			return JsModule.CreateUpDownMarkers(JsRuntime, this, options ?? new());
 		}
 	}
 }

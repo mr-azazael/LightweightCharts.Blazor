@@ -19,7 +19,7 @@ namespace LightweightCharts.Blazor.Customization.Series
 		[JsonConverter(typeof(JsonColorConverter))]
 		public Color Color
 		{
-			get => GetValue(() => Extensions.ParseHtmlCode("#26a69a"));
+			get => GetValue(() => Extensions.ParseColorCode("#26a69a"));
 			set => SetValue(value);
 		}
 

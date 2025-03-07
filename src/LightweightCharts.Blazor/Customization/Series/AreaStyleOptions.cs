@@ -37,6 +37,17 @@ namespace LightweightCharts.Blazor.Customization.Series
 		}
 
 		/// <summary>
+		/// Gradient is relative to the base value and the currently visible range.<br/>
+		/// If it is false, the gradient is relative to the top and bottom of the chart.
+		/// </summary>
+		[JsonPropertyName("relativeGradient")]
+		public bool RelativeGradient
+		{
+			get => GetValue<bool>();
+			set => SetValue(value);
+		}
+
+		/// <summary>
 		/// Invert the filled area. Fills the area above the line if set to true.
 		/// </summary>
 		[JsonPropertyName("invertFilledArea")]
@@ -53,7 +64,7 @@ namespace LightweightCharts.Blazor.Customization.Series
 		[JsonConverter(typeof(JsonColorConverter))]
 		public Color LineColor
 		{
-			get => GetValue(() => Extensions.ParseHtmlCode("#33D778"));
+			get => GetValue(() => Extensions.ParseColorCode("#33D778"));
 			set => SetValue(value);
 		}
 

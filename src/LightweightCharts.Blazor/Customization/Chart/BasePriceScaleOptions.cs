@@ -71,7 +71,7 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonConverter(typeof(JsonColorConverter))]
 		public Color BorderColor
 		{
-			get => GetValue(() => Extensions.ParseHtmlCode("#2B2B43"));
+			get => GetValue(() => Extensions.ParseColorCode("#2B2B43"));
 			set => SetValue(value);
 		}
 

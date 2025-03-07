@@ -43,6 +43,17 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		}
 
 		/// <summary>
+		/// The maximum space between bars in pixels.<br/>
+		/// Has no effect if value is set to 0.
+		/// </summary>
+		[JsonPropertyName("maxBarSpacing")]
+		public double MaxBarSpacing
+		{
+			get => GetValue<double>();
+			set => SetValue(value);
+		}
+
+		/// <summary>
 		/// Prevent scrolling to the left of the first bar.
 		/// </summary>
 		[JsonPropertyName("fixLeftEdge")]
@@ -99,7 +110,7 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonConverter(typeof(JsonColorConverter))]
 		public Color BorderColor
 		{
-			get => GetValue(() => Extensions.ParseHtmlCode("#2B2B43"));
+			get => GetValue(() => Extensions.ParseColorCode("#2B2B43"));
 			set => SetValue(value);
 		}
 
@@ -194,6 +205,27 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		public int MinimumHeight
 		{
 			get => GetValue<int>();
+			set => SetValue(value);
+		}
+
+		/// <summary>
+		/// Allow major time scale labels to be rendered in a bolder font weight.
+		/// </summary>
+		[JsonPropertyName("allowBoldLabels")]
+		public bool AllowBoldLabels
+		{
+			get => GetValue(() => true);
+			set => SetValue(value);
+		}
+
+		/// <summary>
+		/// Ignore time scale points containing only whitespace (for all series) when drawing grid lines, tick marks, and snapping the crosshair to time scale points.<br/>
+		/// For the yield curve chart type it defaults to true.
+		/// </summary>
+		[JsonPropertyName("ignoreWhitespaceIndices")]
+		public bool IgnoreWhitespaceIndices
+		{
+			get => GetValue<bool>();
 			set => SetValue(value);
 		}
 	}

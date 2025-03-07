@@ -21,7 +21,7 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonConverter(typeof(JsonColorConverter))]
 		public Color Color
 		{
-			get => Extensions.ParseHtmlCode("#758696");
+			get => Extensions.ParseColorCode("#758696");
 			set => SetValue(value);
 		}
 
@@ -79,7 +79,7 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonConverter(typeof(JsonColorConverter))]
 		public Color LabelBackgroundColor
 		{
-			get => GetValue(() => Extensions.ParseHtmlCode("#4c525e"));
+			get => GetValue(() => Extensions.ParseColorCode("#4c525e"));
 			set => SetValue(value);
 		}
 	}

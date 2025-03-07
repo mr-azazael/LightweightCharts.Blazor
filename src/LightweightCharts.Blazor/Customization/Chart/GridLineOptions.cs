@@ -20,7 +20,7 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		[JsonConverter(typeof(JsonColorConverter))]
 		public Color Color
 		{
-			get => GetValue(() => Extensions.ParseHtmlCode("#D6DCDE"));
+			get => GetValue(() => Extensions.ParseColorCode("#D6DCDE"));
 			set => SetValue(value);
 		}
 

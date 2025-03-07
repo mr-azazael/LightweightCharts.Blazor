@@ -11,15 +11,15 @@ namespace LightweightCharts.Blazor.Customization.Series
 	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/SeriesOptionsCommon"/>
 	/// </summary>
 	[JsonConverter(typeof(JsonOptionsObjectConverter<SeriesOptionsCommon>))]
-	public class SeriesOptionsCommon : JsonOptionsObject
+	public abstract class SeriesOptionsCommon : JsonOptionsObject
 	{
 		/// <summary>
-		/// Target price scale to bind new series to.
+		/// Visibility of the label with the latest visible price on the price scale.
 		/// </summary>
-		[JsonPropertyName("priceScaleId")]
-		public string PriceScaleId
+		[JsonPropertyName("lastValueVisible")]
+		public bool LastValueVisible
 		{
-			get => GetValue(() => "right");
+			get => GetValue<bool>();
 			set => SetValue(value);
 		}
 
@@ -30,6 +30,16 @@ namespace LightweightCharts.Blazor.Customization.Series
 		public string Title
 		{
 			get => GetValue<string>();
+			set => SetValue(value);
+		}
+
+		/// <summary>
+		/// Target price scale to bind new series to.
+		/// </summary>
+		[JsonPropertyName("priceScaleId")]
+		public string PriceScaleId
+		{
+			get => GetValue(() => "right");
 			set => SetValue(value);
 		}
 
@@ -96,12 +106,12 @@ namespace LightweightCharts.Blazor.Customization.Series
 		}
 
 		/// <summary>
-		/// Visibility of the label with the latest visible price on the price scale.
+		/// Price format.
 		/// </summary>
-		[JsonPropertyName("lastValueVisible")]
-		public bool LastValueVisible
+		[JsonPropertyName("priceFormat")]
+		public PriceFormatOptions PriceFormat
 		{
-			get => GetValue<bool>();
+			get => GetValue(() => new PriceFormatOptions());
 			set => SetValue(value);
 		}
 
@@ -116,6 +126,17 @@ namespace LightweightCharts.Blazor.Customization.Series
 		}
 
 		/// <summary>
+		/// Color of the base line in IndexedTo100 mode.
+		/// </summary>
+		[JsonPropertyName("baseLineColor")]
+		[JsonConverter(typeof(JsonColorConverter))]
+		public Color BaseLineColor
+		{
+			get => GetValue(() => Extensions.ParseColorCode("#B2B5BE"));
+			set => SetValue(value);
+		}
+
+		/// <summary>
 		/// Base line width. Suitable for percentage and IndexedTo10 scales.
 		/// </summary>
 		[JsonPropertyName("baseLineWidth")]
@@ -126,33 +147,12 @@ namespace LightweightCharts.Blazor.Customization.Series
 		}
 
 		/// <summary>
-		/// Color of the base line in IndexedTo100 mode.
-		/// </summary>
-		[JsonPropertyName("baseLineColor")]
-		[JsonConverter(typeof(JsonColorConverter))]
-		public Color BaseLineColor
-		{
-			get => GetValue(() => Extensions.ParseHtmlCode("#B2B5BE"));
-			set => SetValue(value);
-		}
-
-		/// <summary>
 		/// Base line style. Suitable for percentage and indexedTo100 scales.
 		/// </summary>
 		[JsonPropertyName("baseLineStyle")]
 		public LineStyle BaseLineStyle
 		{
 			get => GetValue(() => LineStyle.Solid);
-			set => SetValue(value);
-		}
-
-		/// <summary>
-		/// Price format.
-		/// </summary>
-		[JsonPropertyName("priceFormat")]
-		public PriceFormatOptions PriceFormat
-		{
-			get => GetValue(() => new PriceFormatOptions());
 			set => SetValue(value);
 		}
 
