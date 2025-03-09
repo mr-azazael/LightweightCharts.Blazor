@@ -4,10 +4,10 @@
 		<TargetFramework>net8.0</TargetFramework>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<PackageId>LightweightCharts.Blazor</PackageId>
-		<PackageVersion>4.1.2.1</PackageVersion>
+		<PackageVersion>5.0.3.1</PackageVersion>
 		<Authors>Laurentiu Cernescu</Authors>
 		<Description>A blazor wrapper for TradingView's Lightweight charts library.</Description>
-		<Copyright>Copyright 2024 TradingView, Inc.</Copyright>
+		<Copyright>Copyright 2025 TradingView, Inc.</Copyright>
 		<PackageProjectUrl>https://github.com/mr-azazael/LightweightCharts.Blazor</PackageProjectUrl>
 		<PackageReadmeFile>PACKAGE-README.md</PackageReadmeFile>
 		<RepositoryUrl>https://github.com/mr-azazael/LightweightCharts.Blazor</RepositoryUrl>
@@ -33,7 +33,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.1" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.13" />
 	</ItemGroup>
 
 </Project>
