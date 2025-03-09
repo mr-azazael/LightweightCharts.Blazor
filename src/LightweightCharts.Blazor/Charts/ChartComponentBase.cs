@@ -254,7 +254,7 @@ namespace LightweightCharts.Blazor.Charts
 		/// <summary>
 		/// generic add series method
 		/// </summary>
-		/// <typeparam name="O">series options type</typeparam>
+		/// <typeparam name="S">series options type</typeparam>
 		/// <param name="type">series type descriptor</param>
 		/// <param name="options">series options</param>
 		/// <param name="paneIndex">pane to which to add the series</param>

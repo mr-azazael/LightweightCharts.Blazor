@@ -13,7 +13,7 @@
 		<RepositoryUrl>https://github.com/mr-azazael/LightweightCharts.Blazor</RepositoryUrl>
 		<RespositoryType>git</RespositoryType>
 		<PackageTags>Blazor;TradingView;Financial;Charts</PackageTags>
-		<PackageReleaseNotes>First release</PackageReleaseNotes>
+		<PackageReleaseNotes>Update to Lightweight charts version 5.0.3</PackageReleaseNotes>
 		<Version>$(PackageVersion)</Version>
 		<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
 		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
