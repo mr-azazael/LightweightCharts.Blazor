@@ -9,7 +9,8 @@ namespace LightweightCharts.Blazor.Plugins
 	/// No options method available in js. The value returned by <see cref="ICustomizableObject{O}.Options"/> is the last value applied.<br/>
 	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/IPanePrimitiveWrapper"/>
 	/// </summary>
-	public interface IPanePrimitiveWrapper<O> : ICustomizableObject<O>
+	public interface IPanePrimitiveWrapper<H, O> : ICustomizableObject<O>
+		where H : struct
 		where O : class, new()
 	{
 		/// <summary>
@@ -22,6 +23,6 @@ namespace LightweightCharts.Blazor.Plugins
 		/// Returns the current pane.<br/>
 		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/IPanePrimitiveWrapper#getpane"/>
 		/// </summary>
-		IPaneApi GetPane();
+		IPaneApi<H> GetPane();
 	}
 }

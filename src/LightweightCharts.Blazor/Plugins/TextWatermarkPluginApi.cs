@@ -9,27 +9,29 @@ namespace LightweightCharts.Blazor.Plugins
 	/// <summary>
 	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/type-aliases/ITextWatermarkPluginApi"/>
 	/// </summary>
-	public interface ITextWatermarkPluginApi : IPanePrimitiveWrapper<TextWatermarkOptions>
+	public interface ITextWatermarkPluginApi<H> : IPanePrimitiveWrapper<H, TextWatermarkOptions>
+		where H : struct
 	{
 
 	}
 
-	class TextWatermarkPluginApi : CustomizableObject<TextWatermarkOptions>, ITextWatermarkPluginApi
+	class TextWatermarkPluginApi<H> : CustomizableObject<TextWatermarkOptions>, ITextWatermarkPluginApi<H>
+		where H : struct
 	{
-		public TextWatermarkPluginApi(IJSRuntime jsRuntime, IPaneApi owner, IJSObjectReference jsObjectReference, TextWatermarkOptions options)
+		public TextWatermarkPluginApi(IJSRuntime jsRuntime, IPaneApi<H> owner, IJSObjectReference jsObjectReference, TextWatermarkOptions options)
 			: base(jsRuntime, jsObjectReference)
 		{
 			_Owner = owner;
 			_Options = options;
 		}
 
-		IPaneApi _Owner;
+		IPaneApi<H> _Owner;
 		TextWatermarkOptions _Options;
 
 		public ValueTask Detach()
 			=> JsObjectReference.InvokeVoidAsync("detach");
 
-		public IPaneApi GetPane()
+		public IPaneApi<H> GetPane()
 			=> _Owner;
 
 		public override Task<TextWatermarkOptions> Options()

@@ -1,20 +1,14 @@
-﻿using System;
-
-namespace LightweightCharts.Blazor.DataItems
+﻿namespace LightweightCharts.Blazor.DataItems
 {
 	/// <summary>
-	/// base interface for all <see cref="DateTime"/> data points
+	/// base interface for all data points
 	/// </summary>
-	public interface ISeriesData
+	public interface ISeriesData<H>
+		where H : struct
 	{
 		/// <summary>
-		/// The time of the data in unix format.
+		/// Horizontal scale value.
 		/// </summary>
-		long UnixTime { get; }
-
-		/// <summary>
-		/// The time of the data as a <see cref="DateTime"/>.
-		/// </summary>
-		DateTime Time { get; }
+		H Time { get; set; }
 	}
 }

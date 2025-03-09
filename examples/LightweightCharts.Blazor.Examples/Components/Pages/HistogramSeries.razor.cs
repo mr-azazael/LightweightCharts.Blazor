@@ -2,6 +2,7 @@
 using LightweightCharts.Blazor.Customization.Series;
 using LightweightCharts.Blazor.DataItems;
 using LightweightCharts.Blazor.Models;
+using LightweightCharts.Blazor.Utilities;
 using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
@@ -43,14 +44,14 @@ partial class HistogramSeries
 			return;
 
 		await _ChartComponent.InitializationCompleted;
-		var series = await _ChartComponent.AddSeries(Customization.Enums.SeriesType.Histogram);
-		await series.SetData(BtcUsdDataPoints.OneWeek.OrderBy(x => x.OpenTime).Select(x => new HistogramData
+		var series = await _ChartComponent.AddSeries<HistogramStyleOptions>(Customization.Enums.SeriesType.Histogram);
+		await series.SetData(BtcUsdDataPoints.OneWeek.OrderBy(x => x.OpenTime).Select(x => new HistogramData<long>
 		{
-			Time = x.OpenTime,
+			Time = x.OpenTime.ToUnix(),
 			Value = x.Volume,
 			Color = x.OpenPrice > x.ClosePrice ? Color.Green : Color.Red
 		}));
-		var timeScale = await _ChartComponent.TimeScaleAsync();
+		var timeScale = await _ChartComponent.TimeScale();
 		await timeScale.SetVisibleLogicalRange(new LogicalRange
 		{
 			From = -2,

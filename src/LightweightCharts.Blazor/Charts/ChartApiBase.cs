@@ -12,31 +12,32 @@ namespace LightweightCharts.Blazor.Charts
 	/// The main interface of a single chart.<br/>
 	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/IChartApiBase"/>
 	/// </summary>
-	public interface IChartApiBase
+	public interface IChartApiBase<H>
+		where H : struct
 	{
 		/// <summary>
 		/// Subscribe to the chart click event.<br/>
 		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/IChartApi#subscribeclick"/>
 		/// </summary>
-		event EventHandler<MouseEventParams> Clicked;
+		event EventHandler<MouseEventParams<H>> Clicked;
 
 		/// <summary>
 		/// Subscribe to the chart double-click event.<br/>
 		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/IChartApiBase#subscribedblclick"/>
 		/// </summary>
-		event EventHandler<MouseEventParams> DoubleClicked;
+		event EventHandler<MouseEventParams<H>> DoubleClicked;
 
 		/// <summary>
 		/// Subscribe to the crosshair move event.<br/>
 		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/IChartApi#subscribecrosshairmove"/>
 		/// </summary>
-		event EventHandler<MouseEventParams> CrosshairMoved;
+		event EventHandler<MouseEventParams<H>> CrosshairMoved;
 
 		/// <summary>
 		/// Removes the chart object including all DOM elements. This is an irreversible operation, you cannot do anything with the chart after removing it.<br/>
 		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/IChartApi#remove"/>
 		/// </summary>
-		Task RemoveAsync();
+		Task Remove();
 
 		/// <summary>
 		/// Sets fixed size of the chart. By default chart takes up 100% of its container.<br/>
@@ -46,7 +47,7 @@ namespace LightweightCharts.Blazor.Charts
 		/// <param name="width">Target width of the chart.</param>
 		/// <param name="height">Target height of the chart.</param>
 		/// <param name="repaint">True to initiate resize immediately. One could need this to get screenshot immediately after resize.</param>
-		Task ResizeAsync(double width, double height, bool repaint);
+		Task Resize(double width, double height, bool repaint);
 
 		/// <summary>
 		/// Creates a series with specified parameters.<br/>
@@ -57,25 +58,15 @@ namespace LightweightCharts.Blazor.Charts
 		/// <param name="options">Customization parameters of the series being created.</param>
 		/// <param name="paneIndex">An index of the pane where the series should be created.</param>
 		/// <returns>An interface of the created series.</returns>
-		Task<ISeriesApi<O>> AddSeries<O>(SeriesType type, O options = null, int? paneIndex = null)
+		Task<ISeriesApi<H, O>> AddSeries<O>(SeriesType type, O options = null, int? paneIndex = null)
 			where O : SeriesOptionsCommon, new();
-
-		/// <summary>
-		/// Creates a series with specified parameters.<br/>
-		/// Shorthand for <see cref="AddSeries{O}(SeriesType, O, int?)"/>, with the options being a default instance.<br/>
-		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/IChartApiBase#addseries"/>
-		/// </summary>
-		/// <param name="type">Series type.</param>
-		/// <param name="paneIndex">An index of the pane where the series should be created.</param>
-		/// <returns>An interface of the created series.</returns>
-		Task<ISeriesApi> AddSeries(SeriesType type, int? paneIndex = null);
 
 		/// <summary>
 		/// Removes a series of any type. This is an irreversible operation, you cannot do anything with the series after removing it.<br/>
 		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/IChartApi#removeseries"/>
 		/// </summary>
 		/// <param name="series">The series to be removed.</param>
-		Task RemoveSeriesAsync(ISeriesApi series);
+		Task RemoveSeries(ISeriesApi<H> series);
 
 		/// <summary>
 		/// Returns API to manipulate a price scale.<br/>
@@ -83,28 +74,28 @@ namespace LightweightCharts.Blazor.Charts
 		/// </summary>
 		/// <param name="id">ID of the price scale.</param>
 		/// <returns>Price scale API.</returns>
-		Task<IPriceScaleApi> PriceScaleAsync(string id);
+		Task<IPriceScaleApi> PriceScale(string id);
 
 		/// <summary>
 		/// Returns API to manipulate the time scale.<br/>
 		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/IChartApi#timescale"/>
 		/// </summary>
 		/// <returns>Time scale API</returns>
-		Task<ITimeScaleApi> TimeScaleAsync();
+		Task<ITimeScaleApi<H>> TimeScale();
 
 		/// <summary>
 		/// Make a screenshot of the chart with all the elements excluding crosshair.<br/>
 		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/IChartApiBase#takescreenshot"/>
 		/// </summary>
 		/// <returns>Returns the canvas data.</returns>
-		Task<byte[]> TakeScreenshotAsync();
+		Task<byte[]> TakeScreenshot();
 
 		/// <summary>
 		/// Returns array of panes' API.<br/>
 		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/IChartApiBase#panes"/>
 		/// </summary>
 		/// <returns>Returns array of panes' API</returns>
-		Task<IPaneApi[]> Panes();
+		Task<IPaneApi<H>[]> Panes();
 
 		/// <summary>
 		/// Removes a pane with index.<br/>
@@ -126,7 +117,7 @@ namespace LightweightCharts.Blazor.Charts
 		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/IChartApiBase#autosizeactive"/>
 		/// </summary>
 		/// <returns>Whether the autoSize option is enabled and the active.</returns>
-		Task<bool> AutoSizeActiveAsync();
+		Task<bool> AutoSizeActive();
 
 		/// <summary>
 		/// Set the crosshair position within the chart.<br/>
@@ -137,7 +128,7 @@ namespace LightweightCharts.Blazor.Charts
 		/// <param name="price">The price (vertical coordinate) of the new crosshair position.</param>
 		/// <param name="horizontalPosition">The horizontal coordinate (time by default) of the new crosshair position.</param>
 		/// <param name="series"></param>
-		Task SetCrosshairPosition(double price, long horizontalPosition, ISeriesApi series);
+		Task SetCrosshairPosition(double price, H horizontalPosition, ISeriesApi<H> series);
 
 		/// <summary>
 		/// Clear the crosshair position within the chart.<br/>
@@ -162,5 +153,7 @@ namespace LightweightCharts.Blazor.Charts
 		ValueTask<string> Version();
 
 		#endregion
+
+		internal ISeriesApi<H>[] ResolveSeriesFromIds(string[] seriesIds);
 	}
 }

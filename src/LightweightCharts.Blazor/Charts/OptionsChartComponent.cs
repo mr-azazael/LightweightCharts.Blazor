@@ -10,25 +10,25 @@ using System.Threading.Tasks;
 namespace LightweightCharts.Blazor.Charts
 {
 	/// <summary>
-	/// The main interface of a single chart using time for horizontal scale.<br/>
-	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/IChartApi"/>
+	/// An instance of IChartApiBase configured for price-based horizontal scaling.<br/>
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/functions/createOptionsChart"/>
 	/// </summary>
-	public interface IChartApi : IChartApiBase<long>, ICustomizableObject<ChartOptions>
+	public interface IOptionsChart : IChartApiBase<double>, ICustomizableObject<PriceChartOptions>
 	{
 
 	}
 
 	/// <summary>
-	/// implementation for <see cref="IChartApi"/>
+	/// implementation for <see cref="IOptionsChart"/>
 	/// </summary>
-	public class ChartComponent : ChartComponentBase<long, ChartOptions>, IChartApi, IAsyncDisposable
+	public class OptionsChartComponent : ChartComponentBase<double, PriceChartOptions>, IOptionsChart, IAsyncDisposable
 	{
 		/// <summary>
 		/// <inheritdoc/>
 		/// </summary>
 		/// <returns><inheritdoc/></returns>
 		protected override ValueTask<IJSObjectReference> CreateChart()
-			=> JsModule.CreateChart(JsRuntime, Id, new ChartOptions());
+			=> JsModule.CreateOptionsChart(JsRuntime, Id, new PriceChartOptions());
 
 		/// <summary>
 		/// <inheritdoc/>
@@ -44,32 +44,32 @@ namespace LightweightCharts.Blazor.Charts
 				case SeriesType.Line:
 					{
 						ThrowIfOptionsTypeDoesntMatch<O, LineStyleOptions>(type);
-						return typeof(LineData<long>);
+						return typeof(LineData<double>);
 					}
 				case SeriesType.Area:
 					{
 						ThrowIfOptionsTypeDoesntMatch<O, AreaStyleOptions>(type);
-						return typeof(AreaData<long>);
+						return typeof(AreaData<double>);
 					}
 				case SeriesType.Bar:
 					{
 						ThrowIfOptionsTypeDoesntMatch<O, BarStyleOptions>(type);
-						return typeof(BarData<long>);
+						return typeof(BarData<double>);
 					}
 				case SeriesType.Candlestick:
 					{
 						ThrowIfOptionsTypeDoesntMatch<O, CandlestickStyleOptions>(type);
-						return typeof(CandlestickData<long>);
+						return typeof(CandlestickData<double>);
 					}
 				case SeriesType.Histogram:
 					{
 						ThrowIfOptionsTypeDoesntMatch<O, HistogramStyleOptions>(type);
-						return typeof(HistogramData<long>);
+						return typeof(HistogramData<double>);
 					}
 				case SeriesType.Baseline:
 					{
 						ThrowIfOptionsTypeDoesntMatch<O, BaselineStyleOptions>(type);
-						return typeof(BaselineData<long>);
+						return typeof(BaselineData<double>);
 					}
 				default:
 					throw new NotImplementedException("chart type not handled");

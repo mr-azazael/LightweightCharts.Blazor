@@ -9,7 +9,8 @@ namespace LightweightCharts.Blazor.DataItems
 	/// Represents a series marker.<br/>
 	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/SeriesMarker"/>
 	/// </summary>
-	public class SeriesMarker : WhitespaceData
+	public class SeriesMarker<H> : WhitespaceData<H>
+		where H : struct
 	{
 		/// <summary>
 		/// The position of the marker.

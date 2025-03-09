@@ -4,6 +4,7 @@ using LightweightCharts.Blazor.Customization.Enums;
 using LightweightCharts.Blazor.Customization.Series;
 using LightweightCharts.Blazor.DataItems;
 using LightweightCharts.Blazor.Models;
+using LightweightCharts.Blazor.Utilities;
 using System;
 using System.Drawing;
 using System.Linq;
@@ -41,7 +42,7 @@ partial class AreaSeries : IDisposable
 			AutoSize = true
 		});
 
-		var series = await _ChartComponent.AddSeries(SeriesType.Area);
+		var series = await _ChartComponent.AddSeries<AreaStyleOptions>(SeriesType.Area);
 		var pane = await series.GetPane();
 		var textMark = pane.CreateTextWatermark(new TextWatermarkOptions
 		{
@@ -50,16 +51,16 @@ partial class AreaSeries : IDisposable
 			Lines = [new TextWatermarkLineOptions { Color = Color.LightBlue, Text = "Text watermark example" }]
 		});
 
-		var timeScale = await _ChartComponent.TimeScaleAsync();
+		var timeScale = await _ChartComponent.TimeScale();
 		var upDown = await series.CreateUpDownMarkers(new UpDownMarkersPluginOptions
 		{
 			PositiveColor = Color.Blue,
 			NegativeColor = Color.Red,
 			UpdateVisibilityDuration = 1500
 		});
-		await upDown.SetData(BtcUsdDataPoints.OneWeek.OrderBy(x => x.OpenTime).Select(x => new AreaData
+		await upDown.SetData(BtcUsdDataPoints.OneWeek.OrderBy(x => x.OpenTime).Select(x => new AreaData<long>
 		{
-			Time = x.OpenTime,
+			Time = x.OpenTime.ToUnix(),
 			Value = x.ClosePrice
 		}));
 		await timeScale.ApplyOptions(new TimeScaleOptions
@@ -82,9 +83,9 @@ partial class AreaSeries : IDisposable
 
 				var index = Random.Shared.Next(BtcUsdDataPoints.OneWeek.Count());
 				var point = BtcUsdDataPoints.OneWeek.ElementAt(index);
-				var data = new AreaData
+				var data = new AreaData<long>
 				{
-					Time = point.OpenTime,
+					Time = point.OpenTime.ToUnix(),
 					Value = (100 + (20 * Math.Max(Random.Shared.NextDouble(), 0.25) - 10)) * point.ClosePrice / 100.0
 				};
 				await InvokeAsync(() => upDown.Update(data, true));

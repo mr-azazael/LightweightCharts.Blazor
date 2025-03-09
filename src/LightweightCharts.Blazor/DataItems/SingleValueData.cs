@@ -6,7 +6,8 @@ namespace LightweightCharts.Blazor.DataItems
 	/// A base interface for a data point of single-value series.<br/>
 	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/SingleValueData"/>
 	/// </summary>	
-	public class SingleValueData : WhitespaceData
+	public class SingleValueData<H> : WhitespaceData<H>
+		where H : struct
 	{
 		/// <summary>
 		/// Price value of the data.

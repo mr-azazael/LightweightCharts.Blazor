@@ -1,7 +1,6 @@
 ﻿using LightweightCharts.Blazor.Charts;
 using LightweightCharts.Blazor.Customization;
 using LightweightCharts.Blazor.Customization.Chart;
-using LightweightCharts.Blazor.Customization.Enums;
 using LightweightCharts.Blazor.Customization.Series;
 using LightweightCharts.Blazor.DataItems;
 using LightweightCharts.Blazor.Models.Events;
@@ -74,7 +73,7 @@ namespace LightweightCharts.Blazor
 		public static ValueTask<byte[]> TakeScreenshot(IJSRuntime jsRuntime, IJSObjectReference chartReference)
 			=> jsRuntime.InvokeAsync<byte[]>("lightweightChartsBlazor.takeScreenshot", chartReference);
 
-		public static ValueTask<IJSObjectReference> AddChartSeries(IJSRuntime jsRuntime, IJSObjectReference chartReference, SeriesType type, SeriesOptionsCommon options)
+		public static ValueTask<IJSObjectReference> AddChartSeries<T>(IJSRuntime jsRuntime, IJSObjectReference chartReference, T type, SeriesOptionsCommon options)
 			=> jsRuntime.InvokeAsync<IJSObjectReference>("lightweightChartsBlazor.addSeries", chartReference, type, options);
 
 		public static ValueTask<string[]> GetPaneSeries(IJSRuntime jsRuntime, IJSObjectReference paneReference)
@@ -83,30 +82,40 @@ namespace LightweightCharts.Blazor
 		#region charts api methods
 
 		public static ValueTask<IJSObjectReference> CreateChart(IJSRuntime jsRuntime, string id, ChartOptions options)
-			=> jsRuntime.InvokeAsync<IJSObjectReference>("lightweightChartsBlazor.createChartLayout", id, options);
+			=> jsRuntime.InvokeAsync<IJSObjectReference>("lightweightChartsBlazor.createChart", id, options);
 
-		public static async ValueTask<IImageWatermarkPluginApi> CreateImageWatermark(IJSRuntime jsRuntime, IPaneApi pane, string url, ImageWatermarkOptions options)
+		public static ValueTask<IJSObjectReference> CreateYieldCurveChart(IJSRuntime jsRuntime, string id, YieldCurveChartOptions options)
+			=> jsRuntime.InvokeAsync<IJSObjectReference>("lightweightChartsBlazor.createYieldCurveChart", id, options);
+
+		public static ValueTask<IJSObjectReference> CreateOptionsChart(IJSRuntime jsRuntime, string id, PriceChartOptions options)
+			=> jsRuntime.InvokeAsync<IJSObjectReference>("lightweightChartsBlazor.createOptionsChart", id, options);
+
+		public static async ValueTask<IImageWatermarkPluginApi<H>> CreateImageWatermark<H>(IJSRuntime jsRuntime, IPaneApi<H> pane, string url, ImageWatermarkOptions options)
+			where H : struct
 		{
 			var api = await jsRuntime.InvokeAsync<IJSObjectReference>("lightweightChartsBlazor.createImageWatermark", pane.JsObjectReference, url, options);
-			return new ImageWatermarkPluginApi(jsRuntime, pane, api, options);
+			return new ImageWatermarkPluginApi<H>(jsRuntime, pane, api, options);
 		}
 
-		public static async ValueTask<ISeriesMarkersPluginApi> CreateSeriesMarkers(IJSRuntime jsRuntime, ISeriesApi series, SeriesMarker[] markers)
+		public static async ValueTask<ISeriesMarkersPluginApi<H>> CreateSeriesMarkers<H>(IJSRuntime jsRuntime, ISeriesApi<H> series, SeriesMarker<H>[] markers)
+			where H : struct
 		{
 			var api = await jsRuntime.InvokeAsync<IJSObjectReference>("lightweightChartsBlazor.createSeriesMarkers", series.JsObjectReference, markers);
-			return new SeriesMarkersPluginApi(jsRuntime, series, api, markers);
+			return new SeriesMarkersPluginApi<H>(jsRuntime, series, api, markers);
 		}
 
-		public static async ValueTask<ITextWatermarkPluginApi> CreateTextWatermark(IJSRuntime jsRuntime, IPaneApi pane, TextWatermarkOptions options)
+		public static async ValueTask<ITextWatermarkPluginApi<H>> CreateTextWatermark<H>(IJSRuntime jsRuntime, IPaneApi<H> pane, TextWatermarkOptions options)
+			where H : struct
 		{
 			var api = await jsRuntime.InvokeAsync<IJSObjectReference>("lightweightChartsBlazor.createTextWatermark", pane.JsObjectReference, options);
-			return new TextWatermarkPluginApi(jsRuntime, pane, api, options);
+			return new TextWatermarkPluginApi<H>(jsRuntime, pane, api, options);
 		}
 
-		public static async ValueTask<ISeriesUpDownMarkerPluginApi> CreateUpDownMarkers(IJSRuntime jsRuntime, ISeriesApi series, UpDownMarkersPluginOptions options)
+		public static async ValueTask<ISeriesUpDownMarkerPluginApi<H>> CreateUpDownMarkers<H>(IJSRuntime jsRuntime, ISeriesApi<H> series, UpDownMarkersPluginOptions options)
+			where H : struct
 		{
 			var api = await jsRuntime.InvokeAsync<IJSObjectReference>("lightweightChartsBlazor.createUpDownMarkers", series.JsObjectReference, options);
-			return new SeriesUpDownMarkerPluginApi(jsRuntime, api, series);
+			return new SeriesUpDownMarkerPluginApi<H>(jsRuntime, api, series);
 		}
 
 		public static ValueTask<string> Version(IJSRuntime jsRuntime)

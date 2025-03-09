@@ -3,6 +3,7 @@ using LightweightCharts.Blazor.Customization.Chart;
 using LightweightCharts.Blazor.Customization.Series;
 using LightweightCharts.Blazor.DataItems;
 using LightweightCharts.Blazor.Models;
+using LightweightCharts.Blazor.Utilities;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System.Linq;
@@ -70,9 +71,9 @@ partial class BaselineSeries
 		{
 			BaseValue = new BaseValuePrice { Price = BtcUsdDataPoints.OneWeek.Average(x => x.ClosePrice) }
 		});
-		await series.SetData(BtcUsdDataPoints.OneWeek.OrderBy(x => x.OpenTime).Select(x => new BaselineData
+		await series.SetData(BtcUsdDataPoints.OneWeek.OrderBy(x => x.OpenTime).Select(x => new BaselineData<long>
 		{
-			Time = x.OpenTime,
+			Time = x.OpenTime.ToUnix(),
 			Value = x.ClosePrice
 		}));
 		var pane = await series.GetPane();
@@ -85,7 +86,7 @@ partial class BaselineSeries
 
 		await JsRuntime.InvokeVoidAsync("javascriptHelpers.setAutoscaleInfoProvider", series.JsObjectReference);
 
-		var timeScale = await _ChartComponent.TimeScaleAsync();
+		var timeScale = await _ChartComponent.TimeScale();
 		await timeScale.SetVisibleLogicalRange(new LogicalRange
 		{
 			From = -2,

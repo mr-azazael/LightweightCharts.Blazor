@@ -13,14 +13,15 @@ namespace LightweightCharts.Blazor.Plugins
 	/// This plugin can only be used with Line and Area series types.<br/>
 	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ISeriesUpDownMarkerPluginApi"/>
 	/// </summary>
-	public interface ISeriesUpDownMarkerPluginApi : ISeriesPrimitiveWrapper<UpDownMarkersPluginOptions>
+	public interface ISeriesUpDownMarkerPluginApi<H> : ISeriesPrimitiveWrapper<H, UpDownMarkersPluginOptions>
+		where H : struct
 	{
 		/// <summary>
 		/// Sets the data for the series and manages data points for marker updates.<br/>
 		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ISeriesUpDownMarkerPluginApi#setdata"/>
 		/// </summary>
 		/// <param name="data">Array of data points to set.</param>
-		ValueTask SetData(IEnumerable<ISeriesData> data);
+		ValueTask SetData(IEnumerable<ISeriesData<H>> data);
 
 		/// <summary>
 		/// Updates a single data point and manages marker updates for existing data points.<br/>
@@ -28,20 +29,20 @@ namespace LightweightCharts.Blazor.Plugins
 		/// </summary>
 		/// <param name="data">The data point to update.</param>
 		/// <param name="historicalUpdate">Optional flag for historical updates.</param>
-		ValueTask Update(ISeriesData data, bool? historicalUpdate = null);
+		ValueTask Update(ISeriesData<H> data, bool? historicalUpdate = null);
 
 		/// <summary>
 		/// Retrieves the current markers on the chart.<br/>
 		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ISeriesUpDownMarkerPluginApi#markers"/>
 		/// </summary>
-		ValueTask<SeriesUpDownMarker[]> Markers();
+		ValueTask<SeriesUpDownMarker<H>[]> Markers();
 
 		/// <summary>
 		/// Manually sets markers on the chart.<br/>
 		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ISeriesUpDownMarkerPluginApi#setmarkers"/>
 		/// </summary>
 		/// <param name="markers">Array of SeriesUpDownMarker to set.</param>
-		ValueTask SetMarkers(IEnumerable<SeriesUpDownMarker> markers);
+		ValueTask SetMarkers(IEnumerable<SeriesUpDownMarker<H>> markers);
 
 		/// <summary>
 		/// Clears all markers from the chart.<br/>
@@ -50,26 +51,27 @@ namespace LightweightCharts.Blazor.Plugins
 		ValueTask ClearMarkers();
 	}
 
-	class SeriesUpDownMarkerPluginApi : CustomizableObject<UpDownMarkersPluginOptions>, ISeriesUpDownMarkerPluginApi
+	class SeriesUpDownMarkerPluginApi<H> : CustomizableObject<UpDownMarkersPluginOptions>, ISeriesUpDownMarkerPluginApi<H>
+		where H : struct
 	{
-		public SeriesUpDownMarkerPluginApi(IJSRuntime jsRuntime, IJSObjectReference jsObjectReference, ISeriesApi parent)
+		public SeriesUpDownMarkerPluginApi(IJSRuntime jsRuntime, IJSObjectReference jsObjectReference, ISeriesApi<H> parent)
 			: base(jsRuntime, jsObjectReference)
 		{
 			_SeriesApi = parent;
 		}
 
-		ISeriesApi _SeriesApi;
+		ISeriesApi<H> _SeriesApi;
 
-		public ValueTask SetData(IEnumerable<ISeriesData> data)
+		public ValueTask SetData(IEnumerable<ISeriesData<H>> data)
 			=> JsModule.InvokeVoidAsync(JsRuntime, JsObjectReference, "setData", false, data);
 
-		public ValueTask Update(ISeriesData data, bool? historicalUpdate)
+		public ValueTask Update(ISeriesData<H> data, bool? historicalUpdate)
 			=> JsModule.InvokeVoidAsync(JsRuntime, JsObjectReference, "update", false, data, historicalUpdate);
 
-		public ValueTask<SeriesUpDownMarker[]> Markers()
-			=> JsObjectReference.InvokeAsync<SeriesUpDownMarker[]>("markers");
+		public ValueTask<SeriesUpDownMarker<H>[]> Markers()
+			=> JsObjectReference.InvokeAsync<SeriesUpDownMarker<H>[]>("markers");
 
-		public ValueTask SetMarkers(IEnumerable<SeriesUpDownMarker> markers)
+		public ValueTask SetMarkers(IEnumerable<SeriesUpDownMarker<H>> markers)
 			=> JsObjectReference.InvokeVoidAsync("setMarkers", markers);
 
 		public ValueTask ClearMarkers()
@@ -78,7 +80,7 @@ namespace LightweightCharts.Blazor.Plugins
 		public ValueTask Detach()
 			=> JsObjectReference.InvokeVoidAsync("detach");
 
-		public ISeriesApi GetSeries()
+		public ISeriesApi<H> GetSeries()
 			=> _SeriesApi;
 	}
 }

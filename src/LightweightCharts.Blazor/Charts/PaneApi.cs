@@ -11,7 +11,8 @@ namespace LightweightCharts.Blazor.Charts
 	/// Represents the interface for interacting with a pane in a lightweight chart.<br/>
 	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/IPaneApi"/>
 	/// </summary>
-	public interface IPaneApi : IJsObjectWrapper
+	public interface IPaneApi<H> : IJsObjectWrapper
+		where H : struct
 	{
 		/// <summary>
 		/// Retrieves the height of the pane in pixels.<br/>
@@ -46,7 +47,7 @@ namespace LightweightCharts.Blazor.Charts
 		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/IPaneApi#getseries"/>
 		/// </summary>
 		/// <returns>An array of series.</returns>
-		Task<ISeriesApi[]> GetSeries();
+		Task<ISeriesApi<H>[]> GetSeries();
 
 		/// <summary>
 		/// Returns the price scale with the given id.<br/>
@@ -65,7 +66,7 @@ namespace LightweightCharts.Blazor.Charts
 		/// <param name="url">Image URL.</param>
 		/// <param name="options">Watermark options.</param>
 		/// <returns>Image watermark wrapper.</returns>
-		ValueTask<IImageWatermarkPluginApi> CreateImageWatermark(string url, ImageWatermarkOptions options = null);
+		ValueTask<IImageWatermarkPluginApi<H>> CreateImageWatermark(string url, ImageWatermarkOptions options = null);
 
 		/// <summary>
 		/// Creates a text watermark.<br/>
@@ -73,14 +74,15 @@ namespace LightweightCharts.Blazor.Charts
 		/// </summary>
 		/// <param name="options">Watermark options.</param>
 		/// <returns>Text watermark wrapper.</returns>
-		ValueTask<ITextWatermarkPluginApi> CreateTextWatermark(TextWatermarkOptions options = null);
+		ValueTask<ITextWatermarkPluginApi<H>> CreateTextWatermark(TextWatermarkOptions options = null);
 
 		#endregion
 	}
 
-	class PaneApi : IPaneApi
+	class PaneApi<H> : IPaneApi<H>
+		where H : struct
 	{
-		public PaneApi(IJSRuntime jsRuntime, ChartComponent parent, IJSObjectReference jSObject)
+		public PaneApi(IJSRuntime jsRuntime, IChartApiBase<H> parent, IJSObjectReference jSObject)
 		{
 			_JsRuntime = jsRuntime;
 			_Parent = parent;
@@ -88,7 +90,7 @@ namespace LightweightCharts.Blazor.Charts
 		}
 
 		IJSRuntime _JsRuntime;
-		ChartComponent _Parent;
+		IChartApiBase<H> _Parent;
 		Dictionary<string, IPriceScaleApi> _PriceScales = [];
 
 		public IJSObjectReference JsObjectReference { get; }
@@ -105,7 +107,7 @@ namespace LightweightCharts.Blazor.Charts
 		public async Task<int> PaneIndex()
 			=> await JsObjectReference.InvokeAsync<int>("paneIndex");
 
-		public async Task<ISeriesApi[]> GetSeries()
+		public async Task<ISeriesApi<H>[]> GetSeries()
 		{
 			var seriesIds = await JsModule.GetPaneSeries(_JsRuntime, JsObjectReference);
 			return _Parent.ResolveSeriesFromIds(seriesIds);
@@ -124,10 +126,10 @@ namespace LightweightCharts.Blazor.Charts
 			return _PriceScales[priceScaleId] = new PriceScaleApi(_JsRuntime, jsReference);
 		}
 
-		public ValueTask<IImageWatermarkPluginApi> CreateImageWatermark(string url, ImageWatermarkOptions options = null)
+		public ValueTask<IImageWatermarkPluginApi<H>> CreateImageWatermark(string url, ImageWatermarkOptions options = null)
 			=> JsModule.CreateImageWatermark(_JsRuntime, this, url, options ?? new());
 
-		public ValueTask<ITextWatermarkPluginApi> CreateTextWatermark(TextWatermarkOptions options = null)
+		public ValueTask<ITextWatermarkPluginApi<H>> CreateTextWatermark(TextWatermarkOptions options = null)
 			=> JsModule.CreateTextWatermark(_JsRuntime, this, options ?? new());
 	}
 }

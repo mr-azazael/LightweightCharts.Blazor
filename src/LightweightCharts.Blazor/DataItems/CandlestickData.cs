@@ -8,7 +8,8 @@ namespace LightweightCharts.Blazor.DataItems
 	/// Structure describing a single item of data for candlestick series.<br/>
 	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/CandlestickData"/>
 	/// </summary>
-	public class CandlestickData : OhlcData
+	public class CandlestickData<H> : OhlcData<H>
+		where H : struct
 	{
 		/// <summary>
 		/// Optional color value for certain data item. If missed, color from options is used.

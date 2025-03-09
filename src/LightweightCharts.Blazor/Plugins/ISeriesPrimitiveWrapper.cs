@@ -9,7 +9,8 @@ namespace LightweightCharts.Blazor.Plugins
 	/// No options method available in js. The value returned by <see cref="ICustomizableObject{O}.Options"/> is the last value applied.<br/>
 	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ISeriesPrimitiveWrapper"/>
 	/// </summary>
-	public interface ISeriesPrimitiveWrapper<O> : ICustomizableObject<O>
+	public interface ISeriesPrimitiveWrapper<H, O> : ICustomizableObject<O>
+		where H : struct
 		where O : class, new()
 	{
 		/// <summary>
@@ -22,6 +23,6 @@ namespace LightweightCharts.Blazor.Plugins
 		/// Returns the current series.<br/>
 		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ISeriesPrimitiveWrapper#getseries"/>
 		/// </summary>
-		ISeriesApi GetSeries();
+		ISeriesApi<H> GetSeries();
 	}
 }

@@ -7,14 +7,23 @@ namespace LightweightCharts.Blazor.Models.Events
 	/// <summary>
 	/// Wrapper
 	/// </summary>
-	internal class InternalSeriesPrice
+	public class InternalSeriesPrice
 	{
+		/// <summary>
+		/// Series Id
+		/// </summary>
 		[JsonPropertyName("seriesId")]
 		public string SeriesId { get; set; }
 
+		/// <summary>
+		/// Series type
+		/// </summary>
 		[JsonPropertyName("seriesType")]
 		public SeriesType SeriesType { get; set; }
 
+		/// <summary>
+		/// Json serialization of a series data item
+		/// </summary>
 		[JsonPropertyName("dataItem")]
 		public JsonDocument DataItem { get; set; }
 	}
@@ -23,14 +32,15 @@ namespace LightweightCharts.Blazor.Models.Events
 	/// Represents a mouse event.<br/>
 	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/MouseEventParams"/>
 	/// </summary>
-	internal class InternalMouseEventParams
+	public class InternalMouseEventParams<H>
+		where H : struct
 	{
 		/// <summary>
 		/// Time of the data at the location of the mouse event.<br/>
 		/// The value will be null if the location of the event in the chart is outside the range of available data.
 		/// </summary>
 		[JsonPropertyName("time")]
-		public long? Time { get; set; }
+		public H? Time { get; set; }
 
 		/// <summary>
 		/// Logical index.

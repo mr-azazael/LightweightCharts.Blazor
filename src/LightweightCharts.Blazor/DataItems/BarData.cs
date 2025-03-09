@@ -8,7 +8,8 @@ namespace LightweightCharts.Blazor.DataItems
 	/// Structure describing a single item of data for bar series.<br/>
 	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/BarData"/>
 	/// </summary>
-	public class BarData : OhlcData
+	public class BarData<H> : OhlcData<H>
+		where H : struct
 	{
 		/// <summary>
 		/// Optional color value for certain data item. If missed, color from options is used.

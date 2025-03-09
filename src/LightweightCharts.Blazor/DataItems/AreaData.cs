@@ -8,7 +8,8 @@ namespace LightweightCharts.Blazor.DataItems
 	/// Structure describing a single item of data for area series<br/>
 	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/AreaData"/>
 	/// </summary>
-	public class AreaData : SingleValueData
+	public class AreaData<H> : SingleValueData<H>
+		where H : struct
 	{
 		/// <summary>
 		/// Optional line color value for certain data item. If missed, color from options is used.

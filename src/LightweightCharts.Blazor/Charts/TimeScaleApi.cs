@@ -12,7 +12,8 @@ namespace LightweightCharts.Blazor.Charts
 	/// Interface to chart time scale.<br/>
 	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ITimeScaleApi"/>
 	/// </summary>
-	public interface ITimeScaleApi : IJsObjectWrapper, ICustomizableObject<TimeScaleOptions>
+	public interface ITimeScaleApi<T> : IJsObjectWrapper, ICustomizableObject<TimeScaleOptions>
+		where T : struct
 	{
 		/// <summary>
 		/// Subscribe to the visible time range change events.<br/>
@@ -55,7 +56,7 @@ namespace LightweightCharts.Blazor.Charts
 		/// <summary>
 		/// Returns current visible time range of the chart.<br/>
 		/// Note that this method cannot extrapolate time and will use the only currently existent data.<br/>
-		/// To get complete information about current visible range, please use <see cref="GetVisibleLogicalRange"/> and <see cref="Series.ISeriesApi.BarsInLogicalRange"/>.<br/>
+		/// To get complete information about current visible range, please use <see cref="GetVisibleLogicalRange"/> and <see cref="Series.ISeriesApi{H}.BarsInLogicalRange"/>.<br/>
 		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ITimeScaleApi#getvisiblerange"/>
 		/// </summary>
 		/// <returns>Visible range or null if the chart has no data at all.</returns>
@@ -142,25 +143,24 @@ namespace LightweightCharts.Blazor.Charts
 		Task<double> Height();
 	}
 
-	internal class TimeScaleApi : ITimeScaleApi, IAsyncDisposable
+	internal class TimeScaleApi<T> : ITimeScaleApi<T>, IAsyncDisposable
+		where T : struct
 	{
 		IJSObjectReference _JsObjectRef;
 		EventsHelper _EventsHelper;
-		ChartComponent _ChartLayout;
 		IJSRuntime _JsRuntime;
 
 		public IJSObjectReference JsObjectReference
 			=> _JsObjectRef;
 
-		public ChartComponent ChartLayout
-			=> _ChartLayout;
+		public IChartApiBase<T> ChartLayout { get; }
 
-		internal TimeScaleApi(ChartComponent chartlayout, IJSObjectReference jsObjectRef, IJSRuntime jsRuntime)
+		internal TimeScaleApi(IChartApiBase<T> chartlayout, IJSObjectReference jsObjectRef, IJSRuntime jsRuntime)
 		{
-			_ChartLayout = chartlayout;
 			_JsObjectRef = jsObjectRef;
 			_JsRuntime = jsRuntime;
 			_EventsHelper = new EventsHelper(this, jsRuntime);
+			ChartLayout = chartlayout;
 		}
 
 		#region events

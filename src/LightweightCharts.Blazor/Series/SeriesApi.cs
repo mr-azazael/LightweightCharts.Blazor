@@ -1,44 +1,49 @@
-﻿using Microsoft.JSInterop;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using LightweightCharts.Blazor.Charts;
+﻿using LightweightCharts.Blazor.Charts;
+using LightweightCharts.Blazor.Customization;
+using LightweightCharts.Blazor.Customization.Chart;
 using LightweightCharts.Blazor.Customization.Enums;
 using LightweightCharts.Blazor.Customization.Series;
-using LightweightCharts.Blazor.Models;
-using LightweightCharts.Blazor.Customization;
 using LightweightCharts.Blazor.DataItems;
-using System;
+using LightweightCharts.Blazor.Models;
 using LightweightCharts.Blazor.Plugins;
-using LightweightCharts.Blazor.Customization.Chart;
+using Microsoft.JSInterop;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Threading.Tasks;
 
 namespace LightweightCharts.Blazor.Series
 {
-	internal interface ISeriesApiInternal : ISeriesApi
+	internal interface ISeriesApiInternal<H> : ISeriesApi<H>
+		where H : struct
 	{
 		IEnumerable<Type> AllowedDataItemTypes { get; }
 	}
 
-	internal class SeriesApi<O> : CustomizableObject<O>, ISeriesApi<O>, ISeriesApiInternal
+	internal class SeriesApi<H, O> : CustomizableObject<O>, ISeriesApi<H, O>, ISeriesApiInternal<H>
+		where H : struct
 		where O : SeriesOptionsCommon, new()
 	{
-		public SeriesApi(string uniqueId, IJSRuntime jsRuntime, IJSObjectReference jsObject, ChartComponent parent, SeriesType seriesType, params Type[] dataItemTypes)
+		public SeriesApi(string uniqueId, IJSRuntime jsRuntime, IJSObjectReference jsObject, IChartApiBase<H> parent, SeriesType seriesType, params Type[] dataItemTypes)
 			: base(jsRuntime, jsObject)
 		{
 			UniqueJavascriptId = uniqueId;
 			Parent = parent;
 			_AllowedDataItemTypes = dataItemTypes;
 			_SeriesType = seriesType;
+			_GetData = GetType().GetMethod(nameof(GetData), BindingFlags.Static | BindingFlags.NonPublic).MakeGenericMethod(dataItemTypes[0]);
 		}
 
 		SeriesType _SeriesType;
 		Type[] _AllowedDataItemTypes;
-		List<IPriceLine> _PriceLines = new();
+		List<IPriceLine<H>> _PriceLines = new();
 		IPriceScaleApi _PriceScale;
+		MethodInfo _GetData;
 
 		public string UniqueJavascriptId { get; }
 
-		public IEnumerable<IPriceLine> PriceLines
+		public IEnumerable<IPriceLine<H>> PriceLines
 			=> _PriceLines;
 
 		public IEnumerable<Type> AllowedDataItemTypes
@@ -46,14 +51,14 @@ namespace LightweightCharts.Blazor.Series
 
 		public event EventHandler<DataChangedScope> DataChanged;
 
-		public ChartComponent Parent { get; init; }
+		public IChartApiBase<H> Parent { get; init; }
 
-		public async Task SetData(IEnumerable<ISeriesData> items)
+		public async Task SetData(IEnumerable<ISeriesData<H>> items)
 		{
 			foreach (var item in items)
 			{
 				var itemType = item.GetType();
-				if (!_AllowedDataItemTypes.Contains(itemType) && itemType != typeof(WhitespaceData))
+				if (!_AllowedDataItemTypes.Contains(itemType) && itemType != typeof(WhitespaceData<H>))
 				{
 					var typeName = _AllowedDataItemTypes.Select(x => x.GetType().Name);
 					var seriesType = await SeriesType();
@@ -68,31 +73,32 @@ namespace LightweightCharts.Blazor.Series
 			DataChanged?.Invoke(this, DataChangedScope.Full);
 		}
 
-		public async Task Update(ISeriesData item)
+		public async Task Update(ISeriesData<H> item)
 		{
 			await JsObjectReference.InvokeVoidAsync("update", item);
 			DataChanged?.Invoke(this, DataChangedScope.Update);
 		}
 
-		public async Task<ISeriesData> DataByIndex(int logicalIndex, MismatchDirection? mismatchDirection)
+		public async Task<ISeriesData<H>> DataByIndex(int logicalIndex, MismatchDirection? mismatchDirection)
 		{
-			return await JsObjectReference.InvokeAsync<ISeriesData>("dataByIndex", logicalIndex, mismatchDirection);
+			return await JsObjectReference.InvokeAsync<ISeriesData<H>>("dataByIndex", logicalIndex, mismatchDirection);
 		}
 
-		public async Task<IEnumerable<ISeriesData>> Data()
+		public async Task<IEnumerable<ISeriesData<H>>> Data()
 		{
-			return await JsObjectReference.InvokeAsync<ISeriesData[]>("data");
+			var dataTask = await (Task<Array>)_GetData.Invoke(null, [JsObjectReference]);
+			return dataTask.Cast<ISeriesData<H>>();
 		}
 
-		public async Task<IPriceLine> CreatePriceLine(PriceLineOptions options)
+		public async Task<IPriceLine<H>> CreatePriceLine(PriceLineOptions options)
 		{
 			var priceLineRef = await JsObjectReference.InvokeAsync<IJSObjectReference>("createPriceLine", options ?? new PriceLineOptions());
-			var priceLine = new PriceLine(JsRuntime, priceLineRef, this);
+			var priceLine = new PriceLine<H>(JsRuntime, priceLineRef, this);
 			_PriceLines.Add(priceLine);
 			return priceLine;
 		}
 
-		public async Task RemovePriceLine(IPriceLine priceLine)
+		public async Task RemovePriceLine(IPriceLine<H> priceLine)
 		{
 			if (_PriceLines.Contains(priceLine))
 			{
@@ -127,21 +133,24 @@ namespace LightweightCharts.Blazor.Series
 		public async Task MoveToPane(int paneIndex)
 			=> await JsObjectReference.InvokeVoidAsync("moveToPane", paneIndex);
 
-		public async Task<IPaneApi> GetPane()
+		public async Task<IPaneApi<H>> GetPane()
 		{
 			var paneReference = await JsObjectReference.InvokeAsync<IJSObjectReference>("getPane");
-			return new PaneApi(JsRuntime, Parent, paneReference);
+			return new PaneApi<H>(JsRuntime, Parent, paneReference);
 		}
 
-		public ValueTask<ISeriesMarkersPluginApi> CreateSeriesMarkers(IEnumerable<SeriesMarker> markers)
+		public ValueTask<ISeriesMarkersPluginApi<H>> CreateSeriesMarkers(IEnumerable<SeriesMarker<H>> markers)
 			=> JsModule.CreateSeriesMarkers(JsRuntime, this, markers?.ToArray() ?? []);
 
-		public ValueTask<ISeriesUpDownMarkerPluginApi> CreateUpDownMarkers(UpDownMarkersPluginOptions options = null)
+		public ValueTask<ISeriesUpDownMarkerPluginApi<H>> CreateUpDownMarkers(UpDownMarkersPluginOptions options = null)
 		{
 			if (_SeriesType != Customization.Enums.SeriesType.Line && _SeriesType != Customization.Enums.SeriesType.Area)
 				throw new InvalidOperationException("Method only available for Line and Area series");
 
 			return JsModule.CreateUpDownMarkers(JsRuntime, this, options ?? new());
 		}
+
+		static async Task<Array> GetData<T>(IJSObjectReference jSObject)
+			=> await jSObject.InvokeAsync<T[]>("data");
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using LightweightCharts.Blazor.Customization;
+using LightweightCharts.Blazor.DataItems;
 using System;
 using System.Drawing;
 using System.Linq;
@@ -96,5 +97,36 @@ namespace LightweightCharts.Blazor.Utilities
 			System.Diagnostics.Debug.Assert(false, "color value not handled");
 			return Color.Empty;
 		}
+
+		/// <summary>
+		/// Extension to convert a long to a DateTime.
+		/// </summary>
+		/// <param name="point">data point source</param>
+		public static DateTime GetDate(this ISeriesData<long> point)
+			=> DateTimeOffset.FromUnixTimeSeconds(point.Time).DateTime;
+
+		/// <summary>
+		/// Extension to convert/set the <see cref="ISeriesData{H}"/> Time property to a DateTime.
+		/// </summary>
+		/// <param name="point">data point target</param>
+		/// <param name="dateTime"><see cref="DateTime"/> to set</param>
+		public static void SetDate(this ISeriesData<long> point, DateTime dateTime)
+			=> point.Time = ToUnix(dateTime);
+
+		/// <summary>
+		/// Convert <see cref="DateTime"/> to UnixTimeSeconds (<see cref="DateTimeOffset.ToUnixTimeSeconds"/>)
+		/// </summary>
+		/// <param name="dateTime"></param>
+		/// <returns>unix time</returns>
+		public static long ToUnix(this DateTime dateTime)
+			=> new DateTimeOffset(dateTime).ToUnixTimeSeconds();
+
+		/// <summary>
+		/// Convert <see cref="long"/> to <see cref="DateTime"/> (<see cref="DateTimeOffset.FromUnixTimeSeconds"/>)
+		/// </summary>
+		/// <param name="unix">unix timestamp</param>
+		/// <returns>dateTime</returns>
+		public static DateTime FromUnix(long unix)
+			=> DateTimeOffset.FromUnixTimeSeconds(unix).DateTime;
 	}
 }

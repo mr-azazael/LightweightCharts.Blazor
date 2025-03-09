@@ -7,11 +7,12 @@ namespace LightweightCharts.Blazor.Series
 	/// Represents the interface for interacting with price lines.<br/>
 	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/IPriceLine"/>
 	/// </summary>
-	public interface IPriceLine : ICustomizableObject<PriceLineOptions>
+	public interface IPriceLine<H> : ICustomizableObject<PriceLineOptions>
+		where H : struct
 	{
 		/// <summary>
 		/// The series that contains this series.
 		/// </summary>
-		public ISeriesApi Parent { get; }
+		public ISeriesApi<H> Parent { get; }
 	}
 }

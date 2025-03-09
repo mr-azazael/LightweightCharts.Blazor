@@ -1,22 +1,22 @@
 ﻿@using LightweightCharts.Blazor.DataItems
 
 <div class="bg-info border border-1 border-dark rounded-2 bg-opacity-50 bg-primary mb-1">
-	@if (Data is OhlcData ohlc)
+	@if (Data is OhlcData<long> ohlc)
 	{
 		Format ??= OhlcFormat;
 		<span class="px-1">@(string.Format(Format, ohlc.Open, ohlc.High, ohlc.Low, ohlc.Close))</span>
 	}
-	else if (Data is HistogramData histogram)
+	else if (Data is HistogramData<long> histogram)
 	{
 		Format ??= HistogramFormat;
 		<span class="px-1">@(string.Format(Format, histogram.Value))</span>
 	}
-	else if (Data is SingleValueData single)
+	else if (Data is SingleValueData<long> single)
 	{
 		Format ??= SingleFormat;
 		<span class="px-1">@(string.Format(Format, single.Value))</span>
 	}
-	else if (Data is BarData bar)
+	else if (Data is BarData<long> bar)
 	{
 		Format ??= OhlcFormat;
 		<span class="px-1">@(string.Format(Format, bar.Open, bar.High, bar.Low, bar.Close))</span>
@@ -30,7 +30,7 @@
 	const string SingleFormat = "Value: {0:F2}";
 
 	[Parameter]
-	public WhitespaceData Data { get; set; }
+	public WhitespaceData<long> Data { get; set; }
 
 	[Parameter]
 	public string Format { get; set; }

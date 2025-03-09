@@ -5,6 +5,7 @@ using LightweightCharts.Blazor.Customization.Series;
 using LightweightCharts.Blazor.DataItems;
 using LightweightCharts.Blazor.Models.Events;
 using LightweightCharts.Blazor.Series;
+using LightweightCharts.Blazor.Utilities;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -14,9 +15,9 @@ namespace LightweightCharts.Blazor.Examples.Components.Pages;
 
 partial class CandlestickSeries
 {
-	ISeriesApi<CandlestickStyleOptions> _Candlestick;
-	ISeriesApi<HistogramStyleOptions> _Histogram;
-	IEnumerable<SeriesPrice> _MouseHoverPrices;
+	ISeriesApi<long, CandlestickStyleOptions> _Candlestick;
+	ISeriesApi<long, HistogramStyleOptions> _Histogram;
+	IEnumerable<SeriesPrice<long>> _MouseHoverPrices;
 	string _LastClickedId;
 	bool _InitChartComponent;
 	ChartComponent _ChartComponent;
@@ -112,16 +113,16 @@ partial class CandlestickSeries
 		await SetupCandlestickSeries();
 		await SetupHistogramSeries();
 
-		var timeScale = await _ChartComponent.TimeScaleAsync();
+		var timeScale = await _ChartComponent.TimeScale();
 		await timeScale.FitContent();
 	}
 
 	async Task SetupCandlestickSeries()
 	{
-		_Candlestick = (ISeriesApi<CandlestickStyleOptions>)await _ChartComponent.AddSeries(SeriesType.Candlestick);
-		await _Candlestick.SetData(BtcUsdDataPoints.OneWeek.OrderBy(x => x.OpenTime).Select(x => new CandlestickData
+		_Candlestick = (ISeriesApi<long, CandlestickStyleOptions>)await _ChartComponent.AddSeries<CandlestickStyleOptions>(SeriesType.Candlestick);
+		await _Candlestick.SetData(BtcUsdDataPoints.OneWeek.OrderBy(x => x.OpenTime).Select(x => new CandlestickData<long>
 		{
-			Time = x.OpenTime,
+			Time = x.OpenTime.ToUnix(),
 			Open = x.OpenPrice,
 			Close = x.ClosePrice,
 			High = x.HighPrice,
@@ -134,11 +135,11 @@ partial class CandlestickSeries
 		var minClose = BtcUsdDataPoints.OneWeek.OrderBy(x => x.ClosePrice).First();
 		var maxClose = BtcUsdDataPoints.OneWeek.OrderByDescending(x => x.ClosePrice).First();
 
-		await _Candlestick.CreateSeriesMarkers(new SeriesMarker[]
+		await _Candlestick.CreateSeriesMarkers(new SeriesMarker<long>[]
 		{
-			new SeriesMarker
+			new SeriesMarker<long>
 			{
-				Time = minLowPoint.OpenTime,
+				Time = minLowPoint.OpenTime.ToUnix(),
 				Position = SeriesMarkerPosition.BelowBar,
 				Shape = SeriesMarkerShape.Circle,
 				Color = Color.Purple,
@@ -146,9 +147,9 @@ partial class CandlestickSeries
 				Text = "Minimum low",
 				Id = "min_low"
 			},
-			new SeriesMarker
+			new SeriesMarker<long>
 			{
-				Time = maxHighPoint.OpenTime,
+				Time = maxHighPoint.OpenTime.ToUnix(),
 				Position = SeriesMarkerPosition.AboveBar,
 				Shape = SeriesMarkerShape.Circle,
 				Color = Color.Purple,
@@ -156,9 +157,9 @@ partial class CandlestickSeries
 				Text = "Maximum high",
 				Id = "max_high"
 			},
-			new SeriesMarker
+			new SeriesMarker<long>
 			{
-				Time = minClose.OpenTime,
+				Time = minClose.OpenTime.ToUnix(),
 				Position = SeriesMarkerPosition.BelowBar,
 				Shape = SeriesMarkerShape.ArrowUp,
 				Color = Color.Red,
@@ -166,9 +167,9 @@ partial class CandlestickSeries
 				Text = "Minimum close",
 				Id = "min_close"
 			},
-			new SeriesMarker
+			new SeriesMarker<long>
 			{
-				Time = maxClose.OpenTime,
+				Time = maxClose.OpenTime.ToUnix(),
 				Position = SeriesMarkerPosition.AboveBar,
 				Shape = SeriesMarkerShape.ArrowDown,
 				Color = Color.Red,
@@ -188,21 +189,21 @@ partial class CandlestickSeries
 			LastValueVisible = false
 		});
 		await _Histogram.MoveToPane(1);
-		await _Histogram.SetData(BtcUsdDataPoints.OneWeek.OrderBy(x => x.OpenTime).Select(x => new HistogramData
+		await _Histogram.SetData(BtcUsdDataPoints.OneWeek.OrderBy(x => x.OpenTime).Select(x => new HistogramData<long>
 		{
-			Time = x.OpenTime,
+			Time = x.OpenTime.ToUnix(),
 			Value = x.Volume,
 			Color = x.ClosePrice > x.OpenPrice ? Color.Green : Color.Red
 		}));
 	}
 
-	void OnChartCrosshairMoved(object sender, MouseEventParams e)
+	void OnChartCrosshairMoved(object sender, MouseEventParams<long> e)
 	{
 		_MouseHoverPrices = e.SeriesPrices;
 		StateHasChanged();
 	}
 
-	async void OnChartClicked(object sender, MouseEventParams e)
+	async void OnChartClicked(object sender, MouseEventParams<long> e)
 	{
 		if (_LastClickedId == _Candlestick.UniqueJavascriptId)
 			await _Candlestick.ApplyOptions(new());

@@ -7,7 +7,8 @@ namespace LightweightCharts.Blazor.DataItems
 	/// Represents a marker drawn above or below a data point to indicate a price change update.<br/>
 	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/SeriesUpDownMarker"/>
 	/// </summary>
-	public class SeriesUpDownMarker : WhitespaceData
+	public class SeriesUpDownMarker<H> : WhitespaceData<H>
+		where H : struct
 	{
 		/// <summary>
 		/// The price value for the data point.

@@ -2,6 +2,7 @@
 using LightweightCharts.Blazor.DataItems;
 using LightweightCharts.Blazor.Models;
 using LightweightCharts.Blazor.Series;
+using LightweightCharts.Blazor.Utilities;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System.Drawing;
@@ -60,7 +61,7 @@ partial class BarSeries
 			ThinBars = false
 		});
 
-		var timeScale = await _ChartComponent.TimeScaleAsync();
+		var timeScale = await _ChartComponent.TimeScale();
 		await timeScale.ApplyOptions(new Customization.Chart.TimeScaleOptions
 		{
 			TimeVisible = true,
@@ -70,14 +71,14 @@ partial class BarSeries
 		_ = Run(series, timeScale);
 	}
 
-	async Task Run(ISeriesApi seriesApi, ITimeScaleApi timeScale)
+	async Task Run(ISeriesApi<long> seriesApi, ITimeScaleApi<long> timeScale)
 	{
 		var firstPoints = BtcUsdDataPoints.OneWeek.OrderBy(x => x.OpenTime).Take(30);
 		while (true)
 		{
-			await seriesApi.SetData(firstPoints.Select(x => new BarData
+			await seriesApi.SetData(firstPoints.Select(x => new BarData<long>
 			{
-				Time = x.OpenTime,
+				Time = x.OpenTime.ToUnix(),
 				Open = x.OpenPrice,
 				Close = x.ClosePrice,
 				High = x.HighPrice,
@@ -92,9 +93,9 @@ partial class BarSeries
 
 			foreach (var point in BtcUsdDataPoints.OneWeek.OrderBy(x => x.OpenTime).Skip(30))
 			{
-				await seriesApi.Update(new BarData
+				await seriesApi.Update(new BarData<long>
 				{
-					Time = point.OpenTime,
+					Time = point.OpenTime.ToUnix(),
 					Open = point.OpenPrice,
 					Close = point.ClosePrice,
 					High = point.HighPrice,

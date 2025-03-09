@@ -8,7 +8,8 @@ namespace LightweightCharts.Blazor.DataItems
 	/// Structure describing a single item of data for baseline series.<br/>
 	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/BaselineData"/>
 	/// </summary>
-	public class BaselineData : SingleValueData
+	public class BaselineData<H> : SingleValueData<H>
+		where H : struct
 	{
 		/// <summary>
 		/// Optional color value for certain data item. If missed, color from options is used.

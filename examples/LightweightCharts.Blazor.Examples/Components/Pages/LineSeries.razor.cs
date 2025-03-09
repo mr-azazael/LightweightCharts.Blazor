@@ -2,6 +2,7 @@
 using LightweightCharts.Blazor.Customization.Series;
 using LightweightCharts.Blazor.DataItems;
 using LightweightCharts.Blazor.Series;
+using LightweightCharts.Blazor.Utilities;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,8 +15,8 @@ partial class LineSeries
 	bool _InitAreaChartComponent;
 	ChartComponent _AreaChartComponent;
 
-	ITimeScaleApi _LineChartTimescale;
-	ISeriesApi _LineSeries;
+	ITimeScaleApi<long> _LineChartTimescale;
+	ISeriesApi<long> _LineSeries;
 	ChartComponent LineChartComponent
 	{
 		set
@@ -29,8 +30,8 @@ partial class LineSeries
 		}
 	}
 
-	ITimeScaleApi _AreaChartTimescale;
-	ISeriesApi _AreaSeries;
+	ITimeScaleApi<long> _AreaChartTimescale;
+	ISeriesApi<long> _AreaSeries;
 	ChartComponent AreaChartComponent
 	{
 		set
@@ -78,14 +79,14 @@ partial class LineSeries
 			}
 		});
 
-		_LineSeries = await _LineChartComponent.AddSeries(Customization.Enums.SeriesType.Line);
-		await _LineSeries.SetData(BtcUsdDataPoints.OneWeek.OrderBy(x => x.OpenTime).Select(x => new LineData
+		_LineSeries = await _LineChartComponent.AddSeries<LineStyleOptions>(Customization.Enums.SeriesType.Line);
+		await _LineSeries.SetData(BtcUsdDataPoints.OneWeek.OrderBy(x => x.OpenTime).Select(x => new LineData<long>
 		{
-			Time = x.OpenTime,
+			Time = x.OpenTime.ToUnix(),
 			Value = x.ClosePrice
 		}));
 
-		_LineChartTimescale = await _LineChartComponent.TimeScaleAsync();
+		_LineChartTimescale = await _LineChartComponent.TimeScale();
 		_LineChartTimescale.VisibleLogicalRangeChanged += async (s, e) =>
 		{
 			if (_InLineChartCallback)
@@ -104,8 +105,8 @@ partial class LineSeries
 		{
 			if (e.SeriesPrices.Length > 0)
 			{
-				var data = e.SeriesPrices[0].DataItem as SingleValueData;
-				_AreaChartComponent?.SetCrosshairPosition(data.Value, data.UnixTime, _AreaSeries);
+				var data = e.SeriesPrices[0].DataItem as SingleValueData<long>;
+				_AreaChartComponent?.SetCrosshairPosition(data.Value, data.Time, _AreaSeries);
 			}
 			else
 			{
@@ -131,14 +132,14 @@ partial class LineSeries
 			}
 		});
 
-		_AreaSeries = await _AreaChartComponent.AddSeries(Customization.Enums.SeriesType.Area);
-		await _AreaSeries.SetData(BtcUsdDataPoints.OneWeek.OrderBy(x => x.OpenTime).Select(x => new AreaData
+		_AreaSeries = await _AreaChartComponent.AddSeries<AreaStyleOptions>(Customization.Enums.SeriesType.Area);
+		await _AreaSeries.SetData(BtcUsdDataPoints.OneWeek.OrderBy(x => x.OpenTime).Select(x => new AreaData<long>
 		{
-			Time = x.OpenTime,
+			Time = x.OpenTime.ToUnix(),
 			Value = x.ClosePrice
 		}));
 
-		_AreaChartTimescale = await _AreaChartComponent.TimeScaleAsync();
+		_AreaChartTimescale = await _AreaChartComponent.TimeScale();
 		_AreaChartTimescale.VisibleLogicalRangeChanged += async (s, e) =>
 		{
 			if (_InAreaChartCallback)
@@ -153,8 +154,8 @@ partial class LineSeries
 		{
 			if (e.SeriesPrices.Length > 0)
 			{
-				var data = e.SeriesPrices[0].DataItem as SingleValueData;
-				_LineChartComponent?.SetCrosshairPosition(data.Value, data.UnixTime, _LineSeries);
+				var data = e.SeriesPrices[0].DataItem as SingleValueData<long>;
+				_LineChartComponent?.SetCrosshairPosition(data.Value, data.Time, _LineSeries);
 			}
 			else
 			{

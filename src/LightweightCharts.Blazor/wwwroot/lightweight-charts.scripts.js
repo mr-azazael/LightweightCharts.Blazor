@@ -2,9 +2,17 @@
 /*use 'https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.development.js' for debugging*/
 
 window.lightweightChartsBlazor = {
-	createChartLayout: function (containerId, chartConfig) {
+	createChart: function (containerId, chartConfig) {
 		var container = document.getElementById(containerId);
 		return LightweightCharts.createChart(container, chartConfig);
+	},
+	createYieldCurveChart: function (containerId, chartConfig) {
+		var container = document.getElementById(containerId);
+		return LightweightCharts.createYieldCurveChart(container, chartConfig);
+	},
+	createOptionsChart: function (containerId, chartConfig) {
+		var container = document.getElementById(containerId);
+		return LightweightCharts.createOptionsChart(container, chartConfig);
 	},
 	addSeries: function (chart, type, options) {
 		lightweightChartsBlazor.replaceJsDelegates(options);

@@ -16,7 +16,9 @@ namespace LightweightCharts.Blazor.Series
 	/// Represents the interface for interacting with series.<br/>
 	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ISeriesApi"/>
 	/// </summary>
-	public interface ISeriesApi : IJsObjectWrapper
+	/// <typeparam name="H">horizontal axis value type</typeparam>
+	public interface ISeriesApi<H> : IJsObjectWrapper
+		where H : struct
 	{
 		/// <summary>
 		/// Unique instance id.
@@ -26,7 +28,7 @@ namespace LightweightCharts.Blazor.Series
 		/// <summary>
 		/// Price lines added to this series.
 		/// </summary>
-		IEnumerable<IPriceLine> PriceLines { get; }
+		IEnumerable<IPriceLine<H>> PriceLines { get; }
 
 		/// <summary>
 		/// Subscribe to the data changed event. This event is fired whenever the update or setData method is evoked on the series.<br/>
@@ -71,14 +73,14 @@ namespace LightweightCharts.Blazor.Series
 		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ISeriesApi#setdata"/>
 		/// </summary>
 		/// <param name="data">Ordered (earlier time point goes first) array of data items. Old data is fully replaced with the new one.</param>
-		Task SetData(IEnumerable<ISeriesData> data);
+		Task SetData(IEnumerable<ISeriesData<H>> data);
 
 		/// <summary>
 		/// Adds new data item to the existing set (or updates the latest item if times of the passed/latest items are equal).<br/>
 		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ISeriesApi#update"/>
 		/// </summary>
 		/// <param name="item">A single data item to be added. Time of the new item must be greater or equal to the latest existing time point. If the new item's time is equal to the last existing item's time, then the existing item is replaced with the new one.</param>
-		Task Update(ISeriesData item);
+		Task Update(ISeriesData<H> item);
 
 		/// <summary>
 		/// Returns a bar data by provided logical index.<br/>
@@ -87,28 +89,28 @@ namespace LightweightCharts.Blazor.Series
 		/// <param name="logicalIndex">	Logical index.</param>
 		/// <param name="mismatchDirection">Search direction if no data found at provided logical index.</param>
 		/// <returns>Original data item provided via setData or update methods.</returns>
-		Task<ISeriesData> DataByIndex(int logicalIndex, MismatchDirection? mismatchDirection);
+		Task<ISeriesData<H>> DataByIndex(int logicalIndex, MismatchDirection? mismatchDirection);
 
 		/// <summary>
 		/// Returns all the bar data for the series.<br/>
 		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ISeriesApi#data"/>
 		/// </summary>
 		/// <returns>Original data items provided via setData or update methods.</returns>
-		Task<IEnumerable<ISeriesData>> Data();
+		Task<IEnumerable<ISeriesData<H>>> Data();
 
 		/// <summary>
 		/// Creates a new price line.<br/>
 		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ISeriesApi#createpriceline"/>
 		/// </summary>
 		/// <param name="options">Any subset of options, however price is required.</param>
-		Task<IPriceLine> CreatePriceLine(PriceLineOptions options);
+		Task<IPriceLine<H>> CreatePriceLine(PriceLineOptions options);
 
 		/// <summary>
 		/// Removes the price line that was created before.<br/>
 		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ISeriesApi#removepriceline"/>
 		/// </summary>
 		/// <param name="priceLine">A line to remove.</param>
-		Task RemovePriceLine(IPriceLine priceLine);
+		Task RemovePriceLine(IPriceLine<H> priceLine);
 
 		/// <summary>
 		/// Return current series type.<br/>
@@ -130,7 +132,7 @@ namespace LightweightCharts.Blazor.Series
 		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ISeriesApi#getpane"/>
 		/// </summary>
 		/// <returns>Pane API object to control the pane</returns>
-		Task<IPaneApi> GetPane();
+		Task<IPaneApi<H>> GetPane();
 
 		#region plugins
 
@@ -139,7 +141,7 @@ namespace LightweightCharts.Blazor.Series
 		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/functions/createSeriesMarkers"/>
 		/// </summary>
 		/// <param name="markers">An array of markers to be displayed on the series.</param>
-		ValueTask<ISeriesMarkersPluginApi> CreateSeriesMarkers(IEnumerable<SeriesMarker> markers);
+		ValueTask<ISeriesMarkersPluginApi<H>> CreateSeriesMarkers(IEnumerable<SeriesMarker<H>> markers);
 
 		/// <summary>
 		/// Creates and attaches the Series Up Down Markers Plugin.<br/>
@@ -147,16 +149,18 @@ namespace LightweightCharts.Blazor.Series
 		/// </summary>
 		/// <param name="options">options for the Up Down Markers Plugin</param>
 		/// <returns>Api for Series Up Down Marker Plugin.</returns>
-		ValueTask<ISeriesUpDownMarkerPluginApi> CreateUpDownMarkers(UpDownMarkersPluginOptions options = null);
+		ValueTask<ISeriesUpDownMarkerPluginApi<H>> CreateUpDownMarkers(UpDownMarkersPluginOptions options = null);
 
 		#endregion
 	}
 
 	/// <summary>
-	/// Adds Options and ApplyOptions to the <see cref="ISeriesApi"/> interface.
+	/// Adds Options and ApplyOptions to the <see cref="ISeriesApi{H}"/> interface.
 	/// </summary>
-	/// <typeparam name="O"></typeparam>
-	public interface ISeriesApi<O> : ISeriesApi, ICustomizableObject<O>
+	/// <typeparam name="H">horizontal axis value type</typeparam>
+	/// <typeparam name="O">options type</typeparam>
+	public interface ISeriesApi<H, O> : ISeriesApi<H>, ICustomizableObject<O>
+		where H : struct
 		where O : SeriesOptionsCommon, new()
 	{
 
