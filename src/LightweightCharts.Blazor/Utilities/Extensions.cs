@@ -1,8 +1,6 @@
-﻿using LightweightCharts.Blazor.Customization;
-using LightweightCharts.Blazor.DataItems;
+﻿using LightweightCharts.Blazor.DataItems;
 using System;
 using System.Drawing;
-using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace LightweightCharts.Blazor.Utilities
@@ -126,7 +124,7 @@ namespace LightweightCharts.Blazor.Utilities
 		/// </summary>
 		/// <param name="unix">unix timestamp</param>
 		/// <returns>dateTime</returns>
-		public static DateTime FromUnix(long unix)
+		public static DateTime FromUnix(this long unix)
 			=> DateTimeOffset.FromUnixTimeSeconds(unix).DateTime;
 	}
 }
