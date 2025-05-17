@@ -380,7 +380,7 @@ namespace LightweightCharts.Blazor.Charts
 		public async Task RemovePane(int index)
 		{
 			await InitializationCompleted;
-			await JsModule.InvokeVoidAsync(JsRuntime, _JsObjectReference, "removePane");
+			await JsModule.InvokeVoidAsync(JsRuntime, _JsObjectReference, "removePane", false, index);
 		}
 
 		/// <summary>
