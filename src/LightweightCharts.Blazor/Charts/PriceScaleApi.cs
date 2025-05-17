@@ -24,6 +24,6 @@ namespace LightweightCharts.Blazor.Charts
 			: base(jsRuntime, jsObjectReference) { }
 
 		public async Task<double> Width()
-			=> await JsObjectReference.InvokeAsync<double>("width");
+			=> await JsModule.InvokeAsync<double>(JsRuntime, JsObjectReference, "width");
 	}
 }

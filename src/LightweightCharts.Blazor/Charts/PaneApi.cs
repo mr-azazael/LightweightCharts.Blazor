@@ -96,16 +96,16 @@ namespace LightweightCharts.Blazor.Charts
 		public IJSObjectReference JsObjectReference { get; }
 
 		public async Task<int> GetHeight()
-			=> await JsObjectReference.InvokeAsync<int>("getHeight");
+			=> await JsModule.InvokeAsync<int>(_JsRuntime, JsObjectReference, "getHeight");
 
 		public async Task SetHeight(int height)
-			=> await JsObjectReference.InvokeVoidAsync("setHeight", height);
+			=> await JsModule.InvokeVoidAsync(_JsRuntime, JsObjectReference, "setHeight", false, height);
 
 		public async Task MoveTo(int paneIndex)
-			=> await JsObjectReference.InvokeVoidAsync("moveTo", paneIndex);
+			=> await JsModule.InvokeVoidAsync(_JsRuntime, JsObjectReference, "moveTo", false, paneIndex);
 
 		public async Task<int> PaneIndex()
-			=> await JsObjectReference.InvokeAsync<int>("paneIndex");
+			=> await JsModule.InvokeAsync<int>(_JsRuntime, JsObjectReference, "paneIndex");
 
 		public async Task<ISeriesApi<H>[]> GetSeries()
 		{
@@ -119,7 +119,7 @@ namespace LightweightCharts.Blazor.Charts
 			if (_PriceScales.TryGetValue(priceScaleId, out var api))
 				return api;
 
-			var jsReference = await JsObjectReference.InvokeAsync<IJSObjectReference>("priceScale", priceScaleId);
+			var jsReference = await JsModule.InvokeAsync<IJSObjectReference>(_JsRuntime, JsObjectReference, "priceScale", false, priceScaleId);
 			if (jsReference == null)
 				return null;
 

@@ -186,31 +186,31 @@ namespace LightweightCharts.Blazor.Charts
 		#endregion
 
 		public async Task<long> ScrollPosition()
-			=> await _JsObjectRef.InvokeAsync<long>("scrollPosition");
+			=> await JsModule.InvokeAsync<long>(_JsRuntime, _JsObjectRef, "scrollPosition");
 
 		public async Task ScrollToPosition(long position, bool animated)
-			=> await _JsObjectRef.InvokeVoidAsync("scrollToPosition", position, animated);
+			=> await JsModule.InvokeVoidAsync(_JsRuntime, _JsObjectRef, "scrollToPosition", false, position, animated);
 
 		public async Task ScrollToRealTime()
-			=> await _JsObjectRef.InvokeVoidAsync("scrollToRealTime");
+			=> await JsModule.InvokeVoidAsync(_JsRuntime, _JsObjectRef, "scrollToRealTime");
 
 		public async Task<TimeRange> GetVisibleRange()
-			=> await _JsObjectRef.InvokeAsync<TimeRange>("getVisibleRange");
+			=> await JsModule.InvokeAsync<TimeRange>(_JsRuntime, _JsObjectRef, "getVisibleRange");
 
 		public async Task SetVisibleRange(TimeRange timeRange)
-			=> await _JsObjectRef.InvokeVoidAsync("setVisibleRange", timeRange);
+			=> await JsModule.InvokeVoidAsync(_JsRuntime, _JsObjectRef, "setVisibleRange", false, timeRange);
 
 		public async Task<LogicalRange> GetVisibleLogicalRange()
-			=> await _JsObjectRef.InvokeAsync<LogicalRange>("getVisibleLogicalRange");
+			=> await JsModule.InvokeAsync<LogicalRange>(_JsRuntime, _JsObjectRef, "getVisibleLogicalRange");
 
 		public async Task SetVisibleLogicalRange(LogicalRange timeRange)
-			=> await _JsObjectRef.InvokeVoidAsync("setVisibleLogicalRange", timeRange);
+			=> await JsModule.InvokeVoidAsync(_JsRuntime, _JsObjectRef, "setVisibleLogicalRange", false, timeRange);
 
 		public async Task ResetTimeScale()
-			=> await _JsObjectRef.InvokeVoidAsync("resetTimeScale");
+			=> await JsModule.InvokeVoidAsync(_JsRuntime, _JsObjectRef, "resetTimeScale");
 
 		public async Task FitContent()
-			=> await _JsObjectRef.InvokeVoidAsync("fitContent");
+			=> await JsModule.InvokeVoidAsync(_JsRuntime, _JsObjectRef, "fitContent");
 
 		public async Task ApplyOptions(TimeScaleOptions options)
 			=> await JsModule.InvokeVoidAsync(_JsRuntime, _JsObjectRef, "applyOptions", true, options);
@@ -219,22 +219,22 @@ namespace LightweightCharts.Blazor.Charts
 			=> await JsModule.InvokeAsync<TimeScaleOptions>(_JsRuntime, _JsObjectRef, "options");
 
 		public async Task<double?> TimeToCoordinate(long time)
-			=> await _JsObjectRef.InvokeAsync<double?>("timeToCoordinate", time);
+			=> await JsModule.InvokeAsync<double?>(_JsRuntime, _JsObjectRef, "timeToCoordinate", false, time);
 
 		public async Task<long?> CoordinateToTime(double coordinate)
-			=> await _JsObjectRef.InvokeAsync<long?>("coordinateToTime", coordinate);
+			=> await JsModule.InvokeAsync<long?>(_JsRuntime, _JsObjectRef, "coordinateToTime", false, coordinate);
 
 		public async Task<double?> LogicalToCoordinate(double logical)
-			=> await _JsObjectRef.InvokeAsync<double?>("logicalToCoordinate", logical);
+			=> await JsModule.InvokeAsync<double?>(_JsRuntime, _JsObjectRef, "logicalToCoordinate", false, logical);
 
 		public async Task<double?> CoordinateToLogical(double coordinate)
-			=> await _JsObjectRef.InvokeAsync<double?>("coordinateToLogical", coordinate);
+			=> await JsModule.InvokeAsync<double?>(_JsRuntime, _JsObjectRef, "coordinateToLogical", false, coordinate);
 
 		public async Task<double> Width()
-			=> await _JsObjectRef.InvokeAsync<double>("width");
+			=> await JsModule.InvokeAsync<double>(_JsRuntime, _JsObjectRef, "width");
 
 		public async Task<double> Height()
-			=> await _JsObjectRef.InvokeAsync<double>("height");
+			=> await JsModule.InvokeAsync<double>(_JsRuntime, _JsObjectRef, "height");
 
 		public async ValueTask DisposeAsync()
 		{

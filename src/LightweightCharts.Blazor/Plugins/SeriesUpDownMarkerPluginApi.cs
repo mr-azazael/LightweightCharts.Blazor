@@ -69,16 +69,16 @@ namespace LightweightCharts.Blazor.Plugins
 			=> JsModule.InvokeVoidAsync(JsRuntime, JsObjectReference, "update", false, data, historicalUpdate);
 
 		public ValueTask<SeriesUpDownMarker<H>[]> Markers()
-			=> JsObjectReference.InvokeAsync<SeriesUpDownMarker<H>[]>("markers");
+			=> JsModule.InvokeAsync<SeriesUpDownMarker<H>[]>(JsRuntime, JsObjectReference, "markers");
 
 		public ValueTask SetMarkers(IEnumerable<SeriesUpDownMarker<H>> markers)
-			=> JsObjectReference.InvokeVoidAsync("setMarkers", markers);
+			=> JsModule.InvokeVoidAsync(JsRuntime, JsObjectReference, "setMarkers", false, markers);
 
 		public ValueTask ClearMarkers()
-			=> JsObjectReference.InvokeVoidAsync("clearMarkers");
+			=> JsModule.InvokeVoidAsync(JsRuntime, JsObjectReference, "clearMarkers");
 
 		public ValueTask Detach()
-			=> JsObjectReference.InvokeVoidAsync("detach");
+			=> JsModule.InvokeVoidAsync(JsRuntime, JsObjectReference, "detach");
 
 		public ISeriesApi<H> GetSeries()
 			=> _SeriesApi;

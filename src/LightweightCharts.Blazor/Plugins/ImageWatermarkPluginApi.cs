@@ -29,7 +29,7 @@ namespace LightweightCharts.Blazor.Plugins
 		ImageWatermarkOptions _Options;
 
 		public ValueTask Detach()
-			=> JsObjectReference.InvokeVoidAsync("detach");
+			=> JsModule.InvokeVoidAsync(JsRuntime, JsObjectReference, "detach");
 
 		public IPaneApi<H> GetPane()
 			=> _Owner;

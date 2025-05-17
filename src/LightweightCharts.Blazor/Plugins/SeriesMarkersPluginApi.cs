@@ -43,7 +43,7 @@ namespace LightweightCharts.Blazor.Plugins
 		public ValueTask SetMarkers(SeriesMarker<H>[] markers)
 		{
 			_Markers = markers ?? [];
-			return JsObjectReference.InvokeVoidAsync("setMarkers", _Markers);
+			return JsModule.InvokeVoidAsync(JsRuntime, JsObjectReference, "setMarkers", false, _Markers);
 		}
 
 		public SeriesMarker<H>[] Markers()
@@ -53,7 +53,7 @@ namespace LightweightCharts.Blazor.Plugins
 			=> _Owner;
 
 		public ValueTask Detach()
-			=> JsObjectReference.InvokeVoidAsync("detach");
+			=> JsModule.InvokeVoidAsync(JsRuntime, JsObjectReference, "detach");
 
 		public override Task ApplyOptions(object options)
 			=> Task.CompletedTask;

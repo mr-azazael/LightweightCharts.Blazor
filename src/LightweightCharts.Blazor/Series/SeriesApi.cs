@@ -69,20 +69,18 @@ namespace LightweightCharts.Blazor.Series
 			//having mixed data items with whitespaces will result in serializing all of them as whitespaces, losing any price data
 			//this ensures data items are serialized correctly before sending the to the javascript methods
 			var jsonObjects = items.Select(x => System.Text.Json.JsonSerializer.SerializeToDocument(x, x.GetType()));
-			await JsObjectReference.InvokeVoidAsync("setData", jsonObjects);
+			await JsModule.InvokeVoidAsync(JsRuntime, JsObjectReference, "setData", false, jsonObjects);
 			DataChanged?.Invoke(this, DataChangedScope.Full);
 		}
 
 		public async Task Update(ISeriesData<H> item)
 		{
-			await JsObjectReference.InvokeVoidAsync("update", item);
+			await JsModule.InvokeVoidAsync(JsRuntime, JsObjectReference, "update", false, item);
 			DataChanged?.Invoke(this, DataChangedScope.Update);
 		}
 
 		public async Task<ISeriesData<H>> DataByIndex(int logicalIndex, MismatchDirection? mismatchDirection)
-		{
-			return await JsObjectReference.InvokeAsync<ISeriesData<H>>("dataByIndex", logicalIndex, mismatchDirection);
-		}
+			=> await JsModule.InvokeAsync<ISeriesData<H>>(JsRuntime, JsObjectReference, "dataByIndex", false, logicalIndex, mismatchDirection);
 
 		public async Task<IEnumerable<ISeriesData<H>>> Data()
 		{
@@ -92,7 +90,7 @@ namespace LightweightCharts.Blazor.Series
 
 		public async Task<IPriceLine<H>> CreatePriceLine(PriceLineOptions options)
 		{
-			var priceLineRef = await JsObjectReference.InvokeAsync<IJSObjectReference>("createPriceLine", options ?? new PriceLineOptions());
+			var priceLineRef = await JsModule.InvokeAsync<IJSObjectReference>(JsRuntime, JsObjectReference, "createPriceLine", false, options ?? new PriceLineOptions());
 			var priceLine = new PriceLine<H>(JsRuntime, priceLineRef, this);
 			_PriceLines.Add(priceLine);
 			return priceLine;
@@ -102,28 +100,28 @@ namespace LightweightCharts.Blazor.Series
 		{
 			if (_PriceLines.Contains(priceLine))
 			{
-				await JsObjectReference.InvokeVoidAsync("removePriceLine", priceLine.JsObjectReference);
+				await JsModule.InvokeVoidAsync(JsRuntime, JsObjectReference, "removePriceLine", false, priceLine.JsObjectReference);
 				_PriceLines.Remove(priceLine);
 			}
 		}
 
 		public async Task<BarsInfo> BarsInLogicalRange(LogicalRange logicalRange)
-			=> await JsObjectReference.InvokeAsync<BarsInfo>("barsInLogicalRange", logicalRange);
+			=> await JsModule.InvokeAsync<BarsInfo>(JsRuntime, JsObjectReference, "barsInLogicalRange", false, logicalRange);
 
 		public async Task<SeriesType> SeriesType()
-			=> await JsObjectReference.InvokeAsync<SeriesType>("seriesType");
+			=> await JsModule.InvokeAsync<SeriesType>(JsRuntime, JsObjectReference, "seriesType");
 
 		public async Task<double> PriceToCoordinate(double price)
-			=> await JsObjectReference.InvokeAsync<double>("priceToCoordinate", price);
+			=> await JsModule.InvokeAsync<double>(JsRuntime, JsObjectReference, "priceToCoordinate", false, price);
 
 		public async Task<double> CoordinateToPrice(double coordinate)
-			=> await JsObjectReference.InvokeAsync<double>("coordinateToPrice", coordinate);
+			=> await JsModule.InvokeAsync<double>(JsRuntime, JsObjectReference, "coordinateToPrice", false, coordinate);
 
 		public async Task<IPriceScaleApi> PriceScale()
 		{
 			if (_PriceScale == null)
 			{
-				var reference = await JsObjectReference.InvokeAsync<IJSObjectReference>("priceScale");
+				var reference = await JsModule.InvokeAsync<IJSObjectReference>(JsRuntime, JsObjectReference, "priceScale");
 				_PriceScale = new PriceScaleApi(JsRuntime, reference);
 			}
 
@@ -131,11 +129,11 @@ namespace LightweightCharts.Blazor.Series
 		}
 
 		public async Task MoveToPane(int paneIndex)
-			=> await JsObjectReference.InvokeVoidAsync("moveToPane", paneIndex);
+			=> await JsModule.InvokeVoidAsync(JsRuntime, JsObjectReference, "moveToPane", false, paneIndex);
 
 		public async Task<IPaneApi<H>> GetPane()
 		{
-			var paneReference = await JsObjectReference.InvokeAsync<IJSObjectReference>("getPane");
+			var paneReference = await JsModule.InvokeAsync<IJSObjectReference>(JsRuntime, JsObjectReference, "getPane");
 			return new PaneApi<H>(JsRuntime, Parent, paneReference);
 		}
 
@@ -150,7 +148,7 @@ namespace LightweightCharts.Blazor.Series
 			return JsModule.CreateUpDownMarkers(JsRuntime, this, options ?? new());
 		}
 
-		static async Task<Array> GetData<T>(IJSObjectReference jSObject)
-			=> await jSObject.InvokeAsync<T[]>("data");
+		static async Task<Array> GetData<T>(IJSRuntime runtime, IJSObjectReference jSObject)
+			=> await JsModule.InvokeAsync<T[]>(runtime, jSObject, "data");
 	}
 }

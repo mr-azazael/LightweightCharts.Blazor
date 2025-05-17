@@ -2,19 +2,24 @@
 /*use 'https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.development.js' for debugging*/
 
 window.lightweightChartsBlazor = {
+	//interop
 	createChart: function (containerId, chartConfig) {
 		var container = document.getElementById(containerId);
 		return LightweightCharts.createChart(container, chartConfig);
 	},
+	//interop
 	createYieldCurveChart: function (containerId, chartConfig) {
 		var container = document.getElementById(containerId);
 		return LightweightCharts.createYieldCurveChart(container, chartConfig);
 	},
+	//interop
 	createOptionsChart: function (containerId, chartConfig) {
 		var container = document.getElementById(containerId);
 		return LightweightCharts.createOptionsChart(container, chartConfig);
 	},
+	//interop
 	addSeries: function (chart, type, options) {
+		chart = lightweightChartsBlazor.getStoredReference(chart);
 		lightweightChartsBlazor.replaceJsDelegates(options);
 		let descriptor = null;
 		switch (type) {
@@ -44,6 +49,7 @@ window.lightweightChartsBlazor = {
 
 		return series;
 	},
+	//interop
 	lightweightChartsInvoke: async function (target, method, replaceDelegates /*args*/) {
 		var args = Array.prototype.slice.call(arguments, 3);
 		if (replaceDelegates) {
@@ -51,15 +57,29 @@ window.lightweightChartsBlazor = {
 				lightweightChartsBlazor.replaceJsDelegates(args[arg]);
 		}
 
+		target = lightweightChartsBlazor.getStoredReference(target);
 		var result = target[method].apply(target, args);
 		if (typeof result === 'object' && typeof result.then === 'function')
 			result = await result;
 
-		if (result != undefined && result.uniqueJavascriptId == undefined)
-			result.uniqueJavascriptId = this.generateJavascriptId();
+		lightweightChartsBlazor.ensureUniqueJavascriptId(result);
+		if (!result || lightweightChartsBlazor.isValueSerializable(result))
+			return result;
 
-		return result;
+		if (!Array.isArray(result)) {
+			return lightweightChartsBlazor.createStoredReference(result);
+		}
+
+		let referencesArray = [];
+		for (const item of result) {
+			const stored = lightweightChartsBlazor.createStoredReference(item);
+			const ref = DotNet.createJSObjectReference(stored);
+			referencesArray.push(ref);
+		}
+
+		return referencesArray;
 	},
+	//interop
 	subscribeToEvent: function (target, dotNetHandler, subscriptionMethod, methodName) {
 		let callbackWrapper = {
 			eventCallback: async function (eventArgs) {
@@ -101,21 +121,28 @@ window.lightweightChartsBlazor = {
 			}
 		};
 
+		target = lightweightChartsBlazor.getStoredReference(target);
 		target[subscriptionMethod](callbackWrapper.eventCallback);
 		return callbackWrapper;
 	},
+	//interop
 	unsubscribeFromEvent: function (target, callbackWrapper, unsubscriptionMethod) {
+		target = lightweightChartsBlazor.getStoredReference(target);
 		target[unsubscriptionMethod](callbackWrapper.eventCallback);
 	},
+	//interop
 	takeScreenshot: function (target) {
+		target = lightweightChartsBlazor.getStoredReference(target);
 		var canvas = target['takeScreenshot'].apply(target);
 		var context = canvas.getContext('2d');
 		var data = context.getImageData(0, 0, canvas.width, canvas.height);
 		return new Uint8Array(data.data);
 	},
+	//local
 	getUniqueJavascriptId: function (target) {
 		return target.uniqueJavascriptId;
 	},
+	//local
 	generateJavascriptId: function () {
 		function s4() {
 			return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
@@ -123,6 +150,7 @@ window.lightweightChartsBlazor = {
 
 		return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
 	},
+	//local
 	replaceJsDelegates: function (target) {
 		if (!target)
 			return;
@@ -145,21 +173,95 @@ window.lightweightChartsBlazor = {
 				lightweightChartsBlazor.replaceJsDelegates(value);
 		}
 	},
+	//interop
 	createImageWatermark: function (pane, imageUrl, options) {
+		pane = lightweightChartsBlazor.getStoredReference(pane);
 		lightweightChartsBlazor.replaceJsDelegates(options);
 		return LightweightCharts.createImageWatermark(pane, imageUrl, options);
 	},
+	//interop
 	createTextWatermark: function (pane, options) {
+		pane = lightweightChartsBlazor.getStoredReference(pane);
 		lightweightChartsBlazor.replaceJsDelegates(options);
 		return LightweightCharts.createTextWatermark(pane, options);
 	},
+	//interop
 	createSeriesMarkers: function (series, markers) {
+		series = lightweightChartsBlazor.getStoredReference(series);
 		return LightweightCharts.createSeriesMarkers(series, markers);
 	},
+	//interop
 	createUpDownMarkers: function (series, options) {
+		series = lightweightChartsBlazor.getStoredReference(series);
 		return LightweightCharts.createUpDownMarkers(series, options);
 	},
 	version: function () {
 		return LightweightCharts.version();
+	},
+	//local
+	ensureUniqueJavascriptId: function (target) {
+		if (!target)
+			return;
+
+		if (!Array.isArray(target)) {
+			if (target.uniqueJavascriptId == undefined)
+				target.uniqueJavascriptId = lightweightChartsBlazor.generateJavascriptId();
+			return;
+		}
+
+		for (const item of target)
+			lightweightChartsBlazor.ensureUniqueJavascriptId(item);
+	},
+	//local
+	isValueSerializable: function (value) {
+		if (value === null)
+			return true;
+
+		switch (typeof value) {
+			case 'string':
+			case 'boolean':
+			case 'number':
+			case 'bigint':
+				return true;
+		}
+
+		if (Array.isArray(value))
+			return value.every(lightweightChartsBlazor.isValueSerializable);
+
+		if (typeof value === 'object') {
+			if (Object.getPrototypeOf(value) !== Object.prototype)
+				return false;
+
+			return Object.values(value).every(lightweightChartsBlazor.isValueSerializable);
+		}
+
+		return false;
+	},
+	//local
+	createStoredReference: function (reference) {
+		if (Array.isArray(reference))
+			throw new Error('unexpected array reference');
+
+		lightweightChartsBlazor.ensureUniqueJavascriptId(reference);
+		if (!lightweightChartsBlazor.storedReferencesMap)
+			lightweightChartsBlazor.storedReferencesMap = new Map();
+
+		ref = { __uniqueJavascriptId: reference.uniqueJavascriptId };
+		lightweightChartsBlazor.storedReferencesMap.set(reference.uniqueJavascriptId, reference);
+		return ref;
+	},
+	//local
+	getStoredReference: function (reference) {
+		if (reference.__uniqueJavascriptId === undefined)
+			return reference;
+
+		if (!lightweightChartsBlazor.storedReferencesMap)
+			throw new Error('unknown reference');
+
+		const object = lightweightChartsBlazor.storedReferencesMap.get(reference.__uniqueJavascriptId);
+		if (!object)
+			throw new Error('unknown reference');
+
+		return object;
 	}
 };
