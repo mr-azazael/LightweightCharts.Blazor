@@ -18,8 +18,8 @@ namespace LightweightCharts.Blazor.Plugins
 	class ImageWatermarkPluginApi<H> : CustomizableObject<ImageWatermarkOptions>, IImageWatermarkPluginApi<H>
 		where H : struct
 	{
-		public ImageWatermarkPluginApi(IJSRuntime jsRuntime, IPaneApi<H> owner, IJSObjectReference jSObject, ImageWatermarkOptions options)
-			: base(jsRuntime, jSObject)
+		public ImageWatermarkPluginApi(IJSRuntime jsRuntime, IPaneApi<H> owner, IJSObjectReference jsObject, ImageWatermarkOptions options)
+			: base(jsRuntime, jsObject)
 		{
 			_Owner = owner;
 			_Options = options;

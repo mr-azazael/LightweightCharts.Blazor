@@ -60,21 +60,21 @@ namespace LightweightCharts.Blazor
 			return jsRuntime.InvokeVoidAsync("lightweightChartsBlazor.lightweightChartsInvoke", javascriptArgs);
 		}
 
-		public static ValueTask<string> GetUniqueJavascriptId(IJSRuntime jsRuntime, IJSObjectReference jSObject)
-			=> jsRuntime.InvokeAsync<string>("lightweightChartsBlazor.getUniqueJavascriptId", jSObject);
+		public static ValueTask<string> GetUniqueJavascriptId(IJSRuntime jsRuntime, IJSObjectReference jsObject)
+			=> jsRuntime.InvokeAsync<string>("lightweightChartsBlazor.getUniqueJavascriptId", jsObject);
 
-		public static ValueTask<IJSObjectReference> SubscribeToEvent<T>(IJSRuntime jsRuntime, IJSObjectReference jSObject, DotNetObjectReference<T> dotnetRef, EventDescriptor descriptor, string handler)
+		public static ValueTask<IJSObjectReference> SubscribeToEvent<T>(IJSRuntime jsRuntime, IJSObjectReference jsObject, DotNetObjectReference<T> dotnetRef, EventDescriptor descriptor, string handler)
 			where T : class
-			=> jsRuntime.InvokeAsync<IJSObjectReference>("lightweightChartsBlazor.subscribeToEvent", jSObject, dotnetRef, descriptor.SubscribeMethod, handler);
+			=> jsRuntime.InvokeAsync<IJSObjectReference>("lightweightChartsBlazor.subscribeToEvent", jsObject, dotnetRef, descriptor.SubscribeMethod, handler);
 
-		public static ValueTask UnsubscribeFromEvent(IJSRuntime jsRuntime, IJSObjectReference jSObject, IJSObjectReference jSObjectCallback, EventDescriptor descriptor)
-			=> jsRuntime.InvokeVoidAsync("lightweightChartsBlazor.unsubscribeFromEvent", jSObject, jSObjectCallback, descriptor.UnsubscribeMethod);
+		public static ValueTask UnsubscribeFromEvent(IJSRuntime jsRuntime, IJSObjectReference jsObject, IJSObjectReference jSObjectCallback, EventDescriptor descriptor)
+			=> jsRuntime.InvokeVoidAsync("lightweightChartsBlazor.unsubscribeFromEvent", jsObject, jSObjectCallback, descriptor.UnsubscribeMethod);
 
 		public static ValueTask<byte[]> TakeScreenshot(IJSRuntime jsRuntime, IJSObjectReference chartReference)
 			=> jsRuntime.InvokeAsync<byte[]>("lightweightChartsBlazor.takeScreenshot", chartReference);
 
-		public static ValueTask<IJSObjectReference> AddChartSeries<T>(IJSRuntime jsRuntime, IJSObjectReference chartReference, T type, SeriesOptionsCommon options)
-			=> jsRuntime.InvokeAsync<IJSObjectReference>("lightweightChartsBlazor.addSeries", chartReference, type, options);
+		public static ValueTask<IJSObjectReference> AddChartSeries<T>(IJSRuntime jsRuntime, IJSObjectReference chartReference, T type, SeriesOptionsCommon options, int paneIndex)
+			=> jsRuntime.InvokeAsync<IJSObjectReference>("lightweightChartsBlazor.addSeries", chartReference, type, options, paneIndex);
 
 		public static ValueTask<string[]> GetPaneSeries(IJSRuntime jsRuntime, IJSObjectReference paneReference)
 			=> jsRuntime.InvokeAsync<string[]>("lightweightChartsBlazor.getPaneSeries", paneReference);
@@ -97,7 +97,7 @@ namespace LightweightCharts.Blazor
 			return new ImageWatermarkPluginApi<H>(jsRuntime, pane, api, options);
 		}
 
-		public static async ValueTask<ISeriesMarkersPluginApi<H>> CreateSeriesMarkers<H>(IJSRuntime jsRuntime, ISeriesApi<H> series, SeriesMarker<H>[] markers)
+		public static async ValueTask<ISeriesMarkersPluginApi<H>> CreateSeriesMarkers<H>(IJSRuntime jsRuntime, ISeriesApi<H> series, SeriesMarkerBase<H>[] markers)
 			where H : struct
 		{
 			var api = await jsRuntime.InvokeAsync<IJSObjectReference>("lightweightChartsBlazor.createSeriesMarkers", series.JsObjectReference, markers);

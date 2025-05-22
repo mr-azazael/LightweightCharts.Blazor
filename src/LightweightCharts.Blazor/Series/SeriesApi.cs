@@ -137,7 +137,13 @@ namespace LightweightCharts.Blazor.Series
 			return new PaneApi<H>(JsRuntime, Parent, paneReference);
 		}
 
-		public ValueTask<ISeriesMarkersPluginApi<H>> CreateSeriesMarkers(IEnumerable<SeriesMarker<H>> markers)
+		public async Task<int> SeriesOrder()
+			=> await JsModule.InvokeAsync<int>(JsRuntime, JsObjectReference, "seriesOrder");
+
+		public async Task SetSeriesOrder(int order)
+			=> await JsModule.InvokeVoidAsync(JsRuntime, JsObjectReference, "setSeriesOrder", false, order);
+
+		public ValueTask<ISeriesMarkersPluginApi<H>> CreateSeriesMarkers(IEnumerable<SeriesMarkerBase<H>> markers)
 			=> JsModule.CreateSeriesMarkers(JsRuntime, this, markers?.ToArray() ?? []);
 
 		public ValueTask<ISeriesUpDownMarkerPluginApi<H>> CreateUpDownMarkers(UpDownMarkersPluginOptions options = null)
@@ -148,7 +154,7 @@ namespace LightweightCharts.Blazor.Series
 			return JsModule.CreateUpDownMarkers(JsRuntime, this, options ?? new());
 		}
 
-		static async Task<Array> GetData<T>(IJSRuntime runtime, IJSObjectReference jSObject)
-			=> await JsModule.InvokeAsync<T[]>(runtime, jSObject, "data");
+		static async Task<Array> GetData<T>(IJSRuntime runtime, IJSObjectReference jsObject)
+			=> await JsModule.InvokeAsync<T[]>(runtime, jsObject, "data");
 	}
 }

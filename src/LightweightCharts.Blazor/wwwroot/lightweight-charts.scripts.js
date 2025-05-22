@@ -18,7 +18,7 @@ window.lightweightChartsBlazor = {
 		return LightweightCharts.createOptionsChart(container, chartConfig);
 	},
 	//interop
-	addSeries: function (chart, type, options) {
+	addSeries: function (chart, type, options, paneIndex) {
 		chart = lightweightChartsBlazor.getStoredReference(chart);
 		lightweightChartsBlazor.replaceJsDelegates(options);
 		let descriptor = null;
@@ -43,7 +43,7 @@ window.lightweightChartsBlazor = {
 				break;
 		}
 
-		let series = chart.addSeries(descriptor, options);
+		let series = chart.addSeries(descriptor, options, paneIndex);
 		if (series != undefined && series.uniqueJavascriptId == undefined)
 			series.uniqueJavascriptId = this.generateJavascriptId();
 
