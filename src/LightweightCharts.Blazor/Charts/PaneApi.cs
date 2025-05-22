@@ -82,11 +82,11 @@ namespace LightweightCharts.Blazor.Charts
 	class PaneApi<H> : IPaneApi<H>
 		where H : struct
 	{
-		public PaneApi(IJSRuntime jsRuntime, IChartApiBase<H> parent, IJSObjectReference jSObject)
+		public PaneApi(IJSRuntime jsRuntime, IChartApiBase<H> parent, IJSObjectReference jsObject)
 		{
 			_JsRuntime = jsRuntime;
 			_Parent = parent;
-			JsObjectReference = jSObject;
+			JsObjectReference = jsObject;
 		}
 
 		IJSRuntime _JsRuntime;

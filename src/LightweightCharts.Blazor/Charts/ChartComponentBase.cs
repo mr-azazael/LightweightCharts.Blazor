@@ -261,13 +261,13 @@ namespace LightweightCharts.Blazor.Charts
 		/// <returns>api interface for the added series</returns>
 		/// <exception cref="InvalidOperationException"></exception>
 		/// <exception cref="NotImplementedException"></exception>
-		public async Task<ISeriesApi<H, S>> AddSeries<S>(SeriesType type, S options = null, int? paneIndex = null)
+		public async Task<ISeriesApi<H, S>> AddSeries<S>(SeriesType type, S options = null, int paneIndex = 0)
 			where S : SeriesOptionsCommon, new()
 		{
 			//validate options type and resolve expected data item type
 			var dataItemType = ValidateAndResolveSeries<S>(type);
 			await InitializationCompleted;
-			var javascriptRef = await JsModule.AddChartSeries(JsRuntime, JsObjectReference, type, options ?? new S());
+			var javascriptRef = await JsModule.AddChartSeries(JsRuntime, JsObjectReference, type, options ?? new S(), paneIndex);
 			var uniqueId = await JsModule.GetUniqueJavascriptId(JsRuntime, javascriptRef);
 			var series = new SeriesApi<H, S>(uniqueId, JsRuntime, javascriptRef, this, type, dataItemType);
 			_Series.Add(uniqueId, series);
@@ -295,8 +295,8 @@ namespace LightweightCharts.Blazor.Charts
 			await InitializationCompleted;
 			if (_TimeScale == null)
 			{
-				var reference = await JsModule.InvokeAsync<IJSObjectReference>(JsRuntime, _JsObjectReference, "timeScale", false);
-				_TimeScale = new TimeScaleApi<H>(this, reference, JsRuntime);
+				var timeScale = await JsModule.InvokeAsync<IJSObjectReference>(JsRuntime, _JsObjectReference, "timeScale", false);
+				_TimeScale = new TimeScaleApi<H>(this, timeScale, JsRuntime);
 			}
 
 			return _TimeScale;
@@ -305,19 +305,20 @@ namespace LightweightCharts.Blazor.Charts
 		/// <summary>
 		/// <inheritdoc cref="IChartApiBase{H}.PriceScale"/>
 		/// </summary>
-		public async Task<IPriceScaleApi> PriceScale(string id)
+		public async Task<IPriceScaleApi> PriceScale(string priceScaleId, int paneIndex = 0)
 		{
 			await InitializationCompleted;
-			if (!_PriceScales.ContainsKey(id))
+			var key = $"{priceScaleId}_{paneIndex}";
+			if (!_PriceScales.ContainsKey(key))
 			{
-				var priceScale = await JsModule.InvokeAsync<IJSObjectReference>(JsRuntime, JsObjectReference, "priceScale", false, id);
+				var priceScale = await JsModule.InvokeAsync<IJSObjectReference>(JsRuntime, JsObjectReference, "priceScale", false, priceScaleId, paneIndex);
 				if (priceScale != null)
-					_PriceScales[id] = new PriceScaleApi(JsRuntime, priceScale);
+					_PriceScales[key] = new PriceScaleApi(JsRuntime, priceScale);
 				else
 					return null;
 			}
 
-			return _PriceScales[id];
+			return _PriceScales[key];
 		}
 
 		/// <summary>
@@ -369,7 +370,7 @@ namespace LightweightCharts.Blazor.Charts
 		{
 			await InitializationCompleted;
 			var panes = await JsModule.InvokeAsync<IJSObjectReference[]>(JsRuntime, JsObjectReference, "panes");
-			return panes.Select(x => new PaneApi<H>(JsRuntime, this, x)).ToArray();
+			return panes.Select(pane => new PaneApi<H>(JsRuntime, this, pane)).ToArray();
 		}
 
 		/// <summary>

@@ -7,17 +7,11 @@ namespace LightweightCharts.Blazor.DataItems
 {
 	/// <summary>
 	/// Represents a series marker.<br/>
-	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/SeriesMarker"/>
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/SeriesMarkerBase"/>
 	/// </summary>
-	public class SeriesMarker<H> : WhitespaceData<H>
+	public class SeriesMarkerBase<H> : WhitespaceData<H>
 		where H : struct
 	{
-		/// <summary>
-		/// The position of the marker.
-		/// </summary>
-		[JsonPropertyName("position")]
-		public SeriesMarkerPosition Position { get; set; }
-
 		/// <summary>
 		/// The shape of the marker.
 		/// </summary>
@@ -48,5 +42,33 @@ namespace LightweightCharts.Blazor.DataItems
 		/// </summary>
 		[JsonPropertyName("text")]
 		public string Text { get; set; }
+	}
+
+	/// <summary>
+	/// Represents a series marker bar.<br/>
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/SeriesMarkerBar"/>
+	/// </summary>
+	public class SeriesMarkerBar<H> : SeriesMarkerBase<H>
+		where H : struct
+	{
+		/// <summary>
+		/// The position of the marker.
+		/// </summary>
+		[JsonPropertyName("position")]
+		public SeriesMarkerBarPosition Position { get; set; }
+	}
+
+	/// <summary>
+	/// Represents a series marker price.<br/>
+	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/SeriesMarkerPrice"/>
+	/// </summary>
+	public class SeriesMarkerPrice<H> : SeriesMarkerBase<H>
+		where H : struct
+	{
+		/// <summary>
+		/// The position of the marker.
+		/// </summary>
+		[JsonPropertyName("position")]
+		public SeriesMarkerPricePosition Position { get; set; }
 	}
 }

@@ -1,6 +1,8 @@
-﻿using LightweightCharts.Blazor.DataItems;
+﻿using LightweightCharts.Blazor.Customization;
+using LightweightCharts.Blazor.DataItems;
 using System;
 using System.Drawing;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace LightweightCharts.Blazor.Utilities
