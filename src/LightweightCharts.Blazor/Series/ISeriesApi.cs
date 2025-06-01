@@ -134,6 +134,20 @@ namespace LightweightCharts.Blazor.Series
 		/// <returns>Pane API object to control the pane</returns>
 		Task<IPaneApi<H>> GetPane();
 
+		/// <summary>
+		/// Gets the zero-based index of this series within the list of all series on the current pane.<br/>
+		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ISeriesApi#seriesOrder"/>
+		/// </summary>
+		/// <returns>The current index of the series in the pane's series collection.</returns>
+		Task<int> SeriesOrder();
+
+		/// <summary>
+		/// Sets the zero-based index of this series within the pane's series collection, thereby adjusting its rendering order.<br/>
+		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ISeriesApi#setSeriesOrder"/>
+		/// </summary>
+		/// <param name="order">The desired zero-based index to set for this series within the pane.</param>
+		Task SetSeriesOrder(int order);
+
 		#region plugins
 
 		/// <summary>
@@ -141,7 +155,7 @@ namespace LightweightCharts.Blazor.Series
 		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/functions/createSeriesMarkers"/>
 		/// </summary>
 		/// <param name="markers">An array of markers to be displayed on the series.</param>
-		ValueTask<ISeriesMarkersPluginApi<H>> CreateSeriesMarkers(IEnumerable<SeriesMarker<H>> markers);
+		ValueTask<ISeriesMarkersPluginApi<H>> CreateSeriesMarkers(IEnumerable<SeriesMarkerBase<H>> markers);
 
 		/// <summary>
 		/// Creates and attaches the Series Up Down Markers Plugin.<br/>

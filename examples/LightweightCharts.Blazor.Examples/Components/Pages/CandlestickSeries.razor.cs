@@ -135,42 +135,42 @@ partial class CandlestickSeries
 		var minClose = BtcUsdDataPoints.OneWeek.OrderBy(x => x.ClosePrice).First();
 		var maxClose = BtcUsdDataPoints.OneWeek.OrderByDescending(x => x.ClosePrice).First();
 
-		await _Candlestick.CreateSeriesMarkers(new SeriesMarker<long>[]
+		await _Candlestick.CreateSeriesMarkers(new SeriesMarkerBar<long>[]
 		{
-			new SeriesMarker<long>
+			new SeriesMarkerBar<long>
 			{
 				Time = minLowPoint.OpenTime.ToUnix(),
-				Position = SeriesMarkerPosition.BelowBar,
+				Position = SeriesMarkerBarPosition.BelowBar,
 				Shape = SeriesMarkerShape.Circle,
 				Color = Color.Purple,
 				Size = 1,
 				Text = "Minimum low",
 				Id = "min_low"
 			},
-			new SeriesMarker<long>
+			new SeriesMarkerBar<long>
 			{
 				Time = maxHighPoint.OpenTime.ToUnix(),
-				Position = SeriesMarkerPosition.AboveBar,
+				Position = SeriesMarkerBarPosition.AboveBar,
 				Shape = SeriesMarkerShape.Circle,
 				Color = Color.Purple,
 				Size = 1,
 				Text = "Maximum high",
 				Id = "max_high"
 			},
-			new SeriesMarker<long>
+			new SeriesMarkerBar<long>
 			{
 				Time = minClose.OpenTime.ToUnix(),
-				Position = SeriesMarkerPosition.BelowBar,
+				Position = SeriesMarkerBarPosition.BelowBar,
 				Shape = SeriesMarkerShape.ArrowUp,
 				Color = Color.Red,
 				Size = 3,
 				Text = "Minimum close",
 				Id = "min_close"
 			},
-			new SeriesMarker<long>
+			new SeriesMarkerBar<long>
 			{
 				Time = maxClose.OpenTime.ToUnix(),
-				Position = SeriesMarkerPosition.AboveBar,
+				Position = SeriesMarkerBarPosition.AboveBar,
 				Shape = SeriesMarkerShape.ArrowDown,
 				Color = Color.Red,
 				Size = 3,

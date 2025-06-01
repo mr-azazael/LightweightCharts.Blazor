@@ -58,7 +58,7 @@ namespace LightweightCharts.Blazor.Charts
 		/// <param name="options">Customization parameters of the series being created.</param>
 		/// <param name="paneIndex">An index of the pane where the series should be created.</param>
 		/// <returns>An interface of the created series.</returns>
-		Task<ISeriesApi<H, O>> AddSeries<O>(SeriesType type, O options = null, int? paneIndex = null)
+		Task<ISeriesApi<H, O>> AddSeries<O>(SeriesType type, O options = null, int paneIndex = 0)
 			where O : SeriesOptionsCommon, new();
 
 		/// <summary>
@@ -72,9 +72,10 @@ namespace LightweightCharts.Blazor.Charts
 		/// Returns API to manipulate a price scale.<br/>
 		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/IChartApi#pricescale"/>
 		/// </summary>
-		/// <param name="id">ID of the price scale.</param>
+		/// <param name="priceScaleId">ID of the price scale.</param>
+		/// <param name="paneIndex">Index of the pane (default: 0)</param>
 		/// <returns>Price scale API.</returns>
-		Task<IPriceScaleApi> PriceScale(string id);
+		Task<IPriceScaleApi> PriceScale(string priceScaleId, int paneIndex = 0);
 
 		/// <summary>
 		/// Returns API to manipulate the time scale.<br/>
