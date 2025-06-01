@@ -76,6 +76,17 @@ partial class BaselineSeries
 			Time = x.OpenTime.ToUnix(),
 			Value = x.ClosePrice
 		}));
+		await series.CreateSeriesMarkers([new SeriesMarkerPrice<long>
+		{
+			Id = "test",
+			Position = Customization.Enums.SeriesMarkerPricePosition.AtPriceBottom,
+			Shape = Customization.Enums.SeriesMarkerShape.Square,
+			Color = System.Drawing.Color.Green,
+			Text = "middle",
+			Time = new System.DateTime(2021, 1, 3).ToUnix(),
+			Price = 60000.0,
+		}]);
+
 		var pane = await series.GetPane();
 		var imageWatermark = await pane.CreateImageWatermark(TwEncodedImage, new ImageWatermarkOptions
 		{

@@ -155,7 +155,8 @@ namespace LightweightCharts.Blazor.Series
 		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/functions/createSeriesMarkers"/>
 		/// </summary>
 		/// <param name="markers">An array of markers to be displayed on the series.</param>
-		ValueTask<ISeriesMarkersPluginApi<H>> CreateSeriesMarkers(IEnumerable<SeriesMarkerBase<H>> markers);
+		ValueTask<ISeriesMarkersPluginApi<H>> CreateSeriesMarkers<M>(IEnumerable<M> markers)
+			where M : SeriesMarkerBase<H>;
 
 		/// <summary>
 		/// Creates and attaches the Series Up Down Markers Plugin.<br/>

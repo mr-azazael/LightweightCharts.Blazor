@@ -54,5 +54,16 @@ namespace LightweightCharts.Blazor.Customization.Chart
 			get => GetValue<int>();
 			set => SetValue(value);
 		}
+
+		/// <summary>
+		/// Ensures that tick marks are always visible at the very top and bottom of the price scale, regardless of the data range.<br/>
+		/// When enabled, a tick mark will be drawn at both edges of the scale, providing clear boundary indicators.
+		/// </summary>
+		[JsonPropertyName("ensureEdgeTickMarksVisible")]
+		public bool EnsureEdgeTickMarksVisible
+		{
+			get => GetValue<bool>();
+			set => SetValue(value);
+		}
 	}
 }

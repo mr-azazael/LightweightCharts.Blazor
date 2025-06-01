@@ -97,8 +97,9 @@ namespace LightweightCharts.Blazor
 			return new ImageWatermarkPluginApi<H>(jsRuntime, pane, api, options);
 		}
 
-		public static async ValueTask<ISeriesMarkersPluginApi<H>> CreateSeriesMarkers<H>(IJSRuntime jsRuntime, ISeriesApi<H> series, SeriesMarkerBase<H>[] markers)
+		public static async ValueTask<ISeriesMarkersPluginApi<H>> CreateSeriesMarkers<H, M>(IJSRuntime jsRuntime, ISeriesApi<H> series, M[] markers)
 			where H : struct
+			where M : SeriesMarkerBase<H>
 		{
 			var api = await jsRuntime.InvokeAsync<IJSObjectReference>("lightweightChartsBlazor.createSeriesMarkers", series.JsObjectReference, markers);
 			return new SeriesMarkersPluginApi<H>(jsRuntime, series, api, markers);

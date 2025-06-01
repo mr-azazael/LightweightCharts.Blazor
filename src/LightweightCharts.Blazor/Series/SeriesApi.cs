@@ -143,7 +143,8 @@ namespace LightweightCharts.Blazor.Series
 		public async Task SetSeriesOrder(int order)
 			=> await JsModule.InvokeVoidAsync(JsRuntime, JsObjectReference, "setSeriesOrder", false, order);
 
-		public ValueTask<ISeriesMarkersPluginApi<H>> CreateSeriesMarkers(IEnumerable<SeriesMarkerBase<H>> markers)
+		public ValueTask<ISeriesMarkersPluginApi<H>> CreateSeriesMarkers<M>(IEnumerable<M> markers)
+			where M : SeriesMarkerBase<H>
 			=> JsModule.CreateSeriesMarkers(JsRuntime, this, markers?.ToArray() ?? []);
 
 		public ValueTask<ISeriesUpDownMarkerPluginApi<H>> CreateUpDownMarkers(UpDownMarkersPluginOptions options = null)

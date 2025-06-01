@@ -42,6 +42,13 @@ namespace LightweightCharts.Blazor.DataItems
 		/// </summary>
 		[JsonPropertyName("text")]
 		public string Text { get; set; }
+
+		/// <summary>
+		/// The price value for exact Y-axis positioning.<br/>
+		/// Required when using <see cref="SeriesMarkerPricePosition"/> position type.<br/>
+		/// </summary>
+		[JsonPropertyName("price")]
+		public double? Price { get; set; }
 	}
 
 	/// <summary>
