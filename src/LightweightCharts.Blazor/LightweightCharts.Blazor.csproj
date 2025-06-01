@@ -4,7 +4,7 @@
 		<TargetFramework>net8.0</TargetFramework>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<PackageId>LightweightCharts.Blazor</PackageId>
-		<PackageVersion>5.0.3.2</PackageVersion>
+		<PackageVersion>5.0.7.1</PackageVersion>
 		<Authors>Laurentiu Cernescu</Authors>
 		<Description>A blazor wrapper for TradingView's Lightweight charts library.</Description>
 		<Copyright>Copyright 2025 TradingView, Inc.</Copyright>
@@ -14,8 +14,7 @@
 		<RespositoryType>git</RespositoryType>
 		<PackageTags>Blazor;TradingView;Financial;Charts</PackageTags>
 		<PackageReleaseNotes>
-			Issue #11 - Fixed index arg not being used within the RemovePane function
-			Issue #12 - Fixed serialization for non-serializable objects (js references)
+			Migrate to 5.0.7
 		</PackageReleaseNotes>
 		<Version>$(PackageVersion)</Version>
 		<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
