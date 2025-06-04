@@ -178,6 +178,14 @@ partial class CandlestickSeries
 				Id = "max_close"
 			}
 		}.OrderBy(x => x.Time));
+
+		var line = await _Candlestick.CreatePriceLine(new PriceLineOptions
+		{
+			Price = BtcUsdDataPoints.OneWeek.Average(x => x.ClosePrice),
+			Title = "Average",
+			Color = Color.DarkOrange
+		});
+		await _Candlestick.RemovePriceLine(line);
 	}
 
 	async Task SetupHistogramSeries()

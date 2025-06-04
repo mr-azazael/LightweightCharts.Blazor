@@ -58,6 +58,9 @@ window.lightweightChartsBlazor = {
 		}
 
 		target = lightweightChartsBlazor.getStoredReference(target);
+		for (let i = 0; i < args.length; i++)
+			args[i] = lightweightChartsBlazor.getStoredReference(args[i]);
+
 		var result = target[method].apply(target, args);
 		if (typeof result === 'object' && typeof result.then === 'function')
 			result = await result;
