@@ -4,7 +4,7 @@
 		<TargetFramework>net8.0</TargetFramework>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<PackageId>LightweightCharts.Blazor</PackageId>
-		<PackageVersion>5.0.7.1</PackageVersion>
+		<PackageVersion>5.0.7.2</PackageVersion>
 		<Authors>Laurentiu Cernescu</Authors>
 		<Description>A blazor wrapper for TradingView's Lightweight charts library.</Description>
 		<Copyright>Copyright 2025 TradingView, Inc.</Copyright>
@@ -14,7 +14,7 @@
 		<RespositoryType>git</RespositoryType>
 		<PackageTags>Blazor;TradingView;Financial;Charts</PackageTags>
 		<PackageReleaseNotes>
-			Migrate to 5.0.7
+			Issue #14 - Fixed custom reference tracking not being applied to Dotnet -> Js invocation arguments
 		</PackageReleaseNotes>
 		<Version>$(PackageVersion)</Version>
 		<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
