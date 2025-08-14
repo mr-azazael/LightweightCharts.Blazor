@@ -46,7 +46,7 @@ namespace LightweightCharts.Blazor.Plugins
 		public ValueTask SetMarkers(SeriesMarkerBase<H>[] markers)
 		{
 			_Markers = markers ?? [];
-			return JsModule.InvokeVoidAsync(JsRuntime, JsObjectReference, "setMarkers", false, _Markers);
+			return JsModule.InvokeVoidAsync(JsRuntime, JsObjectReference, "setMarkers", false, [_Markers]);
 		}
 
 		public SeriesMarkerBase<H>[] Markers()
