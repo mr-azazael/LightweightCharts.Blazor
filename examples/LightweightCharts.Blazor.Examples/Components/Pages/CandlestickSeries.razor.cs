@@ -6,6 +6,7 @@ using LightweightCharts.Blazor.DataItems;
 using LightweightCharts.Blazor.Models.Events;
 using LightweightCharts.Blazor.Series;
 using LightweightCharts.Blazor.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -203,6 +204,29 @@ partial class CandlestickSeries
 			Value = x.Volume,
 			Color = x.ClosePrice > x.OpenPrice ? Color.Green : Color.Red
 		}));
+
+		var markers = await _Histogram.CreateSeriesMarkers(Array.Empty<SeriesMarkerBar<long>>());
+		var min = BtcUsdDataPoints.OneWeek.MinBy(x => x.Volume);
+		var max = BtcUsdDataPoints.OneWeek.MaxBy(x => x.Volume);
+		await markers.SetMarkers(new SeriesMarkerBase<long>[]
+		{
+			new SeriesMarkerBar<long>
+			{
+				Time = min.OpenTime.ToUnix(),
+				Shape = SeriesMarkerShape.ArrowDown,
+				Color = Color.Red,
+				Text = "min volume",
+				Position = SeriesMarkerBarPosition.AboveBar
+			},
+			new SeriesMarkerBar<long>
+			{
+				Time = max.OpenTime.ToUnix(),
+				Color = Color.Green,
+				Shape = SeriesMarkerShape.ArrowUp,
+				Text = "max volume",
+				Position = SeriesMarkerBarPosition.AboveBar
+			}
+		}.OrderBy(x => x.Time));
 	}
 
 	void OnChartCrosshairMoved(object sender, MouseEventParams<long> e)

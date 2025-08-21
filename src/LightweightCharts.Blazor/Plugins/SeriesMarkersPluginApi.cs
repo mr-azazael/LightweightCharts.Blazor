@@ -3,6 +3,8 @@ using LightweightCharts.Blazor.Customization.Chart;
 using LightweightCharts.Blazor.DataItems;
 using LightweightCharts.Blazor.Series;
 using Microsoft.JSInterop;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace LightweightCharts.Blazor.Plugins
@@ -19,7 +21,7 @@ namespace LightweightCharts.Blazor.Plugins
 		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ISeriesMarkersPluginApi#setmarkers"/>
 		/// </summary>
 		/// <param name="markers">An array of markers to be displayed on the series.</param>
-		ValueTask SetMarkers(SeriesMarkerBase<H>[] markers);
+		ValueTask SetMarkers(IEnumerable<SeriesMarkerBase<H>> markers);
 
 		/// <summary>
 		/// Returns current markers.<br/>
@@ -31,11 +33,11 @@ namespace LightweightCharts.Blazor.Plugins
 	class SeriesMarkersPluginApi<H> : CustomizableObject<SeriesMarkersOptions>, ISeriesMarkersPluginApi<H>
 		where H : struct
 	{
-		public SeriesMarkersPluginApi(IJSRuntime jsRuntime, ISeriesApi<H> owner, IJSObjectReference jsObjectReference, SeriesMarkerBase<H>[] markers, SeriesMarkersOptions options = null)
+		public SeriesMarkersPluginApi(IJSRuntime jsRuntime, ISeriesApi<H> owner, IJSObjectReference jsObjectReference, IEnumerable<SeriesMarkerBase<H>> markers, SeriesMarkersOptions options = null)
 			: base(jsRuntime, jsObjectReference)
 		{
 			_Owner = owner;
-			_Markers = markers;
+			_Markers = markers?.ToArray() ?? [];
 			_Options = options ?? new();
 		}
 
@@ -43,10 +45,10 @@ namespace LightweightCharts.Blazor.Plugins
 		SeriesMarkerBase<H>[] _Markers;
 		SeriesMarkersOptions _Options;
 
-		public ValueTask SetMarkers(SeriesMarkerBase<H>[] markers)
+		public ValueTask SetMarkers(IEnumerable<SeriesMarkerBase<H>> markers)
 		{
-			_Markers = markers ?? [];
-			return JsModule.InvokeVoidAsync(JsRuntime, JsObjectReference, "setMarkers", false, [_Markers]);
+			markers = _Markers = markers?.ToArray() ?? [];
+			return JsModule.InvokeVoidAsync(JsRuntime, JsObjectReference, "setMarkers", false, markers);
 		}
 
 		public SeriesMarkerBase<H>[] Markers()
