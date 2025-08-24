@@ -3,6 +3,8 @@ using LightweightCharts.Blazor.Customization.Chart;
 using LightweightCharts.Blazor.DataItems;
 using LightweightCharts.Blazor.Series;
 using Microsoft.JSInterop;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -47,8 +49,19 @@ namespace LightweightCharts.Blazor.Plugins
 
 		public ValueTask SetMarkers(IEnumerable<SeriesMarkerBase<H>> markers)
 		{
-			markers = _Markers = markers?.ToArray() ?? [];
-			return JsModule.InvokeVoidAsync(JsRuntime, JsObjectReference, "setMarkers", false, markers);
+			IEnumerable markersRef = null;
+			var markersArray = markers?.ToArray();
+			if (markersArray?.Length > 0)
+			{
+				var array = Array.CreateInstance(markers.First().GetType(), markers.Count());
+				markersArray.CopyTo(array, 0);
+				markersRef = array;
+			}
+			else
+				markersRef = Array.Empty<SeriesMarkerBase<H>>();
+
+			_Markers = (SeriesMarkerBase<H>[])markersRef;
+			return JsModule.InvokeVoidAsync(JsRuntime, JsObjectReference, "setMarkers", false, markersRef);
 		}
 
 		public SeriesMarkerBase<H>[] Markers()
