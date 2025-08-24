@@ -4,7 +4,7 @@
 		<TargetFramework>net8.0</TargetFramework>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<PackageId>LightweightCharts.Blazor</PackageId>
-		<PackageVersion>5.0.7.2</PackageVersion>
+		<PackageVersion>5.0.8.1</PackageVersion>
 		<Authors>Laurentiu Cernescu</Authors>
 		<Description>A blazor wrapper for TradingView's Lightweight charts library.</Description>
 		<Copyright>Copyright 2025 TradingView, Inc.</Copyright>
@@ -14,7 +14,9 @@
 		<RespositoryType>git</RespositoryType>
 		<PackageTags>Blazor;TradingView;Financial;Charts</PackageTags>
 		<PackageReleaseNotes>
-			Issue #14 - Fixed custom reference tracking not being applied to Dotnet -> Js invocation arguments
+			Issue #17 - fix markers being flattened when using SeriesMarkersPluginApi.SetMarkers
+			Issue #18 - fix markers array js serialization in SeriesMarkersPluginApi.SetMarkers
+			Update lightweight-charts to 5.0.8
 		</PackageReleaseNotes>
 		<Version>$(PackageVersion)</Version>
 		<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
@@ -35,7 +37,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.16" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.19" />
 	</ItemGroup>
 
 </Project>
