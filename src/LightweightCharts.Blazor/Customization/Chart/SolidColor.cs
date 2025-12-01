@@ -14,7 +14,8 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		/// <summary>
 		/// <inheritdoc/>
 		/// </summary>
-		public override ColorType Type
+		[JsonIgnore]
+        public override ColorType Type
 			=> ColorType.Solid;
 
 		/// <summary>
