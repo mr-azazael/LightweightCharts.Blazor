@@ -4,7 +4,7 @@
 		<TargetFramework>net10.0</TargetFramework>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<PackageId>LightweightCharts.Blazor</PackageId>
-		<PackageVersion>5.0.8.1</PackageVersion>
+		<PackageVersion>5.0.8.2</PackageVersion>
 		<Authors>Laurentiu Cernescu</Authors>
 		<Description>A blazor wrapper for TradingView's Lightweight charts library.</Description>
 		<Copyright>Copyright 2025 TradingView, Inc.</Copyright>
@@ -14,9 +14,7 @@
 		<RespositoryType>git</RespositoryType>
 		<PackageTags>Blazor;TradingView;Financial;Charts</PackageTags>
 		<PackageReleaseNotes>
-			Issue #17 - fix markers being flattened when using SeriesMarkersPluginApi.SetMarkers
-			Issue #18 - fix markers array js serialization in SeriesMarkersPluginApi.SetMarkers
-			Update lightweight-charts to 5.0.8
+			.Net 10 update and fixes
 		</PackageReleaseNotes>
 		<Version>$(PackageVersion)</Version>
 		<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
