@@ -6,9 +6,12 @@ using LightweightCharts.Blazor.DataItems;
 using LightweightCharts.Blazor.Models.Events;
 using LightweightCharts.Blazor.Series;
 using LightweightCharts.Blazor.Utilities;
+using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -52,6 +55,9 @@ partial class CandlestickSeries
 			};
 		}
 	}
+
+	[Inject]
+	IJSRuntime JsRuntime { get; set; }
 
 	protected override async Task OnAfterRenderAsync(bool firstRender)
 	{
@@ -120,8 +126,9 @@ partial class CandlestickSeries
 
 	async Task SetupCandlestickSeries()
 	{
-		_Candlestick = (ISeriesApi<long, CandlestickStyleOptions>)await _ChartComponent.AddSeries<CandlestickStyleOptions>(SeriesType.Candlestick);
-		await _Candlestick.SetData(BtcUsdDataPoints.OneWeek.OrderBy(x => x.OpenTime).Select(x => new CandlestickData<long>
+		var points = BtcUsdDataPoints.OneWeek.OrderBy(x => x.OpenTime).ToArray();
+		_Candlestick = await _ChartComponent.AddSeries<CandlestickStyleOptions>(SeriesType.Candlestick);
+		await _Candlestick.SetData(points.Select(x => new CandlestickData<long>
 		{
 			Time = x.OpenTime.ToUnix(),
 			Open = x.OpenPrice,
@@ -135,8 +142,10 @@ partial class CandlestickSeries
 		var maxHighPoint = BtcUsdDataPoints.OneWeek.OrderByDescending(x => x.HighPrice).First();
 		var minClose = BtcUsdDataPoints.OneWeek.OrderBy(x => x.ClosePrice).First();
 		var maxClose = BtcUsdDataPoints.OneWeek.OrderByDescending(x => x.ClosePrice).First();
+		var timescale = await _ChartComponent.TimeScale();
+		await timescale.FitContent();
 
-		await _Candlestick.CreateSeriesMarkers(new SeriesMarkerBar<long>[]
+		var markers = await _Candlestick.CreateSeriesMarkers(new SeriesMarkerBar<long>[]
 		{
 			new SeriesMarkerBar<long>
 			{
@@ -178,15 +187,30 @@ partial class CandlestickSeries
 				Text = "Maximum close",
 				Id = "max_close"
 			}
-		}.OrderBy(x => x.Time));
+		}.OrderBy(x => x.Time), new()
+		{
+			AutoScale = true
+		});
 
-		var line = await _Candlestick.CreatePriceLine(new PriceLineOptions
+		var line1 = await _Candlestick.CreatePriceLine(new PriceLineOptions
 		{
 			Price = BtcUsdDataPoints.OneWeek.Average(x => x.ClosePrice),
 			Title = "Average",
 			Color = Color.DarkOrange
 		});
-		await _Candlestick.RemovePriceLine(line);
+		var line2 = await _Candlestick.CreatePriceLine(new PriceLineOptions
+		{
+			Price = BtcUsdDataPoints.OneWeek.Average(x => x.ClosePrice),
+			Title = "Average",
+			Color = Color.Red
+		});
+		await _Candlestick.RemovePriceLine(line2);
+
+		var lastPoints = await _Candlestick.Pop(1);
+		var lastPoint = (CandlestickData<long>)lastPoints[0];
+		System.Diagnostics.Debug.Assert(lastPoint.Time == points[^1].OpenTime.ToUnix());
+		System.Diagnostics.Debug.Assert(lastPoint.Open == points[^1].OpenPrice);
+		System.Diagnostics.Debug.Assert(lastPoint.Close == points[^1].ClosePrice);
 	}
 
 	async Task SetupHistogramSeries()
@@ -260,5 +284,13 @@ partial class CandlestickSeries
 	async Task OnApplyOptions()
 	{
 		await ChartComponent.ApplyOptions(_Options);
+	}
+
+	async Task OnScreenshot()
+	{
+		var bytes = await _ChartComponent.TakeScreenshot(true, true);
+		var stream = new MemoryStream(bytes);
+		using var streamRef = new DotNetStreamReference(stream);
+		await JsRuntime.InvokeVoidAsync("javascriptHelpers.downloadFile", "screenshot.png", streamRef);
 	}
 }

@@ -83,6 +83,14 @@ namespace LightweightCharts.Blazor.Series
 		Task Update(ISeriesData<H> item);
 
 		/// <summary>
+		/// Removes one or more data items from the end of the series.<br/>
+		/// <see href="https://tradingview.github.io/lightweight-charts/docs/5.0/api/interfaces/ISeriesApi#pop"/>
+		/// </summary>
+		/// <param name="count">The number of data items to remove.</param>
+		/// <returns>The removed data items.</returns>
+		Task<ISeriesData<H>[]> Pop(int count);
+
+		/// <summary>
 		/// Returns a bar data by provided logical index.<br/>
 		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ISeriesApi#databyindex"/>
 		/// </summary>
@@ -120,19 +128,20 @@ namespace LightweightCharts.Blazor.Series
 		Task<SeriesType> SeriesType();
 
 		/// <summary>
+		/// Return the last value data of the series.<br/>
+		/// <see href="https://tradingview.github.io/lightweight-charts/docs/5.0/api/interfaces/ISeriesApi#lastvaluedata"/>
+		/// </summary>
+		/// <param name="globalLast">If false, get the last value in the current visible range. Otherwise, fetch the absolute last value</param>
+		/// <returns>The last value data of the series.</returns>
+		Task<LastValueDataResultWithoutData> LastValueData(bool globalLast);
+
+		/// <summary>
 		/// Move the series to another pane.<br/>
 		/// If the pane with the specified index does not exist, the pane will be created.<br/>
 		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ISeriesApi#movetopane"/>
 		/// </summary>
 		/// <param name="paneIndex">The index of the pane. Should be a number between 0 and the total number of panes.</param>
 		Task MoveToPane(int paneIndex);
-
-		/// <summary>
-		/// Returns the pane to which the series is currently attached.<br/>
-		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ISeriesApi#getpane"/>
-		/// </summary>
-		/// <returns>Pane API object to control the pane</returns>
-		Task<IPaneApi<H>> GetPane();
 
 		/// <summary>
 		/// Gets the zero-based index of this series within the list of all series on the current pane.<br/>
@@ -148,6 +157,13 @@ namespace LightweightCharts.Blazor.Series
 		/// <param name="order">The desired zero-based index to set for this series within the pane.</param>
 		Task SetSeriesOrder(int order);
 
+		/// <summary>
+		/// Returns the pane to which the series is currently attached.<br/>
+		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/ISeriesApi#getpane"/>
+		/// </summary>
+		/// <returns>Pane API object to control the pane</returns>
+		Task<IPaneApi<H>> GetPane();
+
 		#region plugins
 
 		/// <summary>
@@ -155,7 +171,8 @@ namespace LightweightCharts.Blazor.Series
 		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/functions/createSeriesMarkers"/>
 		/// </summary>
 		/// <param name="markers">An array of markers to be displayed on the series.</param>
-		ValueTask<ISeriesMarkersPluginApi<H>> CreateSeriesMarkers<M>(IEnumerable<M> markers)
+		/// <param name="options">Options for the series markers plugin.</param>
+		ValueTask<ISeriesMarkersPluginApi<H>> CreateSeriesMarkers<M>(IEnumerable<M> markers, SeriesMarkersOptions options = null)
 			where M : SeriesMarkerBase<H>;
 
 		/// <summary>

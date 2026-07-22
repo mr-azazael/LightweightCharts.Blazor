@@ -26,5 +26,12 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		/// </summary>
 		[JsonPropertyName("minMove")]
 		public float MinMove { get; set; } = 0.01f;
+
+		/// <summary>
+		/// The base value for the price format. It should equal to 1 / minMove. If this option is specified, we ignore the minMove option.<br/>
+		/// It can be useful for cases with very small price movements like 1e-18 where we can reach limitations of floating point precision.
+		/// </summary>
+		[JsonPropertyName("base")]
+		public float? Base { get; set; }
 	}
 }

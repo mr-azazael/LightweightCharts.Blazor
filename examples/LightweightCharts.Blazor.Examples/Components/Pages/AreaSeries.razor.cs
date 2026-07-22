@@ -91,6 +91,10 @@ partial class AreaSeries : IDisposable
 				await InvokeAsync(() => upDown.Update(data, true));
 			}
 		});
+
+		var pane2 = await _ChartComponent.AddPane(true);
+		await pane2.SetHeight(50);
+		await pane2.MoveTo(0);
 	}
 
 	protected override async Task OnAfterRenderAsync(bool firstRender)

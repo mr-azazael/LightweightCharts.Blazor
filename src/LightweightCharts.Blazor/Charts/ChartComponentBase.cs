@@ -324,8 +324,18 @@ namespace LightweightCharts.Blazor.Charts
 		/// <summary>
 		/// <inheritdoc cref="IChartApiBase{H}.TakeScreenshot"/>
 		/// </summary>
-		public async Task<byte[]> TakeScreenshot()
-			=> await JsModule.TakeScreenshot(JsRuntime, JsObjectReference);
+		public async Task<byte[]> TakeScreenshot(bool addTopLayer = false, bool includeCrosshair = false)
+			=> await JsModule.TakeScreenshot(JsRuntime, JsObjectReference, addTopLayer, includeCrosshair);
+
+		/// <summary>
+		/// <inheritdoc cref="IChartApiBase{H}.AddPane"/>
+		/// </summary>
+		public async Task<IPaneApi<H>> AddPane(bool preserveEmptyPane)
+		{
+			await InitializationCompleted;
+			var pane = await JsModule.InvokeAsync<IJSObjectReference>(JsRuntime, JsObjectReference, "addPane", false, preserveEmptyPane);
+			return new PaneApi<H>(JsRuntime, this, pane);
+		}
 
 		/// <summary>
 		/// <inheritdoc cref="IChartApiBase{H}.PaneSize"/>

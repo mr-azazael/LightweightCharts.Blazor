@@ -47,7 +47,7 @@ Custom series are not implemented.
 - Area Series: text watermark, up/down markers, timescale customization, data points update after initialization
 - Bar Series: customTimeFormatter, customTimeScaleTickMarkFormatter functions (JsDelegate), 'live' data update
 - Baseline Series: image watermark, another example on how to customize a sync js function (autoscaleInfoProvider), custom chart options
-- Candlestick Series: histogram on its own pane, chart events, custom chart options
+- Candlestick Series: histogram on its own pane, chart events, custom chart options, take screenshot
 - Histogram Series: timescale customization
 - Line Series: sync zoom, timeline position, crosshair between two charts
 - Yield curve: basic usage

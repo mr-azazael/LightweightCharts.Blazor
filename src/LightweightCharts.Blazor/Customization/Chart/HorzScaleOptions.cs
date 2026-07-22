@@ -23,6 +23,16 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		}
 
 		/// <summary>
+		/// The margin space in pixels from the right side of the chart. This option has priority over rightOffset.
+		/// </summary>
+		[JsonPropertyName("rightOffsetPixels")]
+		public int? RightOffsetPixels
+		{
+			get => GetValue<int?>();
+			set => SetValue(value);
+		}
+
+		/// <summary>
 		/// The space between bars in pixels.
 		/// </summary>
 		[JsonPropertyName("barSpacing")]

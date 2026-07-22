@@ -70,8 +70,8 @@ namespace LightweightCharts.Blazor
 		public static ValueTask UnsubscribeFromEvent(IJSRuntime jsRuntime, IJSObjectReference jsObject, IJSObjectReference jSObjectCallback, EventDescriptor descriptor)
 			=> jsRuntime.InvokeVoidAsync("lightweightChartsBlazor.unsubscribeFromEvent", jsObject, jSObjectCallback, descriptor.UnsubscribeMethod);
 
-		public static ValueTask<byte[]> TakeScreenshot(IJSRuntime jsRuntime, IJSObjectReference chartReference)
-			=> jsRuntime.InvokeAsync<byte[]>("lightweightChartsBlazor.takeScreenshot", chartReference);
+		public static ValueTask<byte[]> TakeScreenshot(IJSRuntime jsRuntime, IJSObjectReference chartReference, bool addTopLayer = false, bool includeCrosshair = false)
+			=> jsRuntime.InvokeAsync<byte[]>("lightweightChartsBlazor.takeScreenshot", chartReference, addTopLayer, includeCrosshair);
 
 		public static ValueTask<IJSObjectReference> AddChartSeries<T>(IJSRuntime jsRuntime, IJSObjectReference chartReference, T type, SeriesOptionsCommon options, int paneIndex)
 			=> jsRuntime.InvokeAsync<IJSObjectReference>("lightweightChartsBlazor.addSeries", chartReference, type, options, paneIndex);
@@ -97,12 +97,12 @@ namespace LightweightCharts.Blazor
 			return new ImageWatermarkPluginApi<H>(jsRuntime, pane, api, options);
 		}
 
-		public static async ValueTask<ISeriesMarkersPluginApi<H>> CreateSeriesMarkers<H, M>(IJSRuntime jsRuntime, ISeriesApi<H> series, M[] markers)
+		public static async ValueTask<ISeriesMarkersPluginApi<H>> CreateSeriesMarkers<H, M>(IJSRuntime jsRuntime, ISeriesApi<H> series, M[] markers, SeriesMarkersOptions options)
 			where H : struct
 			where M : SeriesMarkerBase<H>
 		{
-			var api = await jsRuntime.InvokeAsync<IJSObjectReference>("lightweightChartsBlazor.createSeriesMarkers", series.JsObjectReference, markers);
-			return new SeriesMarkersPluginApi<H>(jsRuntime, series, api, markers);
+			var api = await jsRuntime.InvokeAsync<IJSObjectReference>("lightweightChartsBlazor.createSeriesMarkers", series.JsObjectReference, markers, options);
+			return new SeriesMarkersPluginApi<H>(jsRuntime, series, api, markers, options);
 		}
 
 		public static async ValueTask<ITextWatermarkPluginApi<H>> CreateTextWatermark<H>(IJSRuntime jsRuntime, IPaneApi<H> pane, TextWatermarkOptions options)

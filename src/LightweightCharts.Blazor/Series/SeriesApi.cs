@@ -33,6 +33,7 @@ namespace LightweightCharts.Blazor.Series
 			_AllowedDataItemTypes = dataItemTypes;
 			_SeriesType = seriesType;
 			_GetData = GetType().GetMethod(nameof(GetData), BindingFlags.Static | BindingFlags.NonPublic).MakeGenericMethod(dataItemTypes[0]);
+			_Pop = GetType().GetMethod(nameof(Pop), BindingFlags.Static | BindingFlags.NonPublic).MakeGenericMethod(dataItemTypes[0]);
 		}
 
 		SeriesType _SeriesType;
@@ -40,6 +41,7 @@ namespace LightweightCharts.Blazor.Series
 		List<IPriceLine<H>> _PriceLines = new();
 		IPriceScaleApi _PriceScale;
 		MethodInfo _GetData;
+		MethodInfo _Pop;
 
 		public string UniqueJavascriptId { get; }
 
@@ -60,7 +62,7 @@ namespace LightweightCharts.Blazor.Series
 				var itemType = item.GetType();
 				if (!_AllowedDataItemTypes.Contains(itemType) && itemType != typeof(WhitespaceData<H>))
 				{
-					var typeName = _AllowedDataItemTypes.Select(x => x.GetType().Name);
+					var typeName = _AllowedDataItemTypes.Select(x => x.Name);
 					var seriesType = await SeriesType();
 					throw new InvalidOperationException($"{seriesType} series only supports data items of type {string.Join(", ", typeName)}.");
 				}
@@ -78,6 +80,9 @@ namespace LightweightCharts.Blazor.Series
 			await JsModule.InvokeVoidAsync(JsRuntime, JsObjectReference, "update", false, item);
 			DataChanged?.Invoke(this, DataChangedScope.Update);
 		}
+
+		public async Task<ISeriesData<H>[]> Pop(int count)
+			=> await (Task<ISeriesData<H>[]>)_Pop.Invoke(null, [JsRuntime, JsObjectReference, count]);
 
 		public async Task<ISeriesData<H>> DataByIndex(int logicalIndex, MismatchDirection? mismatchDirection)
 			=> await JsModule.InvokeAsync<ISeriesData<H>>(JsRuntime, JsObjectReference, "dataByIndex", false, logicalIndex, mismatchDirection);
@@ -111,6 +116,15 @@ namespace LightweightCharts.Blazor.Series
 		public async Task<SeriesType> SeriesType()
 			=> await JsModule.InvokeAsync<SeriesType>(JsRuntime, JsObjectReference, "seriesType");
 
+		public async Task<LastValueDataResultWithoutData> LastValueData(bool globalLast)
+		{
+			var data = await JsModule.InvokeAsync<LastValueDataResultWithData>(JsRuntime, JsObjectReference, "lastValueData", false, globalLast);
+			if (data.NoData)
+				return new LastValueDataResultWithoutData();
+			else
+				return data;
+		}
+
 		public async Task<double> PriceToCoordinate(double price)
 			=> await JsModule.InvokeAsync<double>(JsRuntime, JsObjectReference, "priceToCoordinate", false, price);
 
@@ -143,9 +157,9 @@ namespace LightweightCharts.Blazor.Series
 		public async Task SetSeriesOrder(int order)
 			=> await JsModule.InvokeVoidAsync(JsRuntime, JsObjectReference, "setSeriesOrder", false, order);
 
-		public ValueTask<ISeriesMarkersPluginApi<H>> CreateSeriesMarkers<M>(IEnumerable<M> markers)
+		public ValueTask<ISeriesMarkersPluginApi<H>> CreateSeriesMarkers<M>(IEnumerable<M> markers, SeriesMarkersOptions options = null)
 			where M : SeriesMarkerBase<H>
-			=> JsModule.CreateSeriesMarkers(JsRuntime, this, markers?.ToArray() ?? []);
+			=> JsModule.CreateSeriesMarkers(JsRuntime, this, markers?.ToArray() ?? [], options);
 
 		public ValueTask<ISeriesUpDownMarkerPluginApi<H>> CreateUpDownMarkers(UpDownMarkersPluginOptions options = null)
 		{
@@ -157,5 +171,9 @@ namespace LightweightCharts.Blazor.Series
 
 		static async Task<Array> GetData<T>(IJSRuntime runtime, IJSObjectReference jsObject)
 			=> await JsModule.InvokeAsync<T[]>(runtime, jsObject, "data");
+
+		static async Task<ISeriesData<H>[]> Pop<T>(IJSRuntime runtime, IJSObjectReference jsObject, int count)
+			where T : ISeriesData<H>
+			=> (await JsModule.InvokeAsync<T[]>(runtime, jsObject, "pop", false, count)).Cast<ISeriesData<H>>().ToArray();
 	}
 }

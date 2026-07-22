@@ -134,12 +134,12 @@ window.lightweightChartsBlazor = {
 		target[unsubscriptionMethod](callbackWrapper.eventCallback);
 	},
 	//interop
-	takeScreenshot: function (target) {
+	takeScreenshot: function (target, addTopLayer, includeCrosshair) {
 		target = lightweightChartsBlazor.getStoredReference(target);
-		var canvas = target['takeScreenshot'].apply(target);
-		var context = canvas.getContext('2d');
-		var data = context.getImageData(0, 0, canvas.width, canvas.height);
-		return new Uint8Array(data.data);
+		let canvas = target['takeScreenshot'].apply(target, [addTopLayer, includeCrosshair]);
+		let data = canvas.toDataURL('image/png');
+		let content = data.substring(22);
+		return Uint8Array.fromBase64(content);
 	},
 	//local
 	getUniqueJavascriptId: function (target) {
@@ -189,9 +189,9 @@ window.lightweightChartsBlazor = {
 		return LightweightCharts.createTextWatermark(pane, options);
 	},
 	//interop
-	createSeriesMarkers: function (series, markers) {
+	createSeriesMarkers: function (series, markers, options) {
 		series = lightweightChartsBlazor.getStoredReference(series);
-		return LightweightCharts.createSeriesMarkers(series, markers);
+		return LightweightCharts.createSeriesMarkers(series, markers, options);
 	},
 	//interop
 	createUpDownMarkers: function (series, options) {

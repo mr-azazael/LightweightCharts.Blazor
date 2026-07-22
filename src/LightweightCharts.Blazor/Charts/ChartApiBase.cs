@@ -88,8 +88,18 @@ namespace LightweightCharts.Blazor.Charts
 		/// Make a screenshot of the chart with all the elements excluding crosshair.<br/>
 		/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/IChartApiBase#takescreenshot"/>
 		/// </summary>
+		/// <param name="addTopLayer">if true, the top layer and primitives will be included in the screenshot (default: false)</param>
+		/// <param name="includeCrosshair">works only if addTopLayer is enabled. If true, the crosshair will be included in the screenshot (default: false)</param>
 		/// <returns>Returns the canvas data.</returns>
-		Task<byte[]> TakeScreenshot();
+		Task<byte[]> TakeScreenshot(bool addTopLayer = false, bool includeCrosshair = false);
+
+		/// <summary>
+		/// Add a pane to the chart.<br/>
+		/// <see href="https://tradingview.github.io/lightweight-charts/docs/5.0/api/interfaces/IChartApiBase#addpane"/>
+		/// </summary>
+		/// <param name="preserveEmptyPane">Whether to preserve the empty pane</param>
+		/// <returns>The pane API</returns>
+		Task<IPaneApi<H>> AddPane(bool preserveEmptyPane);
 
 		/// <summary>
 		/// Returns array of panes' API.<br/>
