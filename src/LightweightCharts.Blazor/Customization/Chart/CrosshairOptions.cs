@@ -38,5 +38,15 @@ namespace LightweightCharts.Blazor.Customization.Chart
 			get => GetValue(() => new CrosshairLineOption());
 			set => SetValue(value);
 		}
+
+		/// <summary>
+		/// If set to true, the crosshair will not snap to the data points of hidden series.
+		/// </summary>
+		[JsonPropertyName("doNotSnapToHiddenSeriesIndices")]
+		public bool DoNotSnapToHiddenSeriesIndices
+		{
+			get => GetValue<bool>();
+			set => SetValue(value);
+		}
 	}
 }

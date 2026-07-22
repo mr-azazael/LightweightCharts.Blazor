@@ -1,4 +1,5 @@
 ﻿using LightweightCharts.Blazor.Converters;
+using LightweightCharts.Blazor.Customization.Enums;
 using LightweightCharts.Blazor.Utilities;
 using System.Drawing;
 using System.Text.Json.Serialization;
@@ -236,6 +237,69 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		public bool IgnoreWhitespaceIndices
 		{
 			get => GetValue<bool>();
+			set => SetValue(value);
+		}
+
+		/// <summary>
+		/// Enable data conflation for performance optimization when bar spacing is very small.<br/>
+		/// When enabled, multiple data points are automatically combined into single points when they would be rendered in less than 0.5 pixels of screen space.<br/>
+		/// This significantly improves rendering performance for large datasets when zoomed out.
+		/// </summary>
+		[JsonPropertyName("enableConflation")]
+		public bool EnableConflation
+		{
+			get => GetValue<bool>();
+			set => SetValue(value);
+		}
+
+		/// <summary>
+		/// Smoothing factor for conflation thresholds.<br/>
+		/// Controls how aggressively conflation is applied.<br/>
+		/// This can be used to create smoother-looking charts, especially useful for sparklines and small charts.<br/>
+		/// 1.0 = conflate only when display can't show detail (default, performance-focused)<br/>
+		/// 2.0 = conflate at 2x the display threshold(moderate smoothing)<br/>
+		/// 4.0 = conflate at 4x the display threshold(strong smoothing)<br/>
+		/// 8.0+ = very aggressive smoothing for very small charts<br/>
+		/// Higher values result in fewer data points being displayed, creating smoother but less detailed charts.<br/>
+		/// This is particularly useful for sparklines and small charts where smooth appearance is prioritized over showing every data point.<br/>
+		/// Note: Should be used with continuous series types (line, area, baseline) for best visual results.Candlestick and bar series may look less natural with high smoothing factors.
+		/// </summary>
+		[JsonPropertyName("conflationThresholdFactor")]
+		public float? ConflationThresholdFactor
+		{
+			get => GetValue(() => 1.0f);
+			set => SetValue(value);
+		}
+
+		/// <summary>
+		/// Precompute conflation chunks for common levels right after data load.<br/>
+		/// When enabled, the system will precompute conflation data in the background, which improves performance when zooming out but increases initial load time and memory usage.<br/>
+		/// Performance impact:<br/>
+		/// Initial load: +100-500ms depending on dataset size<br/>
+		/// Memory usage: +20-50% of original dataset size<br/>
+		/// Zoom performance: Significant improvement(10-100x faster)<br/>
+		/// Recommended for: Large datasets(>10K points) on machines with sufficient memory
+		/// </summary>
+		[JsonPropertyName("precomputeConflationOnInit")]
+		public bool PrecomputeConflationOnInit
+		{
+			get => GetValue<bool>();
+			set => SetValue(value);
+		}
+
+		/// <summary>
+		/// Priority used for background precompute tasks when the Prioritized Task Scheduling API is available.<br/>
+		/// Options:<br/>
+		/// <see cref="PrecomputeConflationPriority.Background"/>: Lowest priority, tasks run only when the browser is idle<br/>
+		/// <see cref="PrecomputeConflationPriority.UserVisible"/>: Medium priority, tasks run when they might affect visible content<br/>
+		/// <see cref="PrecomputeConflationPriority.UserBlocking"/>: Highest priority, tasks run immediately and may block user interaction<br/>
+		/// Recommendation: Use <see cref="PrecomputeConflationPriority.UserBlocking"/> for most cases to avoid impacting user experience.<br/>
+		/// Only use higher priorities if conflation is critical for your application's functionality.
+		/// </summary>
+		[JsonPropertyName("precomputeConflationPriority")]
+		public PrecomputeConflationPriority PrecomputeConflationPriority
+		{
+			get => GetValue(() => PrecomputeConflationPriority.Background);
 			set => SetValue(value);
 		}
 	}

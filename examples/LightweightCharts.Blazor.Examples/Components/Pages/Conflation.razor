@@ -1,0 +1,13 @@
+﻿@page "/dataConflation"
+@rendermode Configuration.RenderMode
+
+@using LightweightCharts.Blazor.Charts
+
+<PageTitle>Data Conflation</PageTitle>
+
+<div class="w-100 h-100" style="position: relative;">
+	<ChartComponent @ref=ChartComponent />
+	<div style="position: absolute; left: 0; top: 0; padding: 0.5rem; z-index: 5;">
+		<button class="btn btn-info" @onclick=ToggleDataConflation>@(_Enabled ? "Disable Conflation" : "Enable Conflation") </button>
+	</div>
+</div>
