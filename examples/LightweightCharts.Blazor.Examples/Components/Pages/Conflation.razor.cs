@@ -52,7 +52,7 @@ partial class Conflation
 		}).ToArray();
 
 		_Timescale = await _ChartComponent.TimeScale();
-		var series = await _ChartComponent.AddSeries<LineStyleOptions>(Customization.Enums.SeriesType.Line);
+		var series = await _ChartComponent.AddLineSeries();
 		await series.SetData(_data);
 	}
 

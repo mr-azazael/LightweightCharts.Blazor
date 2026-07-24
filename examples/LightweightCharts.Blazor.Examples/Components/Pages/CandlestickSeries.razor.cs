@@ -127,7 +127,7 @@ partial class CandlestickSeries
 	async Task SetupCandlestickSeries()
 	{
 		var points = BtcUsdDataPoints.OneWeek.OrderBy(x => x.OpenTime).ToArray();
-		_Candlestick = await _ChartComponent.AddSeries<CandlestickStyleOptions>(SeriesType.Candlestick);
+		_Candlestick = await _ChartComponent.AddCandlestickSeries();
 		await _Candlestick.SetData(points.Select(x => new CandlestickData<long>
 		{
 			Time = x.OpenTime.ToUnix(),
@@ -215,7 +215,7 @@ partial class CandlestickSeries
 
 	async Task SetupHistogramSeries()
 	{
-		_Histogram = await _ChartComponent.AddSeries(SeriesType.Histogram, new HistogramStyleOptions
+		_Histogram = await _ChartComponent.AddHistogramSeries(new HistogramStyleOptions
 		{
 			//PriceScaleId = "left",
 			PriceLineVisible = false,

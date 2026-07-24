@@ -42,7 +42,7 @@ partial class AreaSeries : IDisposable
 			AutoSize = true
 		});
 
-		var series = await _ChartComponent.AddSeries<AreaStyleOptions>(SeriesType.Area);
+		var series = await _ChartComponent.AddAreaSeries();
 		var pane = await series.GetPane();
 		var textMark = pane.CreateTextWatermark(new TextWatermarkOptions
 		{

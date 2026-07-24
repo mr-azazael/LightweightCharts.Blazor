@@ -79,7 +79,7 @@ partial class LineSeries
 			}
 		});
 
-		_LineSeries = await _LineChartComponent.AddSeries<LineStyleOptions>(Customization.Enums.SeriesType.Line);
+		_LineSeries = await _LineChartComponent.AddLineSeries();
 		await _LineSeries.SetData(BtcUsdDataPoints.OneWeek.OrderBy(x => x.OpenTime).Select(x => new LineData<long>
 		{
 			Time = x.OpenTime.ToUnix(),
@@ -132,7 +132,7 @@ partial class LineSeries
 			}
 		});
 
-		_AreaSeries = await _AreaChartComponent.AddSeries<AreaStyleOptions>(Customization.Enums.SeriesType.Area);
+		_AreaSeries = await _AreaChartComponent.AddAreaSeries();
 		await _AreaSeries.SetData(BtcUsdDataPoints.OneWeek.OrderBy(x => x.OpenTime).Select(x => new AreaData<long>
 		{
 			Time = x.OpenTime.ToUnix(),

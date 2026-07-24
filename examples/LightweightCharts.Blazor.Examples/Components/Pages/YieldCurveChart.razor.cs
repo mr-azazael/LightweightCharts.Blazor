@@ -72,7 +72,7 @@ partial class YieldCurveChart
 
 	async Task<ISeriesApi<long, LineStyleOptions>> AddSeries(LineData<long>[] data, Color lineColor)
 	{
-		var series = await _YieldCurve.AddSeries(Customization.Enums.SeriesType.Line, new LineStyleOptions
+		var series = await _YieldCurve.AddLineSeries(new LineStyleOptions
 		{
 			Color = lineColor
 		});

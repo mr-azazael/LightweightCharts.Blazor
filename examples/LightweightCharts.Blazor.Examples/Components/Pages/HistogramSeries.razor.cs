@@ -44,7 +44,7 @@ partial class HistogramSeries
 			return;
 
 		await _ChartComponent.InitializationCompleted;
-		var series = await _ChartComponent.AddSeries<HistogramStyleOptions>(Customization.Enums.SeriesType.Histogram);
+		var series = await _ChartComponent.AddHistogramSeries();
 		await series.SetData(BtcUsdDataPoints.OneWeek.OrderBy(x => x.OpenTime).Select(x => new HistogramData<long>
 		{
 			Time = x.OpenTime.ToUnix(),

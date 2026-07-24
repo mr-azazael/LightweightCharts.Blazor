@@ -72,10 +72,10 @@ partial class MultiLineSeries
 
 		await _LineChartComponent.InitializationCompleted;
 		_LineSeries = [
-			await _LineChartComponent.AddSeries<LineStyleOptions>(SeriesType.Line, new() { Color = Color.Red }, 0),
-			await _LineChartComponent.AddSeries<LineStyleOptions>(SeriesType.Line, new() { Color = Color.Blue }, 0),
-			await _LineChartComponent.AddSeries<LineStyleOptions>(SeriesType.Line, new() { Color = Color.Green }, 1),
-			await _LineChartComponent.AddSeries<LineStyleOptions>(SeriesType.Line, new() { Color = Color.Pink }, 1)];
+			await _LineChartComponent.AddLineSeries(new() { Color = Color.Red }, 0),
+			await _LineChartComponent.AddLineSeries(new() { Color = Color.Blue }, 0),
+			await _LineChartComponent.AddLineSeries(new() { Color = Color.Green }, 1),
+			await _LineChartComponent.AddLineSeries(new() { Color = Color.Pink }, 1)];
 
 		var numberOfPoints = 500;
 		var endDate = new DateTime(2018, 1, 1, 12, 0, 0, 0);

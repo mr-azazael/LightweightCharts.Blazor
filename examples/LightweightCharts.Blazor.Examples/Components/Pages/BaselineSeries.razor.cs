@@ -67,7 +67,7 @@ partial class BaselineSeries
 			}
 		});
 
-		var series = await _ChartComponent.AddSeries(Customization.Enums.SeriesType.Baseline, new BaselineStyleOptions
+		var series = await _ChartComponent.AddBaselineSeries(new BaselineStyleOptions
 		{
 			BaseValue = new BaseValuePrice { Price = BtcUsdDataPoints.OneWeek.Average(x => x.ClosePrice) }
 		});

@@ -51,7 +51,7 @@ partial class OptionsChart
 			Visible = false
 		});
 
-		var series = await _Options.AddSeries(SeriesType.Baseline, new BaselineStyleOptions
+		var series = await _Options.AddBaselineSeries(new BaselineStyleOptions
 		{
 			PriceScaleId = "left",
 			TopFillColor1 = Color.FromArgb(100, 38, 166, 154),
