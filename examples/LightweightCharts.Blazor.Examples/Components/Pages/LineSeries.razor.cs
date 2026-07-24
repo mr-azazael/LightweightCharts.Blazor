@@ -103,9 +103,9 @@ partial class LineSeries
 
 		_LineChartComponent.CrosshairMoved += (s, e) =>
 		{
-			if (e.SeriesPrices.Length > 0)
+			if (e.SeriesData.Length > 0)
 			{
-				var data = e.SeriesPrices[0].DataItem as SingleValueData<long>;
+				var data = e.SeriesData[0].DataItem as SingleValueData<long>;
 				_AreaChartComponent?.SetCrosshairPosition(data.Value, data.Time, _AreaSeries);
 			}
 			else
@@ -152,9 +152,9 @@ partial class LineSeries
 
 		_AreaChartComponent.CrosshairMoved += (s, e) =>
 		{
-			if (e.SeriesPrices.Length > 0)
+			if (e.SeriesData.Length > 0)
 			{
-				var data = e.SeriesPrices[0].DataItem as SingleValueData<long>;
+				var data = e.SeriesData[0].DataItem as SingleValueData<long>;
 				_LineChartComponent?.SetCrosshairPosition(data.Value, data.Time, _LineSeries);
 			}
 			else

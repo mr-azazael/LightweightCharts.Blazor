@@ -65,5 +65,16 @@ namespace LightweightCharts.Blazor.Customization.Chart
 			get => GetValue<bool>();
 			set => SetValue(value);
 		}
+
+		/// <summary>
+		/// Tick mark label density on the price scale. A higher value results in more spacing between tick marks, and thus fewer tick marks.<br/>
+		/// A lower value results in less spacing and more tick marks.
+		/// </summary>
+		[JsonPropertyName("tickMarkDensity")]
+		public float TickMarkDensity
+		{
+			get => GetValue(() => 2.5f);
+			set => SetValue(value);
+		}
 	}
 }

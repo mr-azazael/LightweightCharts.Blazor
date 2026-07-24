@@ -1,25 +1,5 @@
-﻿using LightweightCharts.Blazor.DataItems;
-using LightweightCharts.Blazor.Series;
-
-namespace LightweightCharts.Blazor.Models.Events
+﻿namespace LightweightCharts.Blazor.Models.Events
 {
-	/// <summary>
-	/// Series price at the mouse location.
-	/// </summary>
-	public class SeriesPrice<H>
-		where H : struct
-	{
-		/// <summary>
-		/// The series to which this price point belongs to.
-		/// </summary>
-		public ISeriesApi<H> SeriesApi { get; init; }
-
-		/// <summary>
-		/// Pricd data at current mouse point.
-		/// </summary>
-		public WhitespaceData<H> DataItem { get; init; }
-	}
-
 	/// <summary>
 	/// Represents a mouse event.<br/>
 	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/MouseEventParams"/>
@@ -36,7 +16,7 @@ namespace LightweightCharts.Blazor.Models.Events
 		/// <summary>
 		/// Logical index.
 		/// </summary>
-		public double? Logical { get; set; }
+		public double? Logical { get; init; }
 
 		/// <summary>
 		/// Location of the event in the chart.<br/>
@@ -47,26 +27,21 @@ namespace LightweightCharts.Blazor.Models.Events
 		/// <summary>
 		/// The index of the Pane.
 		/// </summary>
-		int? PaneIndex { get; set; }
+		public int? PaneIndex { get; init; }
 
 		/// <summary>
 		/// Prices of all series at the location of the event in the chart.
 		/// </summary>
-		public SeriesPrice<H>[] SeriesPrices { get; init; }
+		public SeriesData<H>[] SeriesData { get; init; }
 
 		/// <summary>
-		/// The ISeriesApi for the series at the point of the mouse event.
+		/// Rich information about the hovered item and its owner.
 		/// </summary>
-		public ISeriesApi<H> HoveredSeries { get; init; }
-
-		/// <summary>
-		/// The ID of the marker at the point of the mouse event.
-		/// </summary>
-		public string HoveredObjectId { get; init; }
+		public HoveredInfo<H> HoveredInfo { get; init; }
 
 		/// <summary>
 		/// The underlying source mouse or touch event data, if available
 		/// </summary>
-		public TouchMouseEventData SourceEvent { get; set; }
+		public TouchMouseEventData SourceEvent { get; init; }
 	}
 }

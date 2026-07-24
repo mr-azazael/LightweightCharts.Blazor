@@ -99,9 +99,22 @@ window.lightweightChartsBlazor = {
 					eventArgs.seriesData = replacement;
 				}
 
-				if (eventArgs.hoveredSeries != undefined) {
-					eventArgs.hoveredSeries = eventArgs.hoveredSeries.uniqueJavascriptId;
+				if (eventArgs.hoveredInfo != undefined) {
+					let hoveredInfo = eventArgs.hoveredInfo;
+					eventArgs.hoveredInfo = {
+						type: hoveredInfo.type,
+						sourceKind: hoveredInfo.sourceKind,
+						objectKind: hoveredInfo.objectKind,
+						objectId: hoveredInfo.objectId,
+						paneIndex: hoveredInfo.paneIndex
+					};
+
+					if (hoveredInfo.series != undefined)
+						eventArgs.hoveredInfo.series = hoveredInfo.series.uniqueJavascriptId;
 				}
+
+				if (eventArgs.hoveredSeries)
+					eventArgs.hoveredSeries = undefined;
 
 				//source event might contain a ref to the window object, which causes a circular exception in the json serialization process
 				if (eventArgs.sourceEvent != undefined)

@@ -12,12 +12,12 @@ namespace LightweightCharts.Blazor.Models.Events
 		/// The x coordinate.
 		/// </summary>
 		[JsonPropertyName("x")]
-		public double X { get; set; }
+		public double X { get; init; }
 
 		/// <summary>
 		/// The y coordinate.
 		/// </summary>
 		[JsonPropertyName("y")]
-		public double Y { get; set; }
+		public double Y { get; init; }
 	}
 }

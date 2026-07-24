@@ -21,7 +21,7 @@ partial class CandlestickSeries
 {
 	ISeriesApi<long, CandlestickStyleOptions> _Candlestick;
 	ISeriesApi<long, HistogramStyleOptions> _Histogram;
-	IEnumerable<SeriesPrice<long>> _MouseHoverPrices;
+	IEnumerable<SeriesData<long>> _MouseHoverPrices;
 	string _LastClickedId;
 	bool _InitChartComponent;
 	ChartComponent _ChartComponent;
@@ -94,7 +94,8 @@ partial class CandlestickSeries
 				{
 					Bottom = 0.1d,
 					Top = 0
-				}
+				},
+				TickMarkDensity = 1
 			},
 			OverlayPriceScale = new BasePriceScaleOptions
 			{
@@ -255,7 +256,7 @@ partial class CandlestickSeries
 
 	void OnChartCrosshairMoved(object sender, MouseEventParams<long> e)
 	{
-		_MouseHoverPrices = e.SeriesPrices;
+		_MouseHoverPrices = e.SeriesData;
 		StateHasChanged();
 	}
 
@@ -266,7 +267,7 @@ partial class CandlestickSeries
 		else if (_LastClickedId == _Histogram.UniqueJavascriptId)
 			await _Histogram.ApplyOptions(new());
 
-		_LastClickedId = e.HoveredSeries?.UniqueJavascriptId;
+		_LastClickedId = e.HoveredInfo?.Series?.UniqueJavascriptId;
 
 		if (_LastClickedId == _Candlestick.UniqueJavascriptId)
 			await _Candlestick.ApplyOptions(new()

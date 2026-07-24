@@ -11,12 +11,12 @@ namespace LightweightCharts.Blazor.Models.Events
 		/// 
 		/// </summary>
 		[JsonPropertyName("width")]
-		public double Width { get; set; }
+		public double Width { get; init; }
 
 		/// <summary>
 		/// 
 		/// </summary>
 		[JsonPropertyName("height")]
-		public double Height { get; set; }
+		public double Height { get; init; }
 	}
 }

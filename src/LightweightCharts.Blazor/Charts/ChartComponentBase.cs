@@ -98,7 +98,7 @@ namespace LightweightCharts.Blazor.Charts
 		/// <exception cref="NotImplementedException"></exception>
 		protected virtual MouseEventParams<H> ParseMouseEventArgs(InternalMouseEventParams<H> args)
 		{
-			var seriesPrice = new List<SeriesPrice<H>>();
+			var seriesData = new List<SeriesData<H>>();
 			foreach (var sp in args.SeriesData)
 			{
 				//find the api for the event id
@@ -130,26 +130,40 @@ namespace LightweightCharts.Blazor.Charts
 				}
 
 				priceData.Time = args.Time.GetValueOrDefault();
-				seriesPrice.Add(new SeriesPrice<H>
+				seriesData.Add(new SeriesData<H>
 				{
 					SeriesApi = seriesApi,
 					DataItem = priceData
 				});
 			}
 
-			ISeriesApi<H> hoveredSeries = null;
-			if (!string.IsNullOrEmpty(args.HoveredSeriesId))
-				hoveredSeries = _Series[args.HoveredSeriesId];
+			HoveredInfo<H> hoveredInfo = null;
+			if (args.HoveredInfo != null)
+			{
+				ISeriesApi<H> hoveredSeries = null;
+				if (!string.IsNullOrEmpty(args.HoveredInfo.Series))
+					hoveredSeries = _Series[args.HoveredInfo.Series];
+
+				hoveredInfo = new()
+				{
+					PaneIndex = args.HoveredInfo.PaneIndex,
+					ObjectId = args.HoveredInfo.ObjectId,
+					ObjectKind = args.HoveredInfo.ObjectKind,
+					Series = hoveredSeries,
+					SourceKind = args.HoveredInfo.SourceKind,
+					Type = args.HoveredInfo.Type
+				};
+			}
 
 			return new MouseEventParams<H>
 			{
 				Point = args.Point,
 				Time = args.Time,
 				Logical = args.Logical,
-				HoveredObjectId = args.HoveredObjectId,
-				SeriesPrices = [.. seriesPrice],
-				HoveredSeries = hoveredSeries,
-				SourceEvent = args.SourceEvent
+				SeriesData = [.. seriesData],
+				HoveredInfo = hoveredInfo,
+				SourceEvent = args.SourceEvent,
+				PaneIndex = args.PaneIndex
 			};
 		}
 

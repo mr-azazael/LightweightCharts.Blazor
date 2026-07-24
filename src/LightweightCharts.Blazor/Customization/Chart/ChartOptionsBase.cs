@@ -1,4 +1,6 @@
-﻿using System.Text.Json.Serialization;
+﻿using LightweightCharts.Blazor.Customization.Enums;
+using Microsoft.VisualBasic;
+using System.Text.Json.Serialization;
 
 namespace LightweightCharts.Blazor.Customization.Chart
 {
@@ -72,6 +74,21 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		public PriceScaleOptions RightPriceScale
 		{
 			get => GetValue(() => new PriceScaleOptions());
+			set => SetValue(value);
+		}
+
+		/// <summary>
+		/// The price scale to prefer when the chart needs a default side and both left and right price scales share the same visibility state (both visible or both hidden).<br/>
+		/// This affects behaviors that depend on the pane's default side, such as:<br/>
+		/// * horizontal grid lines<br/>
+		/// * overlay series label placement<br/>
+		/// * the price scale used when adding a series without an explicit priceScaleId<br/>
+		/// * crosshair price coordinate conversion and magnet snapping
+		/// </summary>
+		[JsonPropertyName("defaultVisiblePriceScaleId")]
+		public PriceScaleId DefaultVisiblePriceScaleId
+		{
+			get => GetValue(() => PriceScaleId.Right);
 			set => SetValue(value);
 		}
 
@@ -165,6 +182,27 @@ namespace LightweightCharts.Blazor.Customization.Chart
 		public LocalizationOptions Localization
 		{
 			get => GetValue(() => new LocalizationOptions());
+			set => SetValue(value);
+		}
+
+		/// <summary>
+		/// Whether to add a default pane to the chart Disable this option when you want to create a chart with no panes and add them manually.
+		/// </summary>
+		[JsonPropertyName("addDefaultPane")]
+		public bool AddDefaultPane
+		{
+			get => GetValue(() => true);
+			set => SetValue(value);
+		}
+
+		/// <summary>
+		/// Whether to draw the currently hovered series above the other series in the same pane.<br/>
+		/// This only affects drawing and hit-testing order while the series is hovered; it doesn't change the stored series order.
+		/// </summary>
+		[JsonPropertyName("hoveredSeriesOnTop")]
+		public bool BoveredSeriesOnTop
+		{
+			get => GetValue(() => true);
 			set => SetValue(value);
 		}
 	}

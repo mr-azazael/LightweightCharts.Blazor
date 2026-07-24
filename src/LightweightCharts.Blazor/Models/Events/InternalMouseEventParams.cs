@@ -1,33 +1,7 @@
-﻿using LightweightCharts.Blazor.Customization.Enums;
-using System.Text.Json;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace LightweightCharts.Blazor.Models.Events
 {
-	/// <summary>
-	/// Wrapper
-	/// </summary>
-	public class InternalSeriesPrice
-	{
-		/// <summary>
-		/// Series Id
-		/// </summary>
-		[JsonPropertyName("seriesId")]
-		public string SeriesId { get; set; }
-
-		/// <summary>
-		/// Series type
-		/// </summary>
-		[JsonPropertyName("seriesType")]
-		public SeriesType SeriesType { get; set; }
-
-		/// <summary>
-		/// Json serialization of a series data item
-		/// </summary>
-		[JsonPropertyName("dataItem")]
-		public JsonDocument DataItem { get; set; }
-	}
-
 	/// <summary>
 	/// Represents a mouse event.<br/>
 	/// <see href="https://tradingview.github.io/lightweight-charts/docs/api/interfaces/MouseEventParams"/>
@@ -40,43 +14,43 @@ namespace LightweightCharts.Blazor.Models.Events
 		/// The value will be null if the location of the event in the chart is outside the range of available data.
 		/// </summary>
 		[JsonPropertyName("time")]
-		public H? Time { get; set; }
+		public H? Time { get; init; }
 
 		/// <summary>
 		/// Logical index.
 		/// </summary>
 		[JsonPropertyName("logical")]
-		public double? Logical { get; set; }
+		public double? Logical { get; init; }
 
 		/// <summary>
 		/// Location of the event in the chart.<br/>
 		/// The value will be undefined if the event is fired outside the chart, for example a mouse leave event.
 		/// </summary>
 		[JsonPropertyName("point")]
-		public Point Point { get; set; }
+		public Point Point { get; init; }
 
 		/// <summary>
-		/// The ISeriesApi for the series at the point of the mouse event.
+		/// The index of the Pane.
 		/// </summary>
-		[JsonPropertyName("hoveredSeries")]
-		public string HoveredSeriesId { get; set; }
+		[JsonPropertyName("paneIndex")]
+		public int? PaneIndex { get; init; }
 
 		/// <summary>
 		/// Data of all series at the location of the event in the chart.
 		/// </summary>
 		[JsonPropertyName("seriesData")]
-		public InternalSeriesPrice[] SeriesData { get; set; }
+		public InternalSeriesPrice[] SeriesData { get; init; }
 
 		/// <summary>
-		/// The ID of the marker at the point of the mouse event.
+		/// Data of all series at the location of the event in the chart.
 		/// </summary>
-		[JsonPropertyName("hoveredObjectId")]
-		public string HoveredObjectId { get; set; }
+		[JsonPropertyName("hoveredInfo")]
+		public InternalHoveredInfo HoveredInfo { get; init; }
 
 		/// <summary>
 		/// The underlying source mouse or touch event data, if available
 		/// </summary>
 		[JsonPropertyName("sourceEvent")]
-		public TouchMouseEventData SourceEvent { get; set; }
+		public TouchMouseEventData SourceEvent { get; init; }
 	}
 }
